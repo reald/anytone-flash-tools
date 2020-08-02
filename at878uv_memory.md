@@ -1,1 +1,287 @@
 # AT878UV memory layout
+
+## Digital contact list
+
+For managing the digital contact list 3 memory parts are used. The first part starting at 0x04000000 contains information about the digital radio ID (and the call type) and an memory offset to the contact list. Part 2 only hosts the number of contact list entries and a pointer to the next free contact list memory address.
+Part 3 contains the contact list with all information (ID, Callsign, Name, City, ...).
+
+### Part 1: Contact offsets (used for writing contacts)
+
+One entry contains the BCD coded radio ID shifted left by 1 bit in the first 4 bytes (low byte first). The free lowest bit will be 1 for group calls and 0 for private calls. The next four bytes are the memory offset to the contact list (low byte first) stored in Part 3. 
+
+Example:
+```
+0x04000000: 22010000 00000000 24010000 63000000 
+0x04000010: 26010000 c6000000 28010000 29010000
+
+22010000 => 0x122. Lowest bit is 0 so we have a private call type. Shift 0x122 1 bit down => 0x91 This is the radio ID as BCD.
+The next four bytes are 0 the contact list memory offset for this entry is 0.
+
+24010000 => 0x124. Lowest bit is 0 so we have a private call type. Shift 0x124 1 bit down => 0x92 This is the radio ID as BCD.
+The next four bytes are 0x00000063 so the contact list entry for the first entry was 99 bytes long.
+
+```
+
+So for every entry in the contact list 8 bytes are stored in this memory part. One after each other. But the memory is partitioned in multiple sections with gaps in between:
+
+~~~
+memSectContactsOffsetWrite = [
+   { 'address' : 0x4000000, 'size' : 128000},
+   { 'address' : 0x4040000, 'size' : 128000},
+   { 'address' : 0x4080000, 'size' : 128000},
+   { 'address' : 0x40C0000, 'size' : 128000},
+   { 'address' : 0x4100000, 'size' : 128000},
+   { 'address' : 0x4140000, 'size' : 128000},
+   { 'address' : 0x4180000, 'size' : 128000},
+   { 'address' : 0x41C0000, 'size' : 128000},
+   { 'address' : 0x4200000, 'size' : 128000},
+   { 'address' : 0x4240000, 'size' : 128000},
+   { 'address' : 0x4280000, 'size' : 128000},
+   { 'address' : 0x42c0000, 'size' : 128000},
+   { 'address' : 0x4300000, 'size' : 64000} # maybe more. at least 64000 bytes seen
+]
+~~~
+So when reaching address 0x401F3FF (0x4000000 + 128000 dec) storing these data will be continued in the next section beginning at 0x4040000.
+
+### Part 2: Index 044c0000
+This section only contains 4 bytes with the total number of stored contacts (low byte first) and the relative memory address to the next free contact list entry.
+
+```
+0x044c0000: 400d0300 00006807 00000000 00000000
+
+0x00030d40 => 200000 entries
+Next free entry at memory address 0x07680000
+```
+
+### Part 3: Contact list
+
+In this block beginning at address 0x04500000 the contact information for every contact is stored:
+
+```
+         00167764 15023939 39393939 39393939 || ..wd ..99 9999 9999 || ..wd..9999999999 ||
+         CTIDIDID IDCANANA NANANANA NANANANA
+
+         39393939 39390063 69747900 63616c6c || 9999 99.c ity. call || 999999.city.call ||
+         NANANANA NANA00CI CICICI00 CSCSCSCS
+
+         7369676e 00737461 74657072 6f760063 || sign .sta tepr ov.c || sign.stateprov.c ||
+         CSCSCSCS 00SPSPSP SPSPSPSP SPSP00CO
+
+         6f756e74 72790072 656d6172 6b7300 || ount ry.r emar ks.. || ountry.remarks. ||
+         COCOCOCO COCO00RE RERERERE RERE00
+         
+         - CT: Call Type: 00 -> Private Call, 01 -> Group Call, 02 -> "All" (only once possible), 1 byte
+         - ID: TG/DMRID as BCD, 4 bytes
+         - CA: Call Alert. 00 -> none, 01 -> Ring, 02 -> Online Alert
+         - NA: Name. ASCII, 0 terminated, max 16 bytes
+         - CI: City. ASCII, 0 terminated, max 15 bytes
+         - CS: Callsign, ASCII, 0 terminated, max. 8 bytes
+         - SP: State/Prov, ASCII, 0 terminated, max. 16 bytes
+         - CO: Country, ASCII, 0 terminated, max. 16 bytes
+         - RE: Remarks, 0 terminated, max. 16 bytes
+
+```
+After one data set the next follows immediately. As in block 1 the memory is partitioned in multiple sections with gaps in between. The memory offset described in part 1 does not care about the gaps it only belongs to the relative offset in the valid memory sections.
+```
+memSectContacts = [
+   { 'address' : 0x4500000, 'size' : 100000},
+   { 'address' : 0x4540000, 'size' : 100000},
+   { 'address' : 0x4580000, 'size' : 100000},
+   { 'address' : 0x45c0000, 'size' : 100000},
+   { 'address' : 0x4600000, 'size' : 100000},
+   { 'address' : 0x4640000, 'size' : 100000},
+   { 'address' : 0x4680000, 'size' : 100000},
+   { 'address' : 0x46c0000, 'size' : 100000},
+   { 'address' : 0x4700000, 'size' : 100000},
+   { 'address' : 0x4740000, 'size' : 100000},
+   { 'address' : 0x4780000, 'size' : 100000},
+   { 'address' : 0x47c0000, 'size' : 100000},
+   { 'address' : 0x4800000, 'size' : 100000},
+   { 'address' : 0x4840000, 'size' : 100000},
+   { 'address' : 0x4880000, 'size' : 100000},
+   { 'address' : 0x48c0000, 'size' : 100000},
+   { 'address' : 0x4900000, 'size' : 100000},
+   { 'address' : 0x4940000, 'size' : 100000},
+   { 'address' : 0x4980000, 'size' : 100000},
+   { 'address' : 0x49c0000, 'size' : 100000},
+   { 'address' : 0x4a00000, 'size' : 100000},
+   { 'address' : 0x4a40000, 'size' : 100000},
+   { 'address' : 0x4a80000, 'size' : 100000},
+   { 'address' : 0x4ac0000, 'size' : 100000},
+   { 'address' : 0x4b00000, 'size' : 100000},
+   { 'address' : 0x4b40000, 'size' : 100000},
+   { 'address' : 0x4b80000, 'size' : 100000},
+   { 'address' : 0x4bc0000, 'size' : 100000},
+   { 'address' : 0x4c00000, 'size' : 100000},
+   { 'address' : 0x4c40000, 'size' : 100000},
+   { 'address' : 0x4c80000, 'size' : 100000},
+   { 'address' : 0x4cc0000, 'size' : 100000},
+   { 'address' : 0x4d00000, 'size' : 100000},
+   { 'address' : 0x4d40000, 'size' : 100000},
+   { 'address' : 0x4d80000, 'size' : 100000},
+   { 'address' : 0x4dc0000, 'size' : 100000},
+   { 'address' : 0x4e00000, 'size' : 100000},
+   { 'address' : 0x4e40000, 'size' : 100000},
+   { 'address' : 0x4e80000, 'size' : 100000},
+   { 'address' : 0x4ec0000, 'size' : 100000},
+   { 'address' : 0x4f00000, 'size' : 100000},
+   { 'address' : 0x4f40000, 'size' : 100000},
+   { 'address' : 0x4f80000, 'size' : 100000},
+   { 'address' : 0x4fc0000, 'size' : 100000},
+   { 'address' : 0x5000000, 'size' : 100000},
+   { 'address' : 0x5040000, 'size' : 100000},
+   { 'address' : 0x5080000, 'size' : 100000},
+   { 'address' : 0x50c0000, 'size' : 100000},
+   { 'address' : 0x5100000, 'size' : 100000},
+   { 'address' : 0x5140000, 'size' : 100000},
+   { 'address' : 0x5180000, 'size' : 100000},
+   { 'address' : 0x51c0000, 'size' : 100000},
+   { 'address' : 0x5200000, 'size' : 100000},
+   { 'address' : 0x5240000, 'size' : 100000},
+   { 'address' : 0x5280000, 'size' : 100000},
+   { 'address' : 0x52c0000, 'size' : 100000},
+   { 'address' : 0x5300000, 'size' : 100000},
+   { 'address' : 0x5340000, 'size' : 100000},
+   { 'address' : 0x5380000, 'size' : 100000},
+   { 'address' : 0x53c0000, 'size' : 100000},
+   { 'address' : 0x5400000, 'size' : 100000},
+   { 'address' : 0x5440000, 'size' : 100000},
+   { 'address' : 0x5480000, 'size' : 100000},
+   { 'address' : 0x54c0000, 'size' : 100000},
+   { 'address' : 0x5500000, 'size' : 100000},
+   { 'address' : 0x5540000, 'size' : 100000},
+   { 'address' : 0x5580000, 'size' : 100000},
+   { 'address' : 0x55c0000, 'size' : 100000},
+   { 'address' : 0x5600000, 'size' : 100000},
+   { 'address' : 0x5640000, 'size' : 100000},
+   { 'address' : 0x5680000, 'size' : 100000},
+   { 'address' : 0x56c0000, 'size' : 100000},
+   { 'address' : 0x5700000, 'size' : 100000},
+   { 'address' : 0x5740000, 'size' : 100000},
+   { 'address' : 0x5780000, 'size' : 100000},
+   { 'address' : 0x57c0000, 'size' : 100000},
+   { 'address' : 0x5800000, 'size' : 100000},
+   { 'address' : 0x5840000, 'size' : 100000},
+   { 'address' : 0x5880000, 'size' : 100000},
+   { 'address' : 0x58c0000, 'size' : 100000},
+   { 'address' : 0x5900000, 'size' : 100000},
+   { 'address' : 0x5940000, 'size' : 100000},
+   { 'address' : 0x5980000, 'size' : 100000},
+   { 'address' : 0x59c0000, 'size' : 100000},
+   { 'address' : 0x5a00000, 'size' : 100000},
+   { 'address' : 0x5a40000, 'size' : 100000},
+   { 'address' : 0x5a80000, 'size' : 100000},
+   { 'address' : 0x5ac0000, 'size' : 100000},
+   { 'address' : 0x5b00000, 'size' : 100000},
+   { 'address' : 0x5b40000, 'size' : 100000},
+   { 'address' : 0x5b80000, 'size' : 100000},
+   { 'address' : 0x5bc0000, 'size' : 100000},
+   { 'address' : 0x5c00000, 'size' : 100000},
+   { 'address' : 0x5c40000, 'size' : 100000},
+   { 'address' : 0x5c80000, 'size' : 100000},
+   { 'address' : 0x5cc0000, 'size' : 100000},
+   { 'address' : 0x5d00000, 'size' : 100000},
+   { 'address' : 0x5d40000, 'size' : 100000},
+   { 'address' : 0x5d80000, 'size' : 100000},
+   { 'address' : 0x5dc0000, 'size' : 100000},
+   { 'address' : 0x5e00000, 'size' : 100000},
+   { 'address' : 0x5e40000, 'size' : 100000},
+   { 'address' : 0x5e80000, 'size' : 100000},
+   { 'address' : 0x5ec0000, 'size' : 100000},
+   { 'address' : 0x5f00000, 'size' : 100000},
+   { 'address' : 0x5f40000, 'size' : 100000},
+   { 'address' : 0x5f80000, 'size' : 100000},
+   { 'address' : 0x5fc0000, 'size' : 100000},
+   { 'address' : 0x6000000, 'size' : 100000},
+   { 'address' : 0x6040000, 'size' : 100000},
+   { 'address' : 0x6080000, 'size' : 100000},
+   { 'address' : 0x60c0000, 'size' : 100000},
+   { 'address' : 0x6100000, 'size' : 100000},
+   { 'address' : 0x6140000, 'size' : 100000},
+   { 'address' : 0x6180000, 'size' : 100000},
+   { 'address' : 0x61c0000, 'size' : 100000},
+   { 'address' : 0x6200000, 'size' : 100000},
+   { 'address' : 0x6240000, 'size' : 100000},
+   { 'address' : 0x6280000, 'size' : 100000},
+   { 'address' : 0x62c0000, 'size' : 100000},
+   { 'address' : 0x6300000, 'size' : 100000},
+   { 'address' : 0x6340000, 'size' : 100000},
+   { 'address' : 0x6380000, 'size' : 100000},
+   { 'address' : 0x63c0000, 'size' : 100000},
+   { 'address' : 0x6400000, 'size' : 100000},
+   { 'address' : 0x6440000, 'size' : 100000},
+   { 'address' : 0x6480000, 'size' : 100000},
+   { 'address' : 0x64c0000, 'size' : 100000},
+   { 'address' : 0x6500000, 'size' : 100000},
+   { 'address' : 0x6540000, 'size' : 100000},
+   { 'address' : 0x6580000, 'size' : 100000},
+   { 'address' : 0x65c0000, 'size' : 100000},
+   { 'address' : 0x6600000, 'size' : 100000},
+   { 'address' : 0x6640000, 'size' : 100000},
+   { 'address' : 0x6680000, 'size' : 100000},
+   { 'address' : 0x66c0000, 'size' : 100000},
+   { 'address' : 0x6700000, 'size' : 100000},
+   { 'address' : 0x6740000, 'size' : 100000},
+   { 'address' : 0x6780000, 'size' : 100000},
+   { 'address' : 0x67c0000, 'size' : 100000},
+   { 'address' : 0x6800000, 'size' : 100000},
+   { 'address' : 0x6840000, 'size' : 100000},
+   { 'address' : 0x6880000, 'size' : 100000},
+   { 'address' : 0x68c0000, 'size' : 100000},
+   { 'address' : 0x6900000, 'size' : 100000},
+   { 'address' : 0x6940000, 'size' : 100000},
+   { 'address' : 0x6980000, 'size' : 100000},
+   { 'address' : 0x69c0000, 'size' : 100000},
+   { 'address' : 0x6a00000, 'size' : 100000},
+   { 'address' : 0x6a40000, 'size' : 100000},
+   { 'address' : 0x6a80000, 'size' : 100000},
+   { 'address' : 0x6ac0000, 'size' : 100000},
+   { 'address' : 0x6b00000, 'size' : 100000},
+   { 'address' : 0x6b40000, 'size' : 100000},
+   { 'address' : 0x6b80000, 'size' : 100000},
+   { 'address' : 0x6bc0000, 'size' : 100000},
+   { 'address' : 0x6c00000, 'size' : 100000},
+   { 'address' : 0x6c40000, 'size' : 100000},
+   { 'address' : 0x6c80000, 'size' : 100000},
+   { 'address' : 0x6cc0000, 'size' : 100000},
+   { 'address' : 0x6d00000, 'size' : 100000},
+   { 'address' : 0x6d40000, 'size' : 100000},
+   { 'address' : 0x6d80000, 'size' : 100000},
+   { 'address' : 0x6dc0000, 'size' : 100000},
+   { 'address' : 0x6e00000, 'size' : 100000},
+   { 'address' : 0x6e40000, 'size' : 100000},
+   { 'address' : 0x6e80000, 'size' : 100000},
+   { 'address' : 0x6ec0000, 'size' : 100000},
+   { 'address' : 0x6f00000, 'size' : 100000},
+   { 'address' : 0x6f40000, 'size' : 100000},
+   { 'address' : 0x6f80000, 'size' : 100000},
+   { 'address' : 0x6fc0000, 'size' : 100000},
+   { 'address' : 0x7000000, 'size' : 100000},
+   { 'address' : 0x7040000, 'size' : 100000},
+   { 'address' : 0x7080000, 'size' : 100000},
+   { 'address' : 0x70c0000, 'size' : 100000},
+   { 'address' : 0x7100000, 'size' : 100000},
+   { 'address' : 0x7140000, 'size' : 100000},
+   { 'address' : 0x7180000, 'size' : 100000},
+   { 'address' : 0x71c0000, 'size' : 100000},
+   { 'address' : 0x7200000, 'size' : 100000},
+   { 'address' : 0x7240000, 'size' : 100000},
+   { 'address' : 0x7280000, 'size' : 100000},
+   { 'address' : 0x72c0000, 'size' : 100000},
+   { 'address' : 0x7300000, 'size' : 100000},
+   { 'address' : 0x7340000, 'size' : 100000},
+   { 'address' : 0x7380000, 'size' : 100000},
+   { 'address' : 0x73c0000, 'size' : 100000},
+   { 'address' : 0x7400000, 'size' : 100000},
+   { 'address' : 0x7440000, 'size' : 100000},
+   { 'address' : 0x7480000, 'size' : 100000},
+   { 'address' : 0x74c0000, 'size' : 100000},
+   { 'address' : 0x7500000, 'size' : 100000},
+   { 'address' : 0x7540000, 'size' : 100000},
+   { 'address' : 0x7580000, 'size' : 100000},
+   { 'address' : 0x75c0000, 'size' : 100000},
+   { 'address' : 0x7600000, 'size' : 100000},
+   { 'address' : 0x7640000, 'size' : 100000},
+   { 'address' : 0x7680000, 'size' : 16}, # maybe more. at least 16 bytes seen
+]
+```
