@@ -19,6 +19,7 @@ The script createhexdump.py formats the hex output to a more readable form. Then
 https://github.com/reald/anytone-flash-tools/blob/master/at878uv_protocol.md
 
 ## AT878UV memory layout
+https://github.com/reald/anytone-flash-tools/blob/master/at878uv_memory.md
 
 ## Available tools so far...
 This his highly experimental code. Use it at your own risk!
