@@ -14,4 +14,5 @@ Because it has to be done. CPS is only available on windows. Device and CPS will
 ## Available tools so far...
 This his highly experimental code. Use it at your own risk!
 
-* Export digital contact list to .csv file
+* Read digital contact list from radio to .csv file (readcontacts.py)
+* Write digital contact list from .csv file to radio (writecontacts.py)
