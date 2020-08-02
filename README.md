@@ -13,6 +13,7 @@ Install Wireshark with USBPcap Option and Capture the USB traffic when using the
 ```
 tshark -T fields -e usb.capdata -r file.pcapng
 ```
+The script createhexdump.py formats the hex output to a more readable form. Then make transfers with small configuration changes and watch the difference in the hex dumps.
 
 ## AT878UV Protocol
 https://github.com/reald/anytone-flash-tools/blob/master/at878uv_protocol.md
