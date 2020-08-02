@@ -1,5 +1,5 @@
 # anytone-flash-tools
-Independend flash tools for Anytone 878UV radios and maybe others
+Independend flash tools for Anytone 878UV radios and maybe other anytone models
 
 ## Goal
 Understand the communication protocol between CPS and radio. Provide open source platform independent reprogramming tools.
