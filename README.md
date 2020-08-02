@@ -12,6 +12,6 @@ Because it has to be done. CPS is only available on windows. Device and CPS will
 ## AT878UV Protocol
 
 ## Available tools so far...
-This his highly experimental code. Use it at your owm risk!
+This his highly experimental code. Use it at your own risk!
 
 * Export digital contact list to .csv file
