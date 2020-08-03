@@ -57,13 +57,13 @@ CPS supports up to 60 Bytes sending text.
 ### 4000 Channels
 ```
 57 | 00800000 | 10 | 14550000 00000000 04000000 11001100 | 1f 06 || .U.. .... .... .... || .U.............. ||
-                     RFRFRFRF TOTOTOTO MMCT  CD
+                     RFRFRFRF TOTOTOTO MMCT  CD CE
 57 | 00800010 | 10 | cf090000 07000000 00000005 ff000000 | 83 06 || Ï... .... .... ÿ... || Ï...........ÿ... ||
-                     CCCC                SQ  SL
+                     CCCC                SQBLSL
 57 | 00800020 | 10 | 01000041 6e727566 20326d00 00000000 | 6c 06 || ...A nruf  2m. .... || ...Anruf 2m..... ||
-                           CN CNCNCNCN CNCNCNCN CNCNCNCN
+                       WW  CN CNCNCNCN CNCNCNCN CNCNCNCN
 57 | 00800030 | 10 | 00000000 00000000 0000ff00 00000000 | bf 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
-                     CNCN                CO
+                     CNCN       AR       CO
                      
 57 | 00800040 | 10 | 14547500 00000000 08000000 11001100 | d7 06 || .Tu. .... .... .... || .Tu............. ||
 57 | 00800050 | 10 | cf090000 00000000 000000ff ff000000 | b6 06 || Ï... .... ...ÿ ÿ... || Ï..........ÿÿ... ||
@@ -75,40 +75,39 @@ CPS supports up to 60 Bytes sending text.
 57 | 008000a0 | 10 | 01000044 4230554e 00000000 00000000 | 8a 06 || ...D B0UN .... .... || ...DB0UN........ ||
 57 | 008000b0 | 10 | 00000000 00000000 00c4ff00 00000000 | 03 06 || .... .... .Äÿ. .... || .........Äÿ..... ||
 
-57 | 008000c0 | 10 | 43350000 00000000 08000000 11001100 | f2 06 || C5.. .... .... .... || C5.............. ||
-57 | 008000d0 | 10 | cf090000 00000000 00000005 ff000000 | 3c 06 || Ï... .... .... ÿ... || Ï...........ÿ... ||
-57 | 008000e0 | 10 | 01000041 6e727566 20373063 6d20464d | 77 06 || ...A nruf  70c m FM || ...Anruf 70cm FM ||
-57 | 008000f0 | 10 | 00000000 00000000 00000000 00000000 | 80 06 || .... .... .... .... || ................ ||
-
-57 | 00800100 | 10 | 14566250 00060000 9801000d 11001100 | 7b 06 || .VbP .... .... .... || .VbP............ ||
-                                         CDCD
-57 | 00800110 | 10 | cf090000 07000000 000000ff ff000000 | 7e 06 || Ï... .... ...ÿ ÿ... || Ï..........ÿÿ... ||
-57 | 00800120 | 10 | 01000044 42304746 2032306d 00000000 | e4 06 || ...D B0GF  20m .... || ...DB0GF 20m.... ||
-57 | 00800130 | 10 | 00000000 00000000 0000ff00 00000000 | c0 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
-
 - RF - RX Frequency, BCD, 4 bytes
 - TO - TX Offset absolute, BCD 4 bytes
-- MM - Bandwith, Power, A/D mode: ???BPPTT
+- MM - Bandwith, Power, A/D mode: ?S?BPPTT
+        S Sign: 1: TX offset to receive freq is positive ??
         B Bandwith: 1 for 25khz, 0 otherwise
         PP TX Power: 00 -> Low; 01 -> Mid; 10 -> High; 11 Turbo
         RR Channel Type: 00 -> A-Analog; 01 -> D-Digital; 10 -> A+D TX A; 11 -> D+A TX D
-- CT - ???REEDD
+- CT - T?PREEDD
+       T Talk Around: 0 -> unset; 1 -> set
+       P PTT Prohibit: 0 -> unset; 1 -> set
        R Reverse (Swap TX/RX Freq)
        DD CTCSS/DCS Decode: 00 -> off; 01 -> CTCSS; 10 -> DCS
        EE CTCSS/DCS Encode: 00 -> off; 01 -> CTCSS; 10 -> DCS
-- CD - CTCSS/DCS Decode Tone: 0x01 -> 67.0; 0x32 -> 254.1; 0x33 -> Custom        
+- CD - CTCSS/DCS Decode Tone: 0x01 -> 67.0; 0x32 -> 254.1; 0x33 -> Custom
+- CE - CTCSS/DCS Encode Tone: 0x16 -> D026N; 0x18 -> D030N
 - CC - Custom CTCSS: 2 byte, low byte first, resolution 1/10 Hz, 0x9cf = 2511 -> 255.1 Hz
 - SQ - Bits ???S????
        S Squelch Mode: 0 -> Carrier; 1 -> CTCSS/DCS
+- BL - ??????BB
+       B Busy Lock: 00 -> off: 01 -> Repeater; 10 -> Busy
 - SL - Scanlist: 0 -> Scanlist 1; 1 -> Scanlist 1; 0xff -> No Scanlist
 - CD - CTCSS/DCS Decode as BCD ??
+- WW - W???????
+       W Work Alone: 0 -> unset; 1 -> set
 - CN - Channel Name, ASCII, 15 bytes
+- AR - ??????AA
+       AA: APRS report type: 00 -> off; 01 -> analog; 10 -> digital
 - CO - Freq Correction. 1 byte signed char; 10 Hz steps. 0x84 -> -1240 Hz; 0x7d -> 1250 Hz; -1250..1250 Hz range 
 ```
 
 Start at 0x00800000, 64 byte per Channel.
 
-Other Expected Values: "CTCSS/DCS Decode","CTCSS/DCS Encode","Contact","Contact Call Type","Contact TG/DMR ID","Radio ID","Busy Lock/TX Permit","Optional Signal","DTMF ID","2Tone ID","5Tone ID","PTT ID","Color Code","Slot","Receive Group List","PTT Prohibit","Reverse","Simplex TDMA","TDMA Adaptive","AES Digital Encryption","Digital Encryption","Call Confirmation","Talk Around","Work Alone","2TONE Decode","Ranging","Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","APRS Report Type","Digital APRS Report Channel","SMS Confirmation","Exclude channel from roaming","DMR MODE"
+Other Expected Values: "CTCSS/DCS Decode","CTCSS/DCS Encode","Contact","Contact Call Type","Contact TG/DMR ID","Radio ID","Busy Lock/TX Permit","Optional Signal","DTMF ID","2Tone ID","5Tone ID","PTT ID","Color Code","Slot","Receive Group List","Simplex TDMA","TDMA Adaptive","AES Digital Encryption","Digital Encryption","Call Confirmation","2TONE Decode","Ranging","Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","Digital APRS Report Channel","SMS Confirmation","Exclude channel from roaming","DMR MODE"
 
 
 
