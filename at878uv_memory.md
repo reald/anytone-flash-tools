@@ -57,7 +57,7 @@ CPS supports up to 60 Bytes sending text.
 ### 4000 Channels
 ```
 57 | 00800000 | 10 | 14550000 00000000 04000000 11001100 | 1f 06 || .U.. .... .... .... || .U.............. ||
-                     RFRFRFRF TOTOTOTO OOMM  CD
+                     RFRFRFRF TOTOTOTO MMCT  CD
 57 | 00800010 | 10 | cf090000 07000000 00000005 ff000000 | 83 06 || Ï... .... .... ÿ... || Ï...........ÿ... ||
                      CCCC                SQ  SL
 57 | 00800020 | 10 | 01000041 6e727566 20326d00 00000000 | 6c 06 || ...A nruf  2m. .... || ...Anruf 2m..... ||
@@ -88,14 +88,15 @@ CPS supports up to 60 Bytes sending text.
 
 - RF - RX Frequency, BCD, 4 bytes
 - TO - TX Offset absolute, BCD 4 bytes
-- OO - CCCCOO??
-       CCCC 0101 CTCSS Decode 62.5 DCS Encode D021N
-       OO offset 01 -> +; 10 -> - ??
 - MM - Bandwith, Power, A/D mode: ???BPPTT
-        Bandwith Bit 1 of high nibble = 1 for 25khz, 0 otherwise? Bit 3 of high nibble used for CTCSS?
-        TX Power PP 00 -> Low; 01 -> Mid; 10 -> High; 11 Turbo
-        Channel Type: TT 00 -> A-Analog; 01 -> D-Digital; 10 -> A+D TX A; 11 -> D+A TX D
-- CD - CTCSS/DCS Decode: 0x32 -> 254.1        
+        B Bandwith: 1 for 25khz, 0 otherwise
+        PP TX Power: 00 -> Low; 01 -> Mid; 10 -> High; 11 Turbo
+        RR Channel Type: 00 -> A-Analog; 01 -> D-Digital; 10 -> A+D TX A; 11 -> D+A TX D
+- CT - ???REEDD
+       R Reverse (Swap TX/RX Freq)
+       DD CTCSS/DCS Decode: 00 -> off; 01 -> CTCSS; 10 -> DCS
+       EE CTCSS/DCS Encode: 00 -> off; 01 -> CTCSS; 10 -> DCS
+- CD - CTCSS/DCS Decode Tone: 0x01 -> 67.0; 0x32 -> 254.1; 0x33 -> Custom        
 - CC - Custom CTCSS: 2 byte, low byte first, resolution 1/10 Hz, 0x9cf = 2511 -> 255.1 Hz
 - SQ - Bits ???S????
        S Squelch Mode: 0 -> Carrier; 1 -> CTCSS/DCS
@@ -107,7 +108,7 @@ CPS supports up to 60 Bytes sending text.
 
 Start at 0x00800000, 64 byte per Channel.
 
-Other Expected Values: "Channel Type","CTCSS/DCS Decode","CTCSS/DCS Encode","Contact","Contact Call Type","Contact TG/DMR ID","Radio ID","Busy Lock/TX Permit","Squelch Mode","Optional Signal","DTMF ID","2Tone ID","5Tone ID","PTT ID","Color Code","Slot","Receive Group List","PTT Prohibit","Reverse","Simplex TDMA","TDMA Adaptive","AES Digital Encryption","Digital Encryption","Call Confirmation","Talk Around","Work Alone","2TONE Decode","Ranging","Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","APRS Report Type","Digital APRS Report Channel","SMS Confirmation","Exclude channel from roaming","DMR MODE"
+Other Expected Values: "CTCSS/DCS Decode","CTCSS/DCS Encode","Contact","Contact Call Type","Contact TG/DMR ID","Radio ID","Busy Lock/TX Permit","Optional Signal","DTMF ID","2Tone ID","5Tone ID","PTT ID","Color Code","Slot","Receive Group List","PTT Prohibit","Reverse","Simplex TDMA","TDMA Adaptive","AES Digital Encryption","Digital Encryption","Call Confirmation","Talk Around","Work Alone","2TONE Decode","Ranging","Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","APRS Report Type","Digital APRS Report Channel","SMS Confirmation","Exclude channel from roaming","DMR MODE"
 
 
 
