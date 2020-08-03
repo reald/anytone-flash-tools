@@ -59,9 +59,9 @@ CPS supports up to 60 Bytes sending text.
 57 | 00800000 | 10 | 14550000 00000000 04000000 11001100 | 1f 06 || .U.. .... .... .... || .U.............. ||
                      RFRFRFRF TOTOTOTO MMCTCECD DEDEDDDD
 57 | 00800010 | 10 | cf090000 07000000 00000005 ff000000 | 83 06 || Ï... .... .... ÿ... || Ï...........ÿ... ||
-                     CCCC     CI         SQBLSL RG  5T
+                     CCCC     CI       RISQBLSL RG2T5TDT
 57 | 00800020 | 10 | 01000041 6e727566 20326d00 00000000 | 6c 06 || ...A nruf  2m. .... || ...Anruf 2m..... ||
-                       WW  CN CNCNCNCN CNCNCNCN CNCNCNCN
+                     CLWW  CN CNCNCNCN CNCNCNCN CNCNCNCN
 57 | 00800030 | 10 | 00000000 00000000 0000ff00 00000000 | bf 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
                      CNCN     EXAR       COENSF
                      
@@ -82,8 +82,9 @@ CPS supports up to 60 Bytes sending text.
         B Bandwith: 1 for 25khz, 0 otherwise
         PP TX Power: 00 -> Low; 01 -> Mid; 10 -> High; 11 Turbo
         RR Channel Type: 00 -> A-Analog; 01 -> D-Digital; 10 -> A+D TX A; 11 -> D+A TX D
-- CT - T?PREEDD
+- CT - TCPREEDD
        T Talk Around: 0 -> unset; 1 -> set
+       C Call Confirmation: 0 -> unset; 1 -> set
        P PTT Prohibit: 0 -> unset; 1 -> set
        R Reverse (Swap TX/RX Freq)
        EE CTCSS/DCS Encode: 00 -> off; 01 -> CTCSS; 10 -> DCS
@@ -94,6 +95,7 @@ CPS supports up to 60 Bytes sending text.
 - DD - DCS Decode Tone: 0x03ff -> D777i
 - CC - Custom CTCSS: 2 byte, low byte first, resolution 1/10 Hz, 0x9cf = 2511 -> 255.1 Hz
 - CI - Contact Identifier
+- RI - Radio ID
 - SQ - Bits ???S??PI
        S Squelch Mode: 0 -> Carrier; 1 -> CTCSS/DCS
        PI PTT ID: 00 -> off; 01 -> Start; 10 -> End; 11 -> Start+End
@@ -102,15 +104,20 @@ CPS supports up to 60 Bytes sending text.
        BB Busy Lock/TX Permit: 00 -> off: 01 -> Repeater; 10 -> Busy
 - SL - Scanlist: 0 -> Scanlist 1; 1 -> Scanlist 1; 0xff -> No Scanlist
 - RG - Receive Group List: 0 -> Group 1; ... 249 -> Group 250; 0xff -> None
-- 5T - 5Tone ID: 0 -> 1; 1 -> 2
-- WW - W??A??CS
+- 2T - 2Tone ID: 0 -> 1; 1 -> 2, ...
+- 5T - 5Tone ID: 0 -> 1; 1 -> 2, ...
+- DT - DTMF ID: 0 -> 1; 1 -> 2, ...
+- CL - Color Code: 0x01 -> 1; 0x0f -> 15
+- WW - W??A?DCS
        W Work Alone: 0 -> unset; 1 -> set
        A TDMA Adaption: 0 -> unset; 1 -> set
+       D DMR Mode Double Slot: 0 -> unset; 1 -> set
        C SMS Confirmation: 0 -> unset; 1 -> set
        S Slot: 0 -> Slot 1; 1 -> Slot 2
 - CN - Channel Name, ASCII, 15 bytes
-- EX - ?????E?R
+- EX - ?????ESR
        E Exclude channel from roaming: 0 -> off; 1 -> on
+       S DMR Mode: Simplex or double slot???
        R Ranging: 0 -> unset; 1 -> set
 - AR - ??????AA
        AA: APRS report type: 00 -> off; 01 -> analog; 10 -> digital
@@ -121,9 +128,8 @@ CPS supports up to 60 Bytes sending text.
 
 Start at 0x00800000, 64 byte per Channel.
 
-Other Expected Values: "Contact","Contact Call Type","Contact TG/DMR ID","Radio ID","DTMF ID","2Tone ID","Color Code","Simplex TDMA","TDMA Adaptive","AES Digital Encryption",,"2TONE Decode", "Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","Digital APRS Report Channel","DMR MODE"
+Other Expected Values: "Contact Call Type","Contact TG/DMR ID","Simplex TDMA","AES Digital Encryption",,"2TONE Decode", "Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","Digital APRS Report Channel"
 
-"Call Confirmation" not found
 
 
 
