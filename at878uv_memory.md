@@ -30,7 +30,7 @@
 - LA - part of latitude
 - LO - part of longitude
 - DC - Destination Call Sign: ASCII
-- DI - Destionation SSID ??, 1 byte
+- DI - Destination SSID ??, 1 byte
 - CS - Callsign, ASCII, max. 6 bytes ?
 - ID - SSID: 1 byte ?
 - SP - Signal Path: ASCII, max. 20 bytes in CPS
@@ -57,7 +57,7 @@ CPS supports up to 60 Bytes sending text.
 ### 4000 Channels
 ```
 57 | 00800000 | 10 | 14550000 00000000 04000000 11001100 | 1f 06 || .U.. .... .... .... || .U.............. ||
-                     RFRFRFRF TOTOTOTO MMCT  CD CE
+                     RFRFRFRF TOTOTOTO MMCTCECD DE  DDDD
 57 | 00800010 | 10 | cf090000 07000000 00000005 ff000000 | 83 06 || Ï... .... .... ÿ... || Ï...........ÿ... ||
                      CCCC                SQBLSL
 57 | 00800020 | 10 | 01000041 6e727566 20326d00 00000000 | 6c 06 || ...A nruf  2m. .... || ...Anruf 2m..... ||
@@ -77,8 +77,8 @@ CPS supports up to 60 Bytes sending text.
 
 - RF - RX Frequency, BCD, 4 bytes
 - TO - TX Offset absolute, BCD 4 bytes
-- MM - Bandwith, Power, A/D mode: ?S?BPPTT
-        S Sign: 1: TX offset to receive freq is positive ??
+- MM - Bandwith, Power, A/D mode: SS?BPPTT
+        S Sign: 01 -> TX offset to receive freq is positive; 10 -> TX offset to receive freq is negative
         B Bandwith: 1 for 25khz, 0 otherwise
         PP TX Power: 00 -> Low; 01 -> Mid; 10 -> High; 11 Turbo
         RR Channel Type: 00 -> A-Analog; 01 -> D-Digital; 10 -> A+D TX A; 11 -> D+A TX D
@@ -86,10 +86,12 @@ CPS supports up to 60 Bytes sending text.
        T Talk Around: 0 -> unset; 1 -> set
        P PTT Prohibit: 0 -> unset; 1 -> set
        R Reverse (Swap TX/RX Freq)
-       DD CTCSS/DCS Decode: 00 -> off; 01 -> CTCSS; 10 -> DCS
        EE CTCSS/DCS Encode: 00 -> off; 01 -> CTCSS; 10 -> DCS
-- CD - CTCSS/DCS Decode Tone: 0x01 -> 67.0; 0x32 -> 254.1; 0x33 -> Custom
-- CE - CTCSS/DCS Encode Tone: 0x16 -> D026N; 0x18 -> D030N
+       DD CTCSS/DCS Decode: 00 -> off; 01 -> CTCSS; 10 -> DCS
+- CE - CTCSS Encode Tone: 0x01 -> 67.0; 0x0f -> 107.2; 0x32 -> 254.1; 0x33 -> Custom
+- CD - CTCSS Decode Tone: 0x01 -> 67.0; 0x32 -> 254.1; 0x33 -> Custom
+- DE - DCS Encode Tone: 0x16 -> D026N; 0x18 -> D030N
+- DD - DCS Decode Tone: 0x3ff -> D777i
 - CC - Custom CTCSS: 2 byte, low byte first, resolution 1/10 Hz, 0x9cf = 2511 -> 255.1 Hz
 - SQ - Bits ???S????
        S Squelch Mode: 0 -> Carrier; 1 -> CTCSS/DCS
@@ -107,7 +109,7 @@ CPS supports up to 60 Bytes sending text.
 
 Start at 0x00800000, 64 byte per Channel.
 
-Other Expected Values: "CTCSS/DCS Decode","CTCSS/DCS Encode","Contact","Contact Call Type","Contact TG/DMR ID","Radio ID","Busy Lock/TX Permit","Optional Signal","DTMF ID","2Tone ID","5Tone ID","PTT ID","Color Code","Slot","Receive Group List","Simplex TDMA","TDMA Adaptive","AES Digital Encryption","Digital Encryption","Call Confirmation","2TONE Decode","Ranging","Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","Digital APRS Report Channel","SMS Confirmation","Exclude channel from roaming","DMR MODE"
+Other Expected Values: "Contact","Contact Call Type","Contact TG/DMR ID","Radio ID","Busy Lock/TX Permit","Optional Signal","DTMF ID","2Tone ID","5Tone ID","PTT ID","Color Code","Slot","Receive Group List","Simplex TDMA","TDMA Adaptive","AES Digital Encryption","Digital Encryption","Call Confirmation","2TONE Decode","Ranging","Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","Digital APRS Report Channel","SMS Confirmation","Exclude channel from roaming","DMR MODE"
 
 
 
