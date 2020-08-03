@@ -57,12 +57,13 @@ CPS supports up to 60 Bytes sending text.
 ### 4000 Channels
 ```
 57 | 00800000 | 10 | 14550000 00000000 04000000 11001100 | 1f 06 || .U.. .... .... .... || .U.............. ||
-                     RFRFRF     TOTO
+                     RFRFRFRF   TOTO   BP
 57 | 00800010 | 10 | cf090000 07000000 00000005 ff000000 | 83 06 || Ï... .... .... ÿ... || Ï...........ÿ... ||
+                     CCCC                    SL
 57 | 00800020 | 10 | 01000041 6e727566 20326d00 00000000 | 6c 06 || ...A nruf  2m. .... || ...Anruf 2m..... ||
                            CN CNCNCNCN CNCNCNCN CNCNCNCN
 57 | 00800030 | 10 | 00000000 00000000 0000ff00 00000000 | bf 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
-                     CNCN
+                     CNCN                CO
                      
 57 | 00800040 | 10 | 14547500 00000000 08000000 11001100 | d7 06 || .Tu. .... .... .... || .Tu............. ||
 57 | 00800050 | 10 | cf090000 00000000 000000ff ff000000 | b6 06 || Ï... .... ...ÿ ÿ... || Ï..........ÿÿ... ||
@@ -85,13 +86,21 @@ CPS supports up to 60 Bytes sending text.
 57 | 00800120 | 10 | 01000044 42304746 2032306d 00000000 | e4 06 || ...D B0GF  20m .... || ...DB0GF 20m.... ||
 57 | 00800130 | 10 | 00000000 00000000 0000ff00 00000000 | c0 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
 
-- RF - RX Frequency ?
-- TO - TX Offset (-) ?
+- RF - RX Frequency, BCD, 4 bytes
+- TO - TX Offset, BCD (+-) ?
+- BP - Bandwith and Power: Power low libble x0 -> Low; x4 -> Mid; x8 -> High; xC Turbo // Bandwith Bit 1 of high nibble = 1 for 25khz, 0 otherwise? Bit 3 of high nibble used for CTCSS?
+- CC - Custom CTCSS: 2 byte, low byte first, resolution 1/10 Hz, 0x9cf = 2511 -> 255.1 Hz
+- SL - Scanlist: 0 -> Scanlist 1; 1 -> Scanlist 1; 0xff -> No Scanlist
 - CD - CTCSS/DCS Decode as BCD ??
 - CN - Channel Name, ASCII, 15 bytes
+- CO - Freq Correction. 1 byte signed char; 10 Hz steps. 0x84 -> -1240 Hz; 0x7d -> 1250 Hz; -1250..1250 Hz range 
 ```
 
-Start at 0x00800000, 64 byte per Channel. Different memory sections with gaps. Freq as BCD first. Offset as BCD second. Max 15 bytes channel name.
+Start at 0x00800000, 64 byte per Channel.
+
+Other Expected Values: "Channel Type","CTCSS/DCS Decode","CTCSS/DCS Encode","Contact","Contact Call Type","Contact TG/DMR ID","Radio ID","Busy Lock/TX Permit","Squelch Mode","Optional Signal","DTMF ID","2Tone ID","5Tone ID","PTT ID","Color Code","Slot","Receive Group List","PTT Prohibit","Reverse","Simplex TDMA","TDMA Adaptive","AES Digital Encryption","Digital Encryption","Call Confirmation","Talk Around","Work Alone","2TONE Decode","Ranging","Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","APRS Report Type","Digital APRS Report Channel","SMS Confirmation","Exclude channel from roaming","DMR MODE"
+
+
 
 ### VFO Frequencies 0x00fc0800
 ```
