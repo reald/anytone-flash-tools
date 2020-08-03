@@ -1,5 +1,57 @@
 # AT878UV memory layout
 
+* Observations done with firmware version 1.19. 
+
+* **Observations and interpretations of memory dumps might be wrong. Use at your own risk!**
+
+## ARPS
+
+### General APRS Settings 0x02501000
+```
+57 | 02501000 | 10 | 00144800 001e0000 13003c00 00001700 | 52 06 || ..H. .... ..<. .... || ..H.......<..... ||
+                       TFTFTF                 AI    LA
+57 | 02501010 | 10 | 00007100 00004150 41543831 00444c39 | 4b 06 || ..q. ..AP AT81 .DL9 || ..q...APAT81.DL9 ||
+                         LO       DCDC DCDCDCDC DICSCSCS 
+57 | 02501020 | 10 | 43415409 57494445 312d3157 49444532 | 86 06 || CAT. WIDE 1-1W IDE2 || CAT.WIDE1-1WIDE2 ||
+                     CSCSCSID SPSPSPSP SPSPSPSP SPSPSPSP
+57 | 02501030 | 10 | 2d310000 00000000 002f3e03 00000000 | 70 06 || -1.. .... ./>. .... || -1......./>..... ||
+                     SPSP                STMIPW
+57 | 02501040 | 10 | a20fa20f a20fa20f a20fa20f a20fa20f | 3a 06 || ¢.¢. ¢.¢. ¢.¢. ¢.¢. || ¢.¢.¢.¢.¢.¢.¢.¢. ||
+57 | 02501050 | 10 | 00262999 00000000 00000000 00000000 | aa 06 || .&). .... .... .... || .&)............. ||
+                       TGTGTG
+57 | 02501060 | 10 | 00000000 00000000 00000000 00000000 | d2 06 || .... .... .... .... || ................ ||
+57 | 02501070 | 10 | 00000000 00000000 00000000 00000000 | e2 06 || .... .... .... .... || ................ ||
+57 | 02501080 | 10 | 00010000 00000000 00000000 00000000 | f3 06 || .... .... .... .... || ................ ||
+57 | 02501090 | 10 | 00000000 00000000 00000000 00000000 | 02 06 || .... .... .... .... || ................ ||
+=> Size: 0x2501000 .. 0x250109f: 160 bytes
+
+- TF - Tx Frequency: BCD
+- AI - APRS Auto TX Interval: 0 -> Off; 2 -> 60s; 255 -> 7650s
+- LA - part of latitude
+- LO - part of longitude
+- DC - Destination Call Sign: ASCII
+- DI - Destionation SSID ??, 1 byte
+- CS - Callsign, ASCII, max. 6 bytes ?
+- ID - SSID: 1 byte ?
+- SP - Signal Path: ASCII, max. 20 bytes in CPS
+- ST - Symbol Table: 1 byte
+- MI - Map Icon: 1 byte
+- PW - TX Power: 00 -> Low: 01 -> Mid; 02 -> High; 03 -> Turbo ?
+- TG - APRS TG
+
+```
+
+### APRS Sending Text 0x02501200
+```
+57 | 02501200 | 10 | 37332044 4520444c 39434154 00000000 | 48 06 || 73 D E DL 9CAT .... || 73 DE DL9CAT.... ||
+57 | 02501210 | 10 | 00000000 00000000 00000000 00000000 | 84 06 || .... .... .... .... || ................ ||
+57 | 02501220 | 10 | 00000000 00000000 00000000 00000000 | 94 06 || .... .... .... .... || ................ ||
+57 | 02501230 | 10 | 00000000 00000000 00000000 00000000 | a4 06 || .... .... .... .... || ................ ||
+=> Size: 0x2501200 .. 0x250123f: 64 bytes
+```
+
+CPS supports up to 60 Bytes sending text.
+
 ## Digital contact list
 
 For managing the digital contact list 3 memory parts are used. The first part starting at 0x04000000 contains information about the digital radio ID (and the call type) and an memory offset to the contact list. Part 2 only hosts the number of contact list entries and a pointer to the next free contact list memory address.
