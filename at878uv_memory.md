@@ -54,7 +54,7 @@ CPS supports up to 60 Bytes sending text.
 
 ## Channel List
 
-### 4000 Channels
+### 4000 Channels + 2 VFO
 ```
 57 | 00800000 | 10 | 14550000 00000000 04000000 11001100 | 1f 06 || .U.. .... .... .... || .U.............. ||
                      RFRFRFRF TOTOTOTO MMCTCECD DEDEDDDD
@@ -70,10 +70,17 @@ CPS supports up to 60 Bytes sending text.
 57 | 00800060 | 10 | 0100004f 56204efc 726e6265 72672053 | f3 06 || ...O V Nü rnbe rg S || ...OV Nürnberg S ||
 57 | 00800070 | 10 | fc640000 00000000 00000000 00000000 | 60 06 || üd.. .... .... .... || üd.............. ||
 
-57 | 00800080 | 10 | 14565000 00060000 8400000d 11001100 | 83 06 || .VP. .... .... .... || .VP............. ||
-57 | 00800090 | 10 | cf090000 07000000 000000ff ff000000 | fd 06 || Ï... .... ...ÿ ÿ... || Ï..........ÿÿ... ||
-57 | 008000a0 | 10 | 01000044 4230554e 00000000 00000000 | 8a 06 || ...D B0UN .... .... || ...DB0UN........ ||
-57 | 008000b0 | 10 | 00000000 00000000 00c4ff00 00000000 | 03 06 || .... .... .Äÿ. .... || .........Äÿ..... ||
+[...]
+
+57 | 00fc0800 | 10 | 43350000 00000000 08000909 00000000 | a6 06 || C5.. .... .... .... || C5.............. ||
+57 | 00fc0810 | 10 | 26050000 07000000 000000ff 00000000 | 55 06 || &... .... ...ÿ .... || &..........ÿ.... ||
+57 | 00fc0820 | 10 | 01030043 68616e6e 656c2056 464f2041 | 5d 06 || ...C hann el V FO A || ...Channel VFO A ||
+57 | 00fc0830 | 10 | 00000000 00000000 0000ff00 00000000 | 43 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
+
+57 | 00fc0840 | 10 | 14550000 00000000 08000606 00000000 | d1 06 || .U.. .... .... .... || .U.............. ||
+57 | 00fc0850 | 10 | 26050000 07000000 000000ff 00000000 | 95 06 || &... .... ...ÿ .... || &..........ÿ.... ||
+57 | 00fc0860 | 10 | 01020043 68616e6e 656c2056 464f2042 | 9d 06 || ...C hann el V FO B || ...Channel VFO B ||
+57 | 00fc0870 | 10 | 00000000 00000000 0000ff00 00000000 | 83 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
 
 - RF - RX Frequency, BCD, 4 bytes
 - TO - TX Offset absolute, BCD 4 bytes
@@ -131,31 +138,51 @@ CPS supports up to 60 Bytes sending text.
        S SMS Forbid: 0 -> off; 1 -> on
        R Random key: 0 -> off; 1 -> on
        M Multiple Key: 0 -> off; 1 -> on
-       
-```
-
-Start at 0x00800000, 64 byte per Channel.
 
 Other Expected Values: "Contact Call Type","Through Mode","Digi APRS RX"
 
-Some IDs refer to other lists.
+Some IDs/values refer to other lists!
 
-
-
-### VFO Frequencies 0x00fc0800
 ```
-57 | 00fc0800 | 10 | 43350000 00000000 08000909 00000000 | a6 06 || C5.. .... .... .... || C5.............. ||
-57 | 00fc0810 | 10 | 26050000 07000000 000000ff 00000000 | 55 06 || &... .... ...ÿ .... || &..........ÿ.... ||
-57 | 00fc0820 | 10 | 01030043 68616e6e 656c2056 464f2041 | 5d 06 || ...C hann el V FO A || ...Channel VFO A ||
-57 | 00fc0830 | 10 | 00000000 00000000 0000ff00 00000000 | 43 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
 
-57 | 00fc0840 | 10 | 14550000 00000000 08000606 00000000 | d1 06 || .U.. .... .... .... || .U.............. ||
-57 | 00fc0850 | 10 | 26050000 07000000 000000ff 00000000 | 95 06 || &... .... ...ÿ .... || &..........ÿ.... ||
-57 | 00fc0860 | 10 | 01020043 68616e6e 656c2056 464f2042 | 9d 06 || ...C hann el V FO B || ...Channel VFO B ||
-57 | 00fc0870 | 10 | 00000000 00000000 0000ff00 00000000 | 83 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
-=> Size: 0xfc0800 .. 0xfc087f: 128 bytes
+Start at 0x00800000, 64 byte per Channel, one channel after each other. As seen on other data the memory is partitioned in multiple sections and has gaps in between.
+
 ```
-Layout same as 4000 channels. (?)
+memSectChannels = [
+   { 'address' : 0x800000, 'size' : 8192 },
+   { 'address' : 0x840000, 'size' : 8192 },
+   { 'address' : 0x880000, 'size' : 8192 },
+   { 'address' : 0x8c0000, 'size' : 8192 },
+   { 'address' : 0x900000, 'size' : 8192 },
+   { 'address' : 0x940000, 'size' : 8192 },
+   { 'address' : 0x980000, 'size' : 8192 },
+   { 'address' : 0x9c0000, 'size' : 8192 },
+   { 'address' : 0xa00000, 'size' : 8192 },
+   { 'address' : 0xa40000, 'size' : 8192 },
+   { 'address' : 0xa80000, 'size' : 8192 },
+   { 'address' : 0xac0000, 'size' : 8192 },
+   { 'address' : 0xb00000, 'size' : 8192 },
+   { 'address' : 0xb40000, 'size' : 8192 },
+   { 'address' : 0xb80000, 'size' : 8192 },
+   { 'address' : 0xbc0000, 'size' : 8192 },
+   { 'address' : 0xc00000, 'size' : 8192 },
+   { 'address' : 0xc40000, 'size' : 8192 },
+   { 'address' : 0xc80000, 'size' : 8192 },
+   { 'address' : 0xcc0000, 'size' : 8192 },
+   { 'address' : 0xd00000, 'size' : 8192 },
+   { 'address' : 0xd40000, 'size' : 8192 },
+   { 'address' : 0xd80000, 'size' : 8192 },
+   { 'address' : 0xdc0000, 'size' : 8192 },
+   { 'address' : 0xe00000, 'size' : 8192 },
+   { 'address' : 0xe40000, 'size' : 8192 },
+   { 'address' : 0xe80000, 'size' : 8192 },
+   { 'address' : 0xec0000, 'size' : 8192 },
+   { 'address' : 0xf00000, 'size' : 8192 },
+   { 'address' : 0xf40000, 'size' : 8192 },
+   { 'address' : 0xf80000, 'size' : 8192 },
+   { 'address' : 0xfc0000, 'size' : 2176 }
+]
+```
 
 ## Digital contact list
 
@@ -200,7 +227,7 @@ memSectContactsOffsetWrite = [
 ~~~
 So when reaching address 0x401F3FF (0x4000000 + 128000 dec) storing these data will be continued in the next section beginning at 0x4040000.
 
-### Part 2: Index 044c0000
+### Part 2: Index at 0x044c0000
 This section only contains 4 bytes with the total number of stored contacts (low byte first) and the relative memory address to the next free contact list entry.
 
 ```
