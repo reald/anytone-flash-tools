@@ -61,9 +61,9 @@ CPS supports up to 60 Bytes sending text.
 57 | 00800010 | 10 | cf090000 07000000 00000005 ff000000 | 83 06 || Ï... .... .... ÿ... || Ï...........ÿ... ||
                      CCCC     CI       RISQBLSL RG2T5TDT
 57 | 00800020 | 10 | 01000041 6e727566 20326d00 00000000 | 6c 06 || ...A nruf  2m. .... || ...Anruf 2m..... ||
-                     CLWW  CN CNCNCNCN CNCNCNCN CNCNCNCN
+                     CLWWAKCN CNCNCNCN CNCNCNCN CNCNCNCN
 57 | 00800030 | 10 | 00000000 00000000 0000ff00 00000000 | bf 06 || .... .... ..ÿ. .... || ..........ÿ..... ||
-                     CNCN     EXAR       COENSF
+                     CNCNCN   EXARAPDP DRCOENKK
                      
 57 | 00800040 | 10 | 14547500 00000000 08000000 11001100 | d7 06 || .Tu. .... .... .... || .Tu............. ||
 57 | 00800050 | 10 | cf090000 00000000 000000ff ff000000 | b6 06 || Ï... .... ...ÿ ÿ... || Ï..........ÿÿ... ||
@@ -114,22 +114,31 @@ CPS supports up to 60 Bytes sending text.
        D DMR Mode Double Slot: 0 -> unset; 1 -> set
        C SMS Confirmation: 0 -> unset; 1 -> set
        S Slot: 0 -> Slot 1; 1 -> Slot 2
-- CN - Channel Name, ASCII, 15 bytes
+- AK   AES Digital Encryption: 0x00 -> off
+- CN - Channel Name, ASCII, 16 bytes
 - EX - ?????ESR
        E Exclude channel from roaming: 0 -> off; 1 -> on
        S DMR Mode: Simplex or double slot???
        R Ranging: 0 -> unset; 1 -> set
 - AR - ??????AA
        AA: APRS report type: 00 -> off; 01 -> analog; 10 -> digital
+- AP:  Analog APRS PTT Mode: 0x00 -> off; 0x01 -> Start of Transmission; 0x02 -> End of Transmission
+- DP:  Digital APRS PTT Mode: 00 -> off; 01 -> on ??
+- DR - Digital APRS Report Channel: 0x00 -> off; 0x01 -> 1
 - CO - Freq Correction. 1 byte signed char; 10 Hz steps. 0x84 -> -1240 Hz; 0x7d -> 1250 Hz; -1250..1250 Hz range
 - EN - Digital Encryption: 0xff -> None; 0x20 -> 32
-- SF - SMS Forbid: 0x00 -> off; 0x04 -> on
+- KK - ?????SRM
+       S SMS Forbid: 0 -> off; 1 -> on
+       R Random key: 0 -> off; 1 -> on
+       M Multiple Key: 0 -> off; 1 -> on
+       
 ```
 
 Start at 0x00800000, 64 byte per Channel.
 
-Other Expected Values: "Contact Call Type","Contact TG/DMR ID","Simplex TDMA","AES Digital Encryption",,"2TONE Decode", "Through Mode","Digi APRS RX","Analog APRS PTT Mode","Digital APRS PTT Mode","Digital APRS Report Channel"
+Other Expected Values: "Contact Call Type","Through Mode","Digi APRS RX"
 
+Some IDs refer to other lists.
 
 
 
