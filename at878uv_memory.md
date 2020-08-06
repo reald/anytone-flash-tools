@@ -6,135 +6,6 @@
 
 * Single memory sections cannot be written alone!
 
-## 2 Tone
-### 2 Tone Encode 0x024c1100
-
-**2 Encode general settings are NOT exported to .cvx files by CPS!!**
-
-```
-57 | 024c1100 | 10 | 910c4124 00000000 686f7273 74000000 | a1 06 || ..A$ .... hors t... || ..A$....horst... ||
-                     11112222          NANANANA NANANA
-                     
-  - 11 - 1st Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
-  - 22 - 2nd Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
-  - NA - Name: ASCII, up to 7 bytes, pad with 0x00 if shorter
-
-[...] 
-
-General 2 Tone Encoding settings:
-
-57 | 024c1280 | 10 | 03008000 00000000 00000000 00000000 | 73 06 || .... .... .... .... || ................ ||
-57 | 024c1290 | 10 | 00000000 00000000 0005050a 0a640100 | 83 06 || .... .... .... .d.. || .............d.. ||
-                                         1D2DLD GAARST
-                                         
-   - 1D - 1st Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s.
-   - 2D - 1st Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s. 
-   - LD - Long Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s.
-   - GA - Gap Time: 1 byte, duration = rawvalue * 10 ms. Valid from 0 ... 2000 ms, resolution 100 ms.
-   - AR - Auto Reset Time: 1 byte, time = rawvalue/10 s. Valid from 0.0 .. 25.0s, resolution 0.1s.
-   - ST - Side Tone: 1 byte, 0x00 -> disabled, 0x01 -> enabled
-
-```
-Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f. Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
-
-### 2 Tone Decode 0x024c1100
-**2 Tone Decode data are NOT exported to .cvx files by CPS!!**
-
-```
-57 | 024c2400 | 10 | 910c4124 00000000 00000000 00000000 | 84 06 || ..A$ .... .... .... || ..A$............ ||
-                     11112222 DRNANANA NANANANA
-57 | 024c2410 | 10 | 00000000 00000000 00000000 00000000 | 92 06 || .... .... .... .... || ................ ||
-
-  - 11 - 1st Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
-  - 22 - 2nd Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
-  - DR - Decoding Resonse: 1 byte, 0x00 -> none, 0x01 -> Beep Tone, 0x02 Beep Tone and Respond
-  - NA - Name: ASCII, up to 7 bytes, pad with 0x00 if shorter
-
-57 | 024c2420 | 10 | 00000000 00000000 00000000 00000000 | a2 06 || .... .... .... .... || ................ ||
-=> Block 127: 
-=> Size: 0x24c2400 .. 0x24c242f: 48 bytes
-
-[...]
-
-57 | 024c25e0 | 10 | 400bb80b 01626565 70000000 00000000 | 0e 06 || @.¸. .bee p... .... || @.¸..beep....... ||
-57 | 024c25f0 | 10 | 00000000 00000000 00000000 00000000 | 73 06 || .... .... .... .... || ................ ||
-
-57 | 024c2600 | 10 | 01e00000 00000000 00000000 00000000 | 65 06 || .à.. .... .... .... || .à.............. ||
-                     ????
-```
-Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last entry therefore ends at 0x024c25ff. Empty entries will not be written. 
-
-End information at 0x024c2600 still unclear.
-
-## ARPS
-
-### General APRS Settings 0x02501000
-```
-57 | 02501000 | 10 | 00144800 001e0000 13003c00 00001700 | 52 06 || ..H. .... ..<. .... || ..H.......<..... ||
-                       TFTFTF TFTDSTCT DC  MIAI TTFBLALA
-57 | 02501010 | 10 | 00007100 00004150 41543831 00444c39 | 4b 06 || ..q. ..AP AT81 .DL9 || ..q...APAT81.DL9 ||
-                     LALALOLO LOLODCDC DCDCDCDC DICSCSCS 
-57 | 02501020 | 10 | 43415409 57494445 312d3157 49444532 | 86 06 || CAT. WIDE 1-1W IDE2 || CAT.WIDE1-1WIDE2 ||
-                     CSCSCSID SPSPSPSP SPSPSPSP SPSPSPSP
-57 | 02501030 | 10 | 2d310000 00000000 002f3e03 00000000 | 70 06 || -1.. .... ./>. .... || -1......./>..... ||
-                     SPSP                STMIPW PT    ??
-57 | 02501040 | 10 | a20fa20f a20fa20f a20fa20f a20fa20f | 3a 06 || ¢.¢. ¢.¢. ¢.¢. ¢.¢. || ¢.¢.¢.¢.¢.¢.¢.¢. ||
-                     RCRCRCRC RCRCRCRC RCRCRCRC RCRCRCRC
-57 | 02501050 | 10 | 00262999 00000000 00000000 00000000 | aa 06 || .&). .... .... .... || .&)............. ||
-                     TGTGTGTG TGTGTGTG TGTGTGTG TGTGTGTG
-57 | 02501060 | 10 | 00000000 00000000 00000000 00000000 | d2 06 || .... .... .... .... || ................ ||
-                     TGTGTGTG TGTGTGTG TGTGTGTG TGTGTGTG
-57 | 02501070 | 10 | 00000000 00000000 00000000 00000000 | e2 06 || .... .... .... .... || ................ ||
-                     CTCTCTCT CTCTCTCT ROSLSLSL SLSLSLSL
-57 | 02501080 | 10 | 00010000 00000000 00000000 00000000 | f3 06 || .... .... .... .... || ................ ||
-                     SLRD
-57 | 02501090 | 10 | 00000000 00000000 00000000 00000000 | 02 06 || .... .... .... .... || ................ ||
-=> Size: 0x2501000 .. 0x250109f: 160 bytes
-
-- TF - Tx Frequency: BCD (4 bytes)
-- TD - Transmit Delay: 1 byte, 0x00 -> off, 0x03 -> 60ms, 0xff 5100ms. Transmit Delay = value * 20ms 
-- ST - Send Sub Tone: 1 byte 0x00 -> off, 0x01 -> CTCSS, 0x02 -> DCS
-- CT - CTCSS: 1 byte 0x00-> 62.5, 0x03 -> 71.9 Hz. Todo: complete list
-- DC - DCS: 1 byte: 0x13 -> D023. Todo: complete list
-- AI - Manual TX Interval: 0x00 -> 0; 0xff -> 255s
-- AI - APRS Auto TX Interval: 0 -> Off; 2 -> 60s; 255 -> 7650s
-- FB - Fixed location beacon: 0x00 -> Off (GPS), 0x01 -> On (send fix position) ?
-- LA - latitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> N, 1 -> S)
-- TT - ARPS Tx Tone: 0x00 -> off, 0x01 -> on
-- LO - longitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> E, 1 -> W)
-- DC - Destination Call Sign: ASCII
-- DI - Destination SSID, 1 byte
-- CS - Your Callsign, ASCII, max. 6 bytes
-- ID - SSID: 1 byte
-- SP - ARPS Signal Path: ASCII, max. 20 bytes in CPS
-- ST - Symbol Table: 1 byte
-- MI - Map Icon: 1 byte
-- PW - TX Power: 00 -> Low: 01 -> Mid; 02 -> High; 03 -> Turbo
-- PT - Prewave Time: 1 byte, Prewave Time = value * 10ms
-- ?? - WHAT IS THIS BYTE USED FOR? 0x00 and 0xff seen!
-- RC - Report Channel 1-8: 2 bytes per channel, 0xfa2 = 4002 -> Current Channel, other values point to channel list (use digital channels only)
-- TG - APRS TG 1-8: BCD coded, 4 bytes each, one after another
-- CT - Call Type 1-8: 0x00 -> Private Call, 0x01 -> Group Call, 0x?? -> All Call; 1 byte each, one after another
-- RO - Support for Roaming: 0x00 -> off, 0x01 -> on
-- SL - Slot 1-8: 0x00 -> Channel Slot, 0x01 -> Slot 1, 0x02 -> Slot 2, 1 byte, one after another
-- RD - Repeater Activation Delay: 0x00 -> off, 0x01 -> 100ms, 0x03 -> 300ms, 0x10 -> 1000ms
-```
-
-Other expected values: "APRS TG","Call Type"
-
-
-
-### APRS Sending Text 0x02501200
-```
-57 | 02501200 | 10 | 37332044 4520444c 39434154 00000000 | 48 06 || 73 D E DL 9CAT .... || 73 DE DL9CAT.... ||
-57 | 02501210 | 10 | 00000000 00000000 00000000 00000000 | 84 06 || .... .... .... .... || ................ ||
-57 | 02501220 | 10 | 00000000 00000000 00000000 00000000 | 94 06 || .... .... .... .... || ................ ||
-57 | 02501230 | 10 | 00000000 00000000 00000000 00000000 | a4 06 || .... .... .... .... || ................ ||
-=> Size: 0x2501200 .. 0x250123f: 64 bytes
-```
-
-CPS supports up to 60 Bytes sending text.
-
 ## Channel List
 
 ### 4000 Channels + 2 VFO
@@ -266,6 +137,219 @@ memSectChannels = [
    { 'address' : 0xfc0000, 'size' : 2176 }
 ]
 ```
+
+## 5 Tone 0x024c0000
+
+```
+57 | 024c0000 | 10 | 00000646 38501e00 00000000 00000000 | 50 06 || ...F 8P.. .... .... || ...F8P.......... ||
+                       ESLITI EIEIEIEI EIEIEIEI EIEIEIEI
+57 | 024c0010 | 10 | 00000000 00000000 444c3149 4e5f3100 | 56 06 || .... .... DL1I N_1. || ........DL1IN_1. ||
+                     EIEIEIEI EIEIEIEI NANANANA NANANA
+57 | 024c0020 | 10 | 0000061e 38502e00 00000000 00000000 | 58 06 || .... 8P.. .... .... || ....8P.......... ||
+57 | 024c0030 | 10 | 00000000 00000000 444c3149 4e5f3200 | 77 06 || .... .... DL1I N_2. || ........DL1IN_2. ||
+57 | 024c0040 | 10 | 00010146 1e000000 00000000 00000000 | 04 06 || ...F .... .... .... || ...F............ ||
+57 | 024c0050 | 10 | 00000000 00000000 31202020 20202000 | 9f 06 || .... .... 1       . || ........1      . ||
+57 | 024c0060 | 10 | 00020146 2e000000 00000000 00000000 | 35 06 || ...F .... .... .... || ...F............ ||
+57 | 024c0070 | 10 | 00000000 00000000 32202020 20202000 | c0 06 || .... .... 2       . || ........2      . ||
+
+[...]
+
+57 | 024c0c60 | 10 | 000e0a21 12345679 80000000 00000000 | 98 06 || ...! .4Vy .... .... || ...!.4Vy........ ||
+57 | 024c0c70 | 10 | 00000000 00000000 656e6465 20202000 | d6 06 || .... .... ende    . || ........ende   . ||
+
+57 | 024c0c80 | 10 | 0f000000 00000000 00000000 08000000 | 01 06 || .... .... .... .... || ................ ||
+                     ??                         ??
+
+   - ES - Encoding standard. 0x00 -> ZWEI1, 0x01 -> ZVEI2, 0x01 -> ZVEI2, ... TBD: make list
+   - LI - Length of ID
+   - TI - Time of encode tone: 1 byte, resolution 1ms, valid range 30..100 ms. (0x46 = 70ms)
+   - EI - Encode id: BCD coded. Max 40 characters.
+   - NA - Name: ASCII, max. 7 byte, 0 padded.
+
+Start at 0x024c0000. 1 record is 32 bytes. 100 records possible. End of records therefore at 0x024c0c7f. Empty records will not be written.
+```
+
+```
+57 | 024c1000 | 10 | c05d6829 502d9c31 b036c43b 3c417c47 | 8b 06 || À]h) P-.1 °6Ä; <A|G || À]h)P-.1°6Ä;<A|G ||
+57 | 024c1010 | 10 | 204ef055 606da41f e4259222 90655424 | eb 06 ||  NðU `m¤. ä%." .eT$ ||  NðU`m¤.ä%.".eT$ ||
+57 | 024c1020 | 10 | 00020005 46030805 00010000 14006401 | 65 06 || .... F... .... ..d. || ....F.........d. ||
+                                   ???    ?
+57 | 024c1030 | 10 | 010d0f00 14320100 00000000 00000000 | 02 06 || .... .2.. .... .... || .....2.......... ||
+
+57 | 024c1040 | 10 | 00000746 1234567e 00000000 00000000 | 15 06 || ...F .4V~ .... .... || ...F.4V~........ ||
+                       ESLITI ISISISIS ISISISIS ISISISIS
+57 | 024c1050 | 10 | 00000000 00000000 00000000 00000000 | be 06 || .... .... .... .... || ................ ||
+57 | 024c1060 | 10 | 00000646 75321000 00000000 00000000 | d1 06 || ...F u2.. .... .... || ...Fu2.......... ||
+                       ESLITI IEIEIEIE IEIEIEIE IEIEIEIE
+57 | 024c1070 | 10 | 00000000 00000000 00000000 00000000 | de 06 || .... .... .... .... || ................ ||
+
+57 | 024c1080 | 10 | 0e0a0032 14640100 00001400 00000000 | c5 06 || ...2 .d.. .... .... || ...2.d.......... ||
+57 | 024c1090 | 10 | ffffffff ffffffff ffffffff ffffffff | ee 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 024c10a0 | 10 | ffffffff ffffffff ffffffff ffffffff | fe 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 024c10b0 | 10 | ffffffff ffffffff ffffffff ffffffff | 0e 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 024c10c0 | 10 | ffffffff ffffffff ffffffff ffffffff | 1e 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+
+   - ES - Encoding standard. 0x00 -> ZWEI1, 0x01 -> ZVEI2, 0x01 -> ZVEI2, ... TBD: make list
+   - LI - Length of ID
+   - TI - Time of encode tone: 1 byte, resolution 1ms, valid range 30..100 ms. (0x46 = 70ms).
+   - IS - PTT ID Starting (BOT) Encode ID: BCD coded, max. 12 bytes/24 chars, uneven ID padded with one 'e' than 0?
+   - LI - Length of ID?
+   - TI - Time of encode tone: 1 byte, resolution 1ms, valid range 30..100 ms. (0x46 = 70ms).
+   - IE - PTT ID Ending (EOT) Encode ID:
+
+```
+
+
+## 2 Tone
+### 2 Tone Encode 0x024c1100
+
+**2 Encode general settings are NOT exported to .cvx files by CPS!!**
+
+```
+57 | 024c1100 | 10 | 910c4124 00000000 686f7273 74000000 | a1 06 || ..A$ .... hors t... || ..A$....horst... ||
+                     11112222          NANANANA NANANA
+                     
+  - 11 - 1st Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
+  - 22 - 2nd Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
+  - NA - Name: ASCII, up to 7 bytes, pad with 0x00 if shorter
+
+[...] 
+
+General 2 Tone Encoding settings:
+
+57 | 024c1280 | 10 | 03008000 00000000 00000000 00000000 | 73 06 || .... .... .... .... || ................ ||
+57 | 024c1290 | 10 | 00000000 00000000 0005050a 0a640100 | 83 06 || .... .... .... .d.. || .............d.. ||
+                                         1D2DLD GAARST
+                                         
+   - 1D - 1st Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s.
+   - 2D - 1st Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s. 
+   - LD - Long Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s.
+   - GA - Gap Time: 1 byte, duration = rawvalue * 10 ms. Valid from 0 ... 2000 ms, resolution 100 ms.
+   - AR - Auto Reset Time: 1 byte, time = rawvalue/10 s. Valid from 0.0 .. 25.0s, resolution 0.1s.
+   - ST - Side Tone: 1 byte, 0x00 -> disabled, 0x01 -> enabled
+
+```
+Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f. Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
+
+### 2 Tone Decode 0x024c2400
+**2 Tone Decode data are NOT exported to .cvx files by CPS!!**
+
+```
+57 | 024c2400 | 10 | 910c4124 00000000 00000000 00000000 | 84 06 || ..A$ .... .... .... || ..A$............ ||
+                     11112222 DRNANANA NANANANA
+57 | 024c2410 | 10 | 00000000 00000000 00000000 00000000 | 92 06 || .... .... .... .... || ................ ||
+
+  - 11 - 1st Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
+  - 22 - 2nd Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
+  - DR - Decoding Resonse: 1 byte, 0x00 -> none, 0x01 -> Beep Tone, 0x02 Beep Tone and Respond
+  - NA - Name: ASCII, up to 7 bytes, pad with 0x00 if shorter
+
+57 | 024c2420 | 10 | 00000000 00000000 00000000 00000000 | a2 06 || .... .... .... .... || ................ ||
+=> Block 127: 
+=> Size: 0x24c2400 .. 0x24c242f: 48 bytes
+
+[...]
+
+57 | 024c25e0 | 10 | 400bb80b 01626565 70000000 00000000 | 0e 06 || @.¸. .bee p... .... || @.¸..beep....... ||
+57 | 024c25f0 | 10 | 00000000 00000000 00000000 00000000 | 73 06 || .... .... .... .... || ................ ||
+
+57 | 024c2600 | 10 | 01e00000 00000000 00000000 00000000 | 65 06 || .à.. .... .... .... || .à.............. ||
+                     ????
+```
+Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last entry therefore ends at 0x024c25ff. Empty entries will not be written. 
+
+End information at 0x024c2600 still unclear.
+
+## ARPS
+
+### General APRS Settings 0x02501000
+```
+57 | 02501000 | 10 | 00144800 001e0000 13003c00 00001700 | 52 06 || ..H. .... ..<. .... || ..H.......<..... ||
+                       TFTFTF TFTDSTCT DC  MIAI TTFBLALA
+57 | 02501010 | 10 | 00007100 00004150 41543831 00444c39 | 4b 06 || ..q. ..AP AT81 .DL9 || ..q...APAT81.DL9 ||
+                     LALALOLO LOLODCDC DCDCDCDC DICSCSCS 
+57 | 02501020 | 10 | 43415409 57494445 312d3157 49444532 | 86 06 || CAT. WIDE 1-1W IDE2 || CAT.WIDE1-1WIDE2 ||
+                     CSCSCSID SPSPSPSP SPSPSPSP SPSPSPSP
+57 | 02501030 | 10 | 2d310000 00000000 002f3e03 00000000 | 70 06 || -1.. .... ./>. .... || -1......./>..... ||
+                     SPSP                STMIPW PT    ??
+57 | 02501040 | 10 | a20fa20f a20fa20f a20fa20f a20fa20f | 3a 06 || ¢.¢. ¢.¢. ¢.¢. ¢.¢. || ¢.¢.¢.¢.¢.¢.¢.¢. ||
+                     RCRCRCRC RCRCRCRC RCRCRCRC RCRCRCRC
+57 | 02501050 | 10 | 00262999 00000000 00000000 00000000 | aa 06 || .&). .... .... .... || .&)............. ||
+                     TGTGTGTG TGTGTGTG TGTGTGTG TGTGTGTG
+57 | 02501060 | 10 | 00000000 00000000 00000000 00000000 | d2 06 || .... .... .... .... || ................ ||
+                     TGTGTGTG TGTGTGTG TGTGTGTG TGTGTGTG
+57 | 02501070 | 10 | 00000000 00000000 00000000 00000000 | e2 06 || .... .... .... .... || ................ ||
+                     CTCTCTCT CTCTCTCT ROSLSLSL SLSLSLSL
+57 | 02501080 | 10 | 00010000 00000000 00000000 00000000 | f3 06 || .... .... .... .... || ................ ||
+                     SLRD
+57 | 02501090 | 10 | 00000000 00000000 00000000 00000000 | 02 06 || .... .... .... .... || ................ ||
+=> Size: 0x2501000 .. 0x250109f: 160 bytes
+
+- TF - Tx Frequency: BCD (4 bytes)
+- TD - Transmit Delay: 1 byte, 0x00 -> off, 0x03 -> 60ms, 0xff 5100ms. Transmit Delay = value * 20ms 
+- ST - Send Sub Tone: 1 byte 0x00 -> off, 0x01 -> CTCSS, 0x02 -> DCS
+- CT - CTCSS: 1 byte 0x00-> 62.5, 0x03 -> 71.9 Hz. Todo: complete list
+- DC - DCS: 1 byte: 0x13 -> D023. Todo: complete list
+- AI - Manual TX Interval: 0x00 -> 0; 0xff -> 255s
+- AI - APRS Auto TX Interval: 0 -> Off; 2 -> 60s; 255 -> 7650s
+- FB - Fixed location beacon: 0x00 -> Off (GPS), 0x01 -> On (send fix position) ?
+- LA - latitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> N, 1 -> S)
+- TT - ARPS Tx Tone: 0x00 -> off, 0x01 -> on
+- LO - longitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> E, 1 -> W)
+- DC - Destination Call Sign: ASCII
+- DI - Destination SSID, 1 byte
+- CS - Your Callsign, ASCII, max. 6 bytes
+- ID - SSID: 1 byte
+- SP - ARPS Signal Path: ASCII, max. 20 bytes in CPS
+- ST - Symbol Table: 1 byte
+- MI - Map Icon: 1 byte
+- PW - TX Power: 00 -> Low: 01 -> Mid; 02 -> High; 03 -> Turbo
+- PT - Prewave Time: 1 byte, Prewave Time = value * 10ms
+- ?? - WHAT IS THIS BYTE USED FOR? 0x00 and 0xff seen!
+- RC - Report Channel 1-8: 2 bytes per channel, 0xfa2 = 4002 -> Current Channel, other values point to channel list (use digital channels only)
+- TG - APRS TG 1-8: BCD coded, 4 bytes each, one after another
+- CT - Call Type 1-8: 0x00 -> Private Call, 0x01 -> Group Call, 0x?? -> All Call; 1 byte each, one after another
+- RO - Support for Roaming: 0x00 -> off, 0x01 -> on
+- SL - Slot 1-8: 0x00 -> Channel Slot, 0x01 -> Slot 1, 0x02 -> Slot 2, 1 byte, one after another
+- RD - Repeater Activation Delay: 0x00 -> off, 0x01 -> 100ms, 0x03 -> 300ms, 0x10 -> 1000ms
+```
+
+Other expected values: "APRS TG","Call Type"
+
+
+
+### APRS Sending Text 0x02501200
+```
+57 | 02501200 | 10 | 37332044 4520444c 39434154 00000000 | 48 06 || 73 D E DL 9CAT .... || 73 DE DL9CAT.... ||
+57 | 02501210 | 10 | 00000000 00000000 00000000 00000000 | 84 06 || .... .... .... .... || ................ ||
+57 | 02501220 | 10 | 00000000 00000000 00000000 00000000 | 94 06 || .... .... .... .... || ................ ||
+57 | 02501230 | 10 | 00000000 00000000 00000000 00000000 | a4 06 || .... .... .... .... || ................ ||
+=> Size: 0x2501200 .. 0x250123f: 64 bytes
+```
+
+CPS supports up to 60 Bytes sending text.
+
+
+## Analog Address Book 0x02940000
+
+```
+57 | 02940000 | 10 | 38501000 00000005 444c3149 4e5f3100 | 2b 06 || 8P.. .... DL1I N_1. || 8P......DL1IN_1. ||
+                     NRNRNRNR       LN NANANANA NANANANA
+57 | 02940010 | 10 | 00000000 00000000 38502000 00000005 | 63 06 || .... .... 8P . .... || ........8P ..... ||
+                     NANANANA NANANA   NRNRNRNR       LN
+57 | 02940020 | 10 | 444c3149 4e5f3200 00000000 00000000 | af 06 || DL1I N_2. .... .... || DL1IN_2......... ||
+57 | 02940030 | 10 | 45764000 00000006 234f4537 4d46492d | ce 06 || Ev@. .... #OE7 MFI- || Ev@.....#OE7MFI- ||
+57 | 02940040 | 10 | 4c000000 00000000 71128000 00000006 | 3b 06 || L... .... q... .... || L.......q....... ||
+57 | 02940050 | 10 | 50656761 73757320 50726f6a 656b7400 | cd 06 || Pega sus  Proj ekt. || Pegasus Projekt. ||
+
+   - NR - Number, 4 bytes BCD coded. Highest nibble at lowest address. 0 Padded at the end. Max 8 digits, more will crash CPS.
+   - LN - 1 byte, length of number/digits. Necessary to compare end from 0 at the last digits.
+   - NA - NAME, 15 byte, ASCII. Zero padded.
+   
+Start at 0x02940000, 1 record is 24 bytes, up to 128 records can be stored. There are no empty records, CPS moves other records to empty places. End of last record is approx. at 0x02940bff. TBC.
+
+```
+
 
 ## Digital contact list
 
