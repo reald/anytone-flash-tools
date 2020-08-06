@@ -32,6 +32,7 @@ This his highly experimental code. Use it at your own risk!
 * 2 Tone Encode
 * APRS
 * Analog Address Book
+* 5 Tone Encode
 
 ## Todo - understand memory layout
 
@@ -42,7 +43,6 @@ This his highly experimental code. Use it at your own risk!
 * Prefabricated SMS
 * FM
 * Receive Group Call List
-* 5 Tone Encode
 * DTMF Encode
 * Hotkey_QuickCall
 * Hotkey_State
