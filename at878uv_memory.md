@@ -9,37 +9,49 @@
 ### General APRS Settings 0x02501000
 ```
 57 | 02501000 | 10 | 00144800 001e0000 13003c00 00001700 | 52 06 || ..H. .... ..<. .... || ..H.......<..... ||
-                       TFTFTF                AI     LA
+                       TFTFTF TF           MIAI TT  LALA
 57 | 02501010 | 10 | 00007100 00004150 41543831 00444c39 | 4b 06 || ..q. ..AP AT81 .DL9 || ..q...APAT81.DL9 ||
-                         LO       DCDC DCDCDCDC DICSCSCS 
+                     LALALOLO LOLODCDC DCDCDCDC DICSCSCS 
 57 | 02501020 | 10 | 43415409 57494445 312d3157 49444532 | 86 06 || CAT. WIDE 1-1W IDE2 || CAT.WIDE1-1WIDE2 ||
                      CSCSCSID SPSPSPSP SPSPSPSP SPSPSPSP
 57 | 02501030 | 10 | 2d310000 00000000 002f3e03 00000000 | 70 06 || -1.. .... ./>. .... || -1......./>..... ||
                      SPSP                STMIPW
 57 | 02501040 | 10 | a20fa20f a20fa20f a20fa20f a20fa20f | 3a 06 || ¢.¢. ¢.¢. ¢.¢. ¢.¢. || ¢.¢.¢.¢.¢.¢.¢.¢. ||
 57 | 02501050 | 10 | 00262999 00000000 00000000 00000000 | aa 06 || .&). .... .... .... || .&)............. ||
-                       TGTGTG
+                     TGTGTGTG TGTGTGTG TGTGTGTG TGTGTGTG
 57 | 02501060 | 10 | 00000000 00000000 00000000 00000000 | d2 06 || .... .... .... .... || ................ ||
+                     TGTGTGTG TGTGTGTG TGTGTGTG TGTGTGTG
 57 | 02501070 | 10 | 00000000 00000000 00000000 00000000 | e2 06 || .... .... .... .... || ................ ||
+                     CTCTCTCT CTCTCTCT RO
 57 | 02501080 | 10 | 00010000 00000000 00000000 00000000 | f3 06 || .... .... .... .... || ................ ||
+                       RD
 57 | 02501090 | 10 | 00000000 00000000 00000000 00000000 | 02 06 || .... .... .... .... || ................ ||
 => Size: 0x2501000 .. 0x250109f: 160 bytes
 
-- TF - Tx Frequency: BCD
+- TF - Tx Frequency: BCD (4 bytes)
+- AI - Manual TX Interval: 0x00 -> 0; 0xff -> 255s
 - AI - APRS Auto TX Interval: 0 -> Off; 2 -> 60s; 255 -> 7650s
-- LA - part of latitude
-- LO - part of longitude
+- LA - latitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> N, 1 -> S)
+- TT - Tx Tone: 0x00 -> off, 0x01 -> on
+- LO - longitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> E, 1 -> W)
 - DC - Destination Call Sign: ASCII
 - DI - Destination SSID ??, 1 byte
-- CS - Callsign, ASCII, max. 6 bytes ?
+- CS - Your Callsign, ASCII, max. 6 bytes ?
 - ID - SSID: 1 byte ?
-- SP - Signal Path: ASCII, max. 20 bytes in CPS
+- SP - ARPS Signal Path: ASCII, max. 20 bytes in CPS
 - ST - Symbol Table: 1 byte
 - MI - Map Icon: 1 byte
-- PW - TX Power: 00 -> Low: 01 -> Mid; 02 -> High; 03 -> Turbo ?
-- TG - APRS TG
-
+- PW - TX Power: 00 -> Low: 01 -> Mid; 02 -> High; 03 -> Turbo
+- TG - APRS TG 1-8: BCD coded, 4 bytes each, one after another
+- CT - Call Type 1-8: 0x00 -> Private Call, 0x01 -> Group Call, 0x?? -> All Call; 1 byte each, one after another
+- RO - Support for Roaming: 0x00 -> off, 0x01 -> on
+- RD - Repeater Activation Delay: 0x00 -> off, 0x01 -> 100ms, 0x03 -> 300ms, 0x10 -> 1000ms
 ```
+
+Expected values: "Fixed Location Beacon",
+"channel1","slot1","channel2","slot2","channel3","slot3","channel4","slot4","channel5","slot5",,"channel6","slot6","channel7","slot7","channel8","slot8","APRS TG","Call Type",,"APRS TX Tone","Transmit Delay[ms]","Send Sub Tone","CTCSS","DCS","Prewave Time[ms]",
+
+
 
 ### APRS Sending Text 0x02501200
 ```
