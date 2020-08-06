@@ -38,7 +38,7 @@
 - AI - APRS Auto TX Interval: 0 -> Off; 2 -> 60s; 255 -> 7650s
 - FB - Fixed location beacon: 0x00 -> Off (GPS), 0x01 -> On (send fix position) ?
 - LA - latitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> N, 1 -> S)
-- TT - Tx Tone: 0x00 -> off, 0x01 -> on
+- TT - ARPS Tx Tone: 0x00 -> off, 0x01 -> on
 - LO - longitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> E, 1 -> W)
 - DC - Destination Call Sign: ASCII
 - DI - Destination SSID, 1 byte
@@ -57,8 +57,7 @@
 - RD - Repeater Activation Delay: 0x00 -> off, 0x01 -> 100ms, 0x03 -> 300ms, 0x10 -> 1000ms
 ```
 
-Expected values: 
-"APRS TG","Call Type","APRS TX Tone"
+Other expected values: "APRS TG","Call Type"
 
 
 
