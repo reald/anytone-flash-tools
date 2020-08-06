@@ -27,18 +27,22 @@ This his highly experimental code. Use it at your own risk!
 * Read digital contact list from radio to .csv file (readcontacts.py)
 * Write digital contact list from .csv file to radio (writecontacts.py)
 
-## Todo
+## WIP - understand memory layout
 * Channel
+* 2 Tone Encode
+* APRS
+
+## Todo - understand memory layout
+
 * Radio ID List
 * Zone
 * Scan List
 * Analog Address Book
 * Talk Groups
-* Prefacricated SMS
+* Prefabricated SMS
 * FM
 * Receive Group Call List
 * 5 Tone Encode
-* 2 Tone Encode
 * DTMF Encode
 * Hotkey_QuickCall
 * Hotkey_State
@@ -46,7 +50,10 @@ This his highly experimental code. Use it at your own risk!
 * Auto Repeater Offset Frequencies
 * Roaming Channel
 * Roaming Zone
-* APRS
+* Written memory areas which not part of this list
+
+## Todo - other things
+
 * Icon Update
 * Boot Image
 * Firmware Update
