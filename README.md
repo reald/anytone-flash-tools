@@ -31,13 +31,13 @@ This his highly experimental code. Use it at your own risk!
 * Channel
 * 2 Tone Encode
 * APRS
+* Analog Address Book
 
 ## Todo - understand memory layout
 
 * Radio ID List
 * Zone
 * Scan List
-* Analog Address Book
 * Talk Groups
 * Prefabricated SMS
 * FM
