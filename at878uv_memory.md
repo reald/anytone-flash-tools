@@ -4,6 +4,8 @@
 
 * **Observations and interpretations of memory dumps might be wrong. Use at your own risk!**
 
+* Single memory sections cannot be written alone!
+
 ## ARPS
 
 ### General APRS Settings 0x02501000
