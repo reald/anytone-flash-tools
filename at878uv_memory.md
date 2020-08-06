@@ -9,7 +9,7 @@
 ## 2 Tone
 ### 2 Tone Encode 0x024c1100
 
-** 2 Encode general settings are NOT exported to .cvx files by CPS!! **
+**2 Encode general settings are NOT exported to .cvx files by CPS!!**
 
 ```
 57 | 024c1100 | 10 | 910c4124 00000000 686f7273 74000000 | a1 06 || ..A$ .... hors t... || ..A$....horst... ||
@@ -38,7 +38,7 @@ General 2 Tone Encoding settings:
 Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f. Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
 
 ### 2 Tone Decode 0x024c1100
-** 2 Tone Decode data are NOT exported to .cvx files by CPS!! **
+**2 Tone Decode data are NOT exported to .cvx files by CPS!!**
 
 ```
 57 | 024c2400 | 10 | 910c4124 00000000 00000000 00000000 | 84 06 || ..A$ .... .... .... || ..A$............ ||
