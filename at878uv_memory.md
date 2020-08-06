@@ -6,6 +6,66 @@
 
 * Single memory sections cannot be written alone!
 
+## 2 Tone
+### 2 Tone Encode 0x024c1100
+
+** 2 Encode general settings are NOT exported to .cvx files by CPS!! **
+
+```
+57 | 024c1100 | 10 | 910c4124 00000000 686f7273 74000000 | a1 06 || ..A$ .... hors t... || ..A$....horst... ||
+                     11112222          NANANANA NANANA
+                     
+  - 11 - 1st Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
+  - 22 - 2nd Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
+  - NA - Name: ASCII, up to 7 bytes, pad with 0x00 if shorter
+
+[...] 
+
+General 2 Tone Encoding settings:
+
+57 | 024c1280 | 10 | 03008000 00000000 00000000 00000000 | 73 06 || .... .... .... .... || ................ ||
+57 | 024c1290 | 10 | 00000000 00000000 0005050a 0a640100 | 83 06 || .... .... .... .d.. || .............d.. ||
+                                         1D2DLD GAARST
+                                         
+   - 1D - 1st Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s.
+   - 2D - 1st Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s. 
+   - LD - Long Tone Duration: 1 byte, duration = rawvalue / 10 s. Valid from 0.5 s .. 10 s.
+   - GA - Gap Time: 1 byte, duration = rawvalue * 10 ms. Valid from 0 ... 2000 ms, resolution 100 ms.
+   - AR - Auto Reset Time: 1 byte, time = rawvalue/10 s. Valid from 0.0 .. 25.0s, resolution 0.1s.
+   - ST - Side Tone: 1 byte, 0x00 -> disabled, 0x01 -> enabled
+
+```
+Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f. Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
+
+### 2 Tone Decode 0x024c1100
+** 2 Tone Decode data are NOT exported to .cvx files by CPS!! **
+
+```
+57 | 024c2400 | 10 | 910c4124 00000000 00000000 00000000 | 84 06 || ..A$ .... .... .... || ..A$............ ||
+                     11112222 DRNANANA NANANANA
+57 | 024c2410 | 10 | 00000000 00000000 00000000 00000000 | 92 06 || .... .... .... .... || ................ ||
+
+  - 11 - 1st Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
+  - 22 - 2nd Tone Frequency: 2bytes, low byte first, freq = rawvalue / 10 Hz
+  - DR - Decoding Resonse: 1 byte, 0x00 -> none, 0x01 -> Beep Tone, 0x02 Beep Tone and Respond
+  - NA - Name: ASCII, up to 7 bytes, pad with 0x00 if shorter
+
+57 | 024c2420 | 10 | 00000000 00000000 00000000 00000000 | a2 06 || .... .... .... .... || ................ ||
+=> Block 127: 
+=> Size: 0x24c2400 .. 0x24c242f: 48 bytes
+
+[...]
+
+57 | 024c25e0 | 10 | 400bb80b 01626565 70000000 00000000 | 0e 06 || @.¸. .bee p... .... || @.¸..beep....... ||
+57 | 024c25f0 | 10 | 00000000 00000000 00000000 00000000 | 73 06 || .... .... .... .... || ................ ||
+
+57 | 024c2600 | 10 | 01e00000 00000000 00000000 00000000 | 65 06 || .à.. .... .... .... || .à.............. ||
+                     ????
+```
+Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last entry therefore ends at 0x024c25ff. Empty entries will not be written. 
+
+End information at 0x024c2600 still unclear.
+
 ## ARPS
 
 ### General APRS Settings 0x02501000
@@ -168,7 +228,7 @@ Some IDs/values refer to other lists!
 
 ```
 
-Start at 0x00800000, 64 byte per Channel, one channel after each other. As seen on other data the memory is partitioned in multiple sections and has gaps in between.
+Start at 0x00800000, 64 bytes per Channel, one channel after each other. As seen on other data the memory is partitioned in multiple sections and has gaps in between.
 
 ```
 memSectChannels = [
