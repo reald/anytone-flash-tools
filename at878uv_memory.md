@@ -51,6 +51,7 @@
 - MI - Map Icon: 1 byte
 - PW - TX Power: 00 -> Low: 01 -> Mid; 02 -> High; 03 -> Turbo
 - PT - Prewave Time: 1 byte, Prewave Time = value * 10ms
+- ?? - WHAT IS THIS BYTE USED FOR? 0x00 and 0xff seen!
 - RC - Report Channel 1-8: 2 bytes per channel, 0xfa2 = 4002 -> Current Channel, other values point to channel list (use digital channels only)
 - TG - APRS TG 1-8: BCD coded, 4 bytes each, one after another
 - CT - Call Type 1-8: 0x00 -> Private Call, 0x01 -> Group Call, 0x?? -> All Call; 1 byte each, one after another
