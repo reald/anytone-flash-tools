@@ -139,7 +139,159 @@ memSectChannels = [
 ```
 ## Prefabricated SMS
 
-Example (SMS No. 100):
+Up to 100 prefabricated SMS can be stored. Besides the SMS texts two management memory sections must be written.
+
+### List of used SMS storage 1
+
+```
+57 | 01640000 | 10 | 00000100 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
+                         NEAC
+   
+   - NE - Next used SMS number (0xff if no further SMS to be stored)
+   - AC - Actual SMS number
+                         
+57 | 01640010 | 10 | 00000201 00000000 00000000 00000000 | 88 06 || .... .... .... .... || ................ ||
+57 | 01640020 | 10 | 00000302 00000000 00000000 00000000 | 9a 06 || .... .... .... .... || ................ ||
+
+[...]
+
+57 | 01640100 | 10 | 00001110 00000000 00000000 00000000 | 97 06 || .... .... .... .... || ................ ||
+57 | 01640110 | 10 | 00006311 00000000 00000000 00000000 | fa 06 || ..c. .... .... .... || ..c............. ||
+
+[...]
+
+57 | 01640630 | 10 | 0000ff63 00000000 00000000 00000000 | 0d 06 || ..ÿc .... .... .... || ..ÿc............ ||
+
+memSectSMSUse1 = [
+   { 'address' : 0x01640000, 'size' = 16 }, # SMS 1 (ID: 0)
+   { 'address' : 0x01640010, 'size' = 16 }, # SMS 2 (ID: 1)
+   { 'address' : 0x01640020, 'size' = 16 }, # SMS 3 (ID: 2)
+   { 'address' : 0x01640030, 'size' = 16 }, # SMS 4 (ID: 3)
+   { 'address' : 0x01640040, 'size' = 16 }, # SMS 5 (ID: 4)
+   { 'address' : 0x01640050, 'size' = 16 }, # SMS 6 (ID: 5)
+   { 'address' : 0x01640060, 'size' = 16 }, # SMS 7 (ID: 6)
+   { 'address' : 0x01640070, 'size' = 16 }, # SMS 8 (ID: 7)
+   { 'address' : 0x01640080, 'size' = 16 }, # SMS 9 (ID: 8)
+   { 'address' : 0x01640090, 'size' = 16 }, # SMS 10 (ID: 9)
+   { 'address' : 0x016400a0, 'size' = 16 }, # SMS 11 (ID: 10)
+   { 'address' : 0x016400b0, 'size' = 16 }, # SMS 12 (ID: 11)
+   { 'address' : 0x016400c0, 'size' = 16 }, # SMS 13 (ID: 12)
+   { 'address' : 0x016400d0, 'size' = 16 }, # SMS 14 (ID: 13)
+   { 'address' : 0x016400e0, 'size' = 16 }, # SMS 15 (ID: 14)
+   { 'address' : 0x016400f0, 'size' = 16 }, # SMS 16 (ID: 15)
+   { 'address' : 0x01640100, 'size' = 16 }, # SMS 17 (ID: 16)
+   { 'address' : 0x01640110, 'size' = 16 }, # SMS 18 (ID: 17)
+   { 'address' : 0x01640120, 'size' = 16 }, # SMS 19 (ID: 18)
+   { 'address' : 0x01640130, 'size' = 16 }, # SMS 20 (ID: 19)
+   { 'address' : 0x01640140, 'size' = 16 }, # SMS 21 (ID: 20)
+   { 'address' : 0x01640150, 'size' = 16 }, # SMS 22 (ID: 21)
+   { 'address' : 0x01640160, 'size' = 16 }, # SMS 23 (ID: 22)
+   { 'address' : 0x01640170, 'size' = 16 }, # SMS 24 (ID: 23)
+   { 'address' : 0x01640180, 'size' = 16 }, # SMS 25 (ID: 24)
+   { 'address' : 0x01640190, 'size' = 16 }, # SMS 26 (ID: 25)
+   { 'address' : 0x016401a0, 'size' = 16 }, # SMS 27 (ID: 26)
+   { 'address' : 0x016401b0, 'size' = 16 }, # SMS 28 (ID: 27)
+   { 'address' : 0x016401c0, 'size' = 16 }, # SMS 29 (ID: 28)
+   { 'address' : 0x016401d0, 'size' = 16 }, # SMS 30 (ID: 29)
+   { 'address' : 0x016401e0, 'size' = 16 }, # SMS 31 (ID: 30)
+   { 'address' : 0x016401f0, 'size' = 16 }, # SMS 32 (ID: 31)
+   { 'address' : 0x01640200, 'size' = 16 }, # SMS 33 (ID: 32)
+   { 'address' : 0x01640210, 'size' = 16 }, # SMS 34 (ID: 33)
+   { 'address' : 0x01640220, 'size' = 16 }, # SMS 35 (ID: 34)
+   { 'address' : 0x01640230, 'size' = 16 }, # SMS 36 (ID: 35)
+   { 'address' : 0x01640240, 'size' = 16 }, # SMS 37 (ID: 36)
+   { 'address' : 0x01640250, 'size' = 16 }, # SMS 38 (ID: 37)
+   { 'address' : 0x01640260, 'size' = 16 }, # SMS 39 (ID: 38)
+   { 'address' : 0x01640270, 'size' = 16 }, # SMS 40 (ID: 39)
+   { 'address' : 0x01640280, 'size' = 16 }, # SMS 41 (ID: 40)
+   { 'address' : 0x01640290, 'size' = 16 }, # SMS 42 (ID: 41)
+   { 'address' : 0x016402a0, 'size' = 16 }, # SMS 43 (ID: 42)
+   { 'address' : 0x016402b0, 'size' = 16 }, # SMS 44 (ID: 43)
+   { 'address' : 0x016402c0, 'size' = 16 }, # SMS 45 (ID: 44)
+   { 'address' : 0x016402d0, 'size' = 16 }, # SMS 46 (ID: 45)
+   { 'address' : 0x016402e0, 'size' = 16 }, # SMS 47 (ID: 46)
+   { 'address' : 0x016402f0, 'size' = 16 }, # SMS 48 (ID: 47)
+   { 'address' : 0x01640300, 'size' = 16 }, # SMS 49 (ID: 48)
+   { 'address' : 0x01640310, 'size' = 16 }, # SMS 50 (ID: 49)
+   { 'address' : 0x01640320, 'size' = 16 }, # SMS 51 (ID: 50)
+   { 'address' : 0x01640330, 'size' = 16 }, # SMS 52 (ID: 51)
+   { 'address' : 0x01640340, 'size' = 16 }, # SMS 53 (ID: 52)
+   { 'address' : 0x01640350, 'size' = 16 }, # SMS 54 (ID: 53)
+   { 'address' : 0x01640360, 'size' = 16 }, # SMS 55 (ID: 54)
+   { 'address' : 0x01640370, 'size' = 16 }, # SMS 56 (ID: 55)
+   { 'address' : 0x01640380, 'size' = 16 }, # SMS 57 (ID: 56)
+   { 'address' : 0x01640390, 'size' = 16 }, # SMS 58 (ID: 57)
+   { 'address' : 0x016403a0, 'size' = 16 }, # SMS 59 (ID: 58)
+   { 'address' : 0x016403b0, 'size' = 16 }, # SMS 60 (ID: 59)
+   { 'address' : 0x016403c0, 'size' = 16 }, # SMS 61 (ID: 60)
+   { 'address' : 0x016403d0, 'size' = 16 }, # SMS 62 (ID: 61)
+   { 'address' : 0x016403e0, 'size' = 16 }, # SMS 63 (ID: 62)
+   { 'address' : 0x016403f0, 'size' = 16 }, # SMS 64 (ID: 63)
+   { 'address' : 0x01640400, 'size' = 16 }, # SMS 65 (ID: 64)
+   { 'address' : 0x01640410, 'size' = 16 }, # SMS 66 (ID: 65)
+   { 'address' : 0x01640420, 'size' = 16 }, # SMS 67 (ID: 66)
+   { 'address' : 0x01640430, 'size' = 16 }, # SMS 68 (ID: 67)
+   { 'address' : 0x01640440, 'size' = 16 }, # SMS 69 (ID: 68)
+   { 'address' : 0x01640450, 'size' = 16 }, # SMS 70 (ID: 69)
+   { 'address' : 0x01640460, 'size' = 16 }, # SMS 71 (ID: 70)
+   { 'address' : 0x01640470, 'size' = 16 }, # SMS 72 (ID: 71)
+   { 'address' : 0x01640480, 'size' = 16 }, # SMS 73 (ID: 72)
+   { 'address' : 0x01640490, 'size' = 16 }, # SMS 74 (ID: 73)
+   { 'address' : 0x016404a0, 'size' = 16 }, # SMS 75 (ID: 74)
+   { 'address' : 0x016404b0, 'size' = 16 }, # SMS 76 (ID: 75)
+   { 'address' : 0x016404c0, 'size' = 16 }, # SMS 77 (ID: 76)
+   { 'address' : 0x016404d0, 'size' = 16 }, # SMS 78 (ID: 77)
+   { 'address' : 0x016404e0, 'size' = 16 }, # SMS 79 (ID: 78)
+   { 'address' : 0x016404f0, 'size' = 16 }, # SMS 80 (ID: 79)
+   { 'address' : 0x01640500, 'size' = 16 }, # SMS 81 (ID: 80)
+   { 'address' : 0x01640510, 'size' = 16 }, # SMS 82 (ID: 81)
+   { 'address' : 0x01640520, 'size' = 16 }, # SMS 83 (ID: 82)
+   { 'address' : 0x01640530, 'size' = 16 }, # SMS 84 (ID: 83)
+   { 'address' : 0x01640540, 'size' = 16 }, # SMS 85 (ID: 84)
+   { 'address' : 0x01640550, 'size' = 16 }, # SMS 86 (ID: 85)
+   { 'address' : 0x01640560, 'size' = 16 }, # SMS 87 (ID: 86)
+   { 'address' : 0x01640570, 'size' = 16 }, # SMS 88 (ID: 87)
+   { 'address' : 0x01640580, 'size' = 16 }, # SMS 89 (ID: 88)
+   { 'address' : 0x01640590, 'size' = 16 }, # SMS 90 (ID: 89)
+   { 'address' : 0x016405a0, 'size' = 16 }, # SMS 91 (ID: 90)
+   { 'address' : 0x016405b0, 'size' = 16 }, # SMS 92 (ID: 91)
+   { 'address' : 0x016405c0, 'size' = 16 }, # SMS 93 (ID: 92)
+   { 'address' : 0x016405d0, 'size' = 16 }, # SMS 94 (ID: 93)
+   { 'address' : 0x016405e0, 'size' = 16 }, # SMS 95 (ID: 94)
+   { 'address' : 0x016405f0, 'size' = 16 }, # SMS 96 (ID: 95)
+   { 'address' : 0x01640600, 'size' = 16 }, # SMS 97 (ID: 96)
+   { 'address' : 0x01640610, 'size' = 16 }, # SMS 98 (ID: 97)
+   { 'address' : 0x01640620, 'size' = 16 }, # SMS 99 (ID: 98)
+   { 'address' : 0x01640630, 'size' = 16 }  # SMS 100 (ID: 99)
+]
+```
+
+Empty fields will not be written.
+
+
+### List of used SMS storage 2 0x01640800
+
+100 bytes starting at address 0x01640800 are used to mark if a predefined SMS is available or not.
+
+```
+57 | 01640800 | 10 | 00000000 00000000 00000000 00000000 | 7d 06 || .... .... .... .... || ................ ||
+57 | 01640810 | 10 | 0000ffff ffffffff ffffffff ffffffff | 7f 06 || ..ÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ..ÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 01640820 | 10 | ffffffff ffffffff ffffffff ffffffff | 8d 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 01640830 | 10 | ffffffff ffffffff ffffffff ffffffff | 9d 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 01640840 | 10 | ffffffff ffffffff ffffffff ffffffff | ad 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 01640850 | 10 | ffffffff ffffffff ffffffff ffffffff | bd 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 01640860 | 10 | ffffff00 00000000 00000000 00000000 | da 06 || ÿÿÿ. .... .... .... || ÿÿÿ............. ||
+57 | 01640870 | 10 | 00000000 00000000 00000000 00000000 | ed 06 || .... .... .... .... || ................ ||
+57 | 01640880 | 10 | 00000000 00000000 00000000 00000000 | fd 06 || .... .... .... .... || ................ ||
+
+1 byte per SMS entry, 0x00 -> SMS stored, 0xff -> no SMS stored.
+
+In this example SMS 1..18 and 100 are stored. All other memories are free.
+```
+
+### SMS Text
+
+Example of one SMS (SMS No. 100):
 
 ```
 57 | 02440300 | 10 | 65696e74 72616731 30302d46 46464646 | 5f 06 || eint rag1 00-F FFFF || eintrag100-FFFFF ||
@@ -260,7 +412,8 @@ memSectPrefSMS = [
    { 'address' : 0x02440000, 'size' : 208 }, # SMS 97
    { 'address' : 0x02440100, 'size' : 208 }, # SMS 98
    { 'address' : 0x02440200, 'size' : 208 }, # SMS 99
-   { 'address' : 0x02440300, 'size' : 208 }, # SMS 100
+   { 'address' : 0x02440300, 'size' : 208 } # SMS 100
+]
 ```
 
 Unused memory sections will not be written.
