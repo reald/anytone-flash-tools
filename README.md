@@ -36,13 +36,13 @@ This his highly experimental code. Use it at your own risk!
 * FM
 * DTMF Encode
 * Radio ID List
+* Prefabricated SMS
 
 ## Todo - understand memory layout
 
 * Zone
 * Scan List
 * Talk Groups
-* Prefabricated SMS
 * Receive Group Call List
 * Hotkey_QuickCall
 * Hotkey_State
