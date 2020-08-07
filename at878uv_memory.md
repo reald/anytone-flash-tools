@@ -137,6 +137,135 @@ memSectChannels = [
    { 'address' : 0xfc0000, 'size' : 2176 }
 ]
 ```
+## Prefabricated SMS
+
+Example (SMS No. 100):
+
+```
+57 | 02440300 | 10 | 65696e74 72616731 30302d46 46464646 | 5f 06 || eint rag1 00-F FFFF || eintrag100-FFFFF ||
+57 | 02440310 | 10 | 46464646 46464646 46464646 46464646 | c9 06 || FFFF FFFF FFFF FFFF || FFFFFFFFFFFFFFFF ||
+57 | 02440320 | 10 | 46464646 46464646 46464646 46464646 | d9 06 || FFFF FFFF FFFF FFFF || FFFFFFFFFFFFFFFF ||
+57 | 02440330 | 10 | 46464646 46464646 46464646 46464646 | e9 06 || FFFF FFFF FFFF FFFF || FFFFFFFFFFFFFFFF ||
+57 | 02440340 | 10 | 46464646 46464646 46464646 46464646 | f9 06 || FFFF FFFF FFFF FFFF || FFFFFFFFFFFFFFFF ||
+57 | 02440350 | 10 | 46464646 46464646 46464646 46464646 | 09 06 || FFFF FFFF FFFF FFFF || FFFFFFFFFFFFFFFF ||
+57 | 02440360 | 10 | 46464646 00000000 00000000 00000000 | d1 06 || FFFF .... .... .... || FFFF............ ||
+57 | 02440370 | 10 | 00000000 00000000 00000000 00000000 | c9 06 || .... .... .... .... || ................ ||
+57 | 02440380 | 10 | 00000000 00000000 00000000 00000000 | d9 06 || .... .... .... .... || ................ ||
+57 | 02440390 | 10 | 00000000 00000000 00000000 00000000 | e9 06 || .... .... .... .... || ................ ||
+57 | 024403a0 | 10 | 00000000 00000000 00000000 00000000 | f9 06 || .... .... .... .... || ................ ||
+57 | 024403b0 | 10 | 00000000 00000000 00000000 00000000 | 09 06 || .... .... .... .... || ................ ||
+57 | 024403c0 | 10 | 00000000 00000000 00000000 00000000 | 19 06 || .... .... .... .... || ................ ||
+```
+Every entry has its own 208 byte memory section. The first 100 bytes can be used as text (ASCII), all others are 0x00.
+
+The reserved memory sections are:
+```
+memSectPrefSMS = [
+   { 'address' : 0x02140000, 'size' : 208 }, # SMS 1
+   { 'address' : 0x02140100, 'size' : 208 }, # SMS 2
+   { 'address' : 0x02140200, 'size' : 208 }, # SMS 3
+   { 'address' : 0x02140300, 'size' : 208 }, # SMS 4
+   { 'address' : 0x02140400, 'size' : 208 }, # SMS 5
+   { 'address' : 0x02140500, 'size' : 208 }, # SMS 6
+   { 'address' : 0x02140600, 'size' : 208 }, # SMS 7
+   { 'address' : 0x02140700, 'size' : 208 }, # SMS 8
+   { 'address' : 0x02180000, 'size' : 208 }, # SMS 9
+   { 'address' : 0x02180100, 'size' : 208 }, # SMS 10
+   { 'address' : 0x02180200, 'size' : 208 }, # SMS 11
+   { 'address' : 0x02180300, 'size' : 208 }, # SMS 12
+   { 'address' : 0x02180400, 'size' : 208 }, # SMS 13
+   { 'address' : 0x02180500, 'size' : 208 }, # SMS 14
+   { 'address' : 0x02180600, 'size' : 208 }, # SMS 15
+   { 'address' : 0x02180700, 'size' : 208 }, # SMS 16
+   { 'address' : 0x021c0000, 'size' : 208 }, # SMS 17
+   { 'address' : 0x021c0100, 'size' : 208 }, # SMS 18
+   { 'address' : 0x021c0200, 'size' : 208 }, # SMS 19
+   { 'address' : 0x021c0300, 'size' : 208 }, # SMS 20
+   { 'address' : 0x021c0400, 'size' : 208 }, # SMS 21
+   { 'address' : 0x021c0500, 'size' : 208 }, # SMS 22
+   { 'address' : 0x021c0600, 'size' : 208 }, # SMS 23
+   { 'address' : 0x021c0700, 'size' : 208 }, # SMS 24
+   { 'address' : 0x02200000, 'size' : 208 }, # SMS 25
+   { 'address' : 0x02200100, 'size' : 208 }, # SMS 26
+   { 'address' : 0x02200200, 'size' : 208 }, # SMS 27
+   { 'address' : 0x02200300, 'size' : 208 }, # SMS 28
+   { 'address' : 0x02200400, 'size' : 208 }, # SMS 29
+   { 'address' : 0x02200500, 'size' : 208 }, # SMS 30
+   { 'address' : 0x02200600, 'size' : 208 }, # SMS 31
+   { 'address' : 0x02200700, 'size' : 208 }, # SMS 32
+   { 'address' : 0x02240000, 'size' : 208 }, # SMS 33
+   { 'address' : 0x02240100, 'size' : 208 }, # SMS 34
+   { 'address' : 0x02240200, 'size' : 208 }, # SMS 35
+   { 'address' : 0x02240300, 'size' : 208 }, # SMS 36
+   { 'address' : 0x02240400, 'size' : 208 }, # SMS 37
+   { 'address' : 0x02240500, 'size' : 208 }, # SMS 38
+   { 'address' : 0x02240600, 'size' : 208 }, # SMS 39
+   { 'address' : 0x02240700, 'size' : 208 }, # SMS 40
+   { 'address' : 0x02280000, 'size' : 208 }, # SMS 41
+   { 'address' : 0x02280100, 'size' : 208 }, # SMS 42
+   { 'address' : 0x02280200, 'size' : 208 }, # SMS 43
+   { 'address' : 0x02280300, 'size' : 208 }, # SMS 44
+   { 'address' : 0x02280400, 'size' : 208 }, # SMS 45
+   { 'address' : 0x02280500, 'size' : 208 }, # SMS 46
+   { 'address' : 0x02280600, 'size' : 208 }, # SMS 47
+   { 'address' : 0x02280700, 'size' : 208 }, # SMS 48
+   { 'address' : 0x022c0000, 'size' : 208 }, # SMS 49
+   { 'address' : 0x022c0100, 'size' : 208 }, # SMS 50
+   { 'address' : 0x022c0200, 'size' : 208 }, # SMS 51
+   { 'address' : 0x022c0300, 'size' : 208 }, # SMS 52
+   { 'address' : 0x022c0400, 'size' : 208 }, # SMS 53
+   { 'address' : 0x022c0500, 'size' : 208 }, # SMS 54
+   { 'address' : 0x022c0600, 'size' : 208 }, # SMS 55
+   { 'address' : 0x022c0700, 'size' : 208 }, # SMS 56
+   { 'address' : 0x02300000, 'size' : 208 }, # SMS 57
+   { 'address' : 0x02300100, 'size' : 208 }, # SMS 58
+   { 'address' : 0x02300200, 'size' : 208 }, # SMS 59
+   { 'address' : 0x02300300, 'size' : 208 }, # SMS 60
+   { 'address' : 0x02300400, 'size' : 208 }, # SMS 61
+   { 'address' : 0x02300500, 'size' : 208 }, # SMS 62
+   { 'address' : 0x02300600, 'size' : 208 }, # SMS 63
+   { 'address' : 0x02300700, 'size' : 208 }, # SMS 64
+   { 'address' : 0x02340000, 'size' : 208 }, # SMS 65
+   { 'address' : 0x02340100, 'size' : 208 }, # SMS 66
+   { 'address' : 0x02340200, 'size' : 208 }, # SMS 67
+   { 'address' : 0x02340300, 'size' : 208 }, # SMS 68
+   { 'address' : 0x02340400, 'size' : 208 }, # SMS 69
+   { 'address' : 0x02340500, 'size' : 208 }, # SMS 70
+   { 'address' : 0x02340600, 'size' : 208 }, # SMS 71
+   { 'address' : 0x02340700, 'size' : 208 }, # SMS 72
+   { 'address' : 0x02380000, 'size' : 208 }, # SMS 73
+   { 'address' : 0x02380100, 'size' : 208 }, # SMS 74
+   { 'address' : 0x02380200, 'size' : 208 }, # SMS 75
+   { 'address' : 0x02380300, 'size' : 208 }, # SMS 76
+   { 'address' : 0x02380400, 'size' : 208 }, # SMS 77
+   { 'address' : 0x02380500, 'size' : 208 }, # SMS 78
+   { 'address' : 0x02380600, 'size' : 208 }, # SMS 79
+   { 'address' : 0x02380700, 'size' : 208 }, # SMS 80
+   { 'address' : 0x023c0000, 'size' : 208 }, # SMS 81
+   { 'address' : 0x023c0100, 'size' : 208 }, # SMS 82
+   { 'address' : 0x023c0200, 'size' : 208 }, # SMS 83
+   { 'address' : 0x023c0300, 'size' : 208 }, # SMS 84
+   { 'address' : 0x023c0400, 'size' : 208 }, # SMS 85
+   { 'address' : 0x023c0500, 'size' : 208 }, # SMS 86
+   { 'address' : 0x023c0600, 'size' : 208 }, # SMS 87
+   { 'address' : 0x023c0700, 'size' : 208 }, # SMS 88
+   { 'address' : 0x02400000, 'size' : 208 }, # SMS 89
+   { 'address' : 0x02400100, 'size' : 208 }, # SMS 90
+   { 'address' : 0x02400200, 'size' : 208 }, # SMS 91
+   { 'address' : 0x02400300, 'size' : 208 }, # SMS 92
+   { 'address' : 0x02400400, 'size' : 208 }, # SMS 93
+   { 'address' : 0x02400500, 'size' : 208 }, # SMS 94
+   { 'address' : 0x02400600, 'size' : 208 }, # SMS 95
+   { 'address' : 0x02400700, 'size' : 208 }, # SMS 96
+   { 'address' : 0x02440000, 'size' : 208 }, # SMS 97
+   { 'address' : 0x02440100, 'size' : 208 }, # SMS 98
+   { 'address' : 0x02440200, 'size' : 208 }, # SMS 99
+   { 'address' : 0x02440300, 'size' : 208 }, # SMS 100
+```
+
+Unused memory sections will not be written.
+
+
 
 ## FM 0x02480000
 
