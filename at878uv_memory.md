@@ -163,7 +163,7 @@ memSectChannels = [
 57 | 02480220 | 10 | 00000000 00000000 00000000 08000000 | 84 06 || .... .... .... .... || ................ ||
                      S1S2S3...
 
- - Sx - FM Scan: Bit field S1 contains channel 1 (LSB) .. 8 (MSB), S2 9-16, ...
+  - Sx - FM Scan: Bit field S1 contains channel 1 (LSB) .. 8 (MSB), S2 9-16, ...
     Del -> 0  Add -> 1
     
 13 bytes for 100 channels. VFO has no scan type.
@@ -303,17 +303,18 @@ DTMF:
 
 57 | 024c1080 | 10 | 0e0a0032 14640100 00001400 00000000 | c5 06 || ...2 .d.. .... .... || ...2.d.......... ||
 57 | 024c1080 | 10 | 0f0d0238 19800102 0300f90c 010d0000 | f6 06 || ...8 .... ..ù. .... || ...8......ù..... ||
-                     INGCDRPT FDARSISI SISTTLPI ??DC
+                     INGCDRPT FDARSISI SISTTLPI PPDC
 
    - IN - DTMF Interval Character: 0x0a -> A, 0x0b -> B, 0x0c -> C, 0x0d -> D, 0x0e -> *, 0x0f -> #
-   - GC - Group Code: 1 byte, 0x0A -> A, 0x0D -> D ????
+   - GC - Group Code: 1 byte, 0x00 -> off, 0x0a -> A, 0x0b -> B, 0x0c -> C, 0x0d -> D, 0x0e -> *, 0x0f -> #
    - DR - Decoding Response: 1 byte, 0x00 -> off, 0x01 -> Beep Tone, 0x02 -> Beep Tone & Respond
    - PT - Pretime: 1 byte, time = rawvalue * 10 ms (valid range 10 .. 2500 ms)
    - FD - First Digit Time: 1 byte, time = rawvalue * 10 ms (valid range 0 .. 2500 ms)
    - AR - Auto Reset Time: 1 byte, time = rawvalue / 10 s (valid range 0 .. 25 s, resolution 1/10s)
-   - SI - Self ID: max 3 bytes END?????
+   - SI - Self ID: max 3 bytes, unused character paddding by 0x00
    - TL - Time laps after encode: 1 byte, time = rawvalue * 10 ms (valid range 10 .. 2500 ms)
    - PI - PTT ID Pause Time: 1 byte, time = rawvalue * 1 s (valid range 0 (off) .. 12 s)
+   - PP - PTT ID: 0x00 -> off, 0x01 -> on
    - DC - D Code Pause: 1 byte, time = rawvalue * 1 s (valid range 0 (off) .. 16 s)
    - ST - Side Tone: 0x00 -> off, 0x01 -> on
                                          
@@ -395,6 +396,13 @@ Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last
 Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last entry therefore ends at 0x024c25ff. Empty entries will not be written. 
 
 End information at 0x024c2600 still unclear.
+
+## even more DTMF ??
+```
+57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
+                           DT
+   - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
+```
 
 ## DTMF Encode List (M1..M16) 0x02500500
 
