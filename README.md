@@ -33,17 +33,17 @@ This his highly experimental code. Use it at your own risk!
 * APRS
 * Analog Address Book
 * 5 Tone Encode
+* FM
+* DTMF Encode
+* Radio ID List
 
 ## Todo - understand memory layout
 
-* Radio ID List
 * Zone
 * Scan List
 * Talk Groups
 * Prefabricated SMS
-* FM
 * Receive Group Call List
-* DTMF Encode
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
