@@ -40,6 +40,7 @@ This his highly experimental code. Use it at your own risk!
 
 ## Todo - understand memory layout
 
+* Optional Settings
 * Zone
 * Scan List
 * Talk Groups
@@ -50,6 +51,12 @@ This his highly experimental code. Use it at your own risk!
 * Auto Repeater Offset Frequencies
 * Roaming Channel
 * Roaming Zone
+* Basic information
+* Alarm Settings
+* Local information
+* AES Encryption Code
+* Talk Alias
+* Encryption Code
 * Written memory areas which not part of this list
 
 ## Todo - other things
