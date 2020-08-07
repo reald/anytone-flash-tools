@@ -782,6 +782,21 @@ Other expected values: "APRS TG","Call Type"
 
 CPS supports up to 60 Bytes sending text.
 
+## Radio ID List 0x02580000
+
+```
+57 | 02580000 | 10 | 02620848 00444c39 43415400 00000000 | bf 06 || .b.H .DL9 CAT. .... || .b.H.DL9CAT..... ||
+                     RIRIRIRI   NANANA NANANANA NANANANA
+57 | 02580010 | 10 | 00000000 00000000 00000000 00000000 | 7a 06 || .... .... .... .... || ................ ||
+                     NANANANA NANANANA NANANANA NANANA
+                     
+  - RI - Radio ID: 4 bytes, BCD coded.
+  - NA - Name: ASCII, max. 26 bytes, 0 terminated
+
+```
+250 entries can be made. Every entry has 32 bytes. One follows after another so the last entry will end at address 0x02580000 + 32*250 - 1 = 0x02581f3f
+
+Empty entries will not be written.
 
 ## Analog Address Book 0x02940000
 
