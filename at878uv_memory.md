@@ -222,9 +222,9 @@ Start at 0x024c0d00. 32 bytes per record, 16 records total. So end of last recor
 57 | 024c1000 | 10 | c05d6829 502d9c31 b036c43b 3c417c47 | 8b 06 || À]h) P-.1 °6Ä; <A|G || À]h)P-.1°6Ä;<A|G ||
 57 | 024c1010 | 10 | 204ef055 606da41f e4259222 90655424 | eb 06 ||  NðU `m¤. ä%." .eT$ ||  NðU`m¤.ä%.".eT$ ||
 57 | 024c1020 | 10 | 00020005 46030805 00010000 14006401 | 65 06 || .... F... .... ..d. || ....F.........d. ||
-                       DRDSLI DTSISISI SISISISI
+                       DRDSLI DTSISISI SISISISI TLPIARDF
 57 | 024c1030 | 10 | 010d0f00 14320100 00000000 00000000 | 02 06 || .... .2.. .... .... || .....2.......... ||
-                           ST DTFD
+                     CS??SCST DTFDPT
 57 | 024c1040 | 10 | 00000746 1234567e 00000000 00000000 | 15 06 || ...F .4V~ .... .... || ...F.4V~........ ||
                        ESLITI ISISISIS ISISISIS ISISISIS
 57 | 024c1050 | 10 | 00000000 00000000 00000000 00000000 | be 06 || .... .... .... .... || ................ ||
@@ -244,12 +244,19 @@ Start at 0x024c0d00. 32 bytes per record, 16 records total. So end of last recor
    - DT - Decode Time: 1 byte, resolution 1ms, valid range 30..100 ms. (0x46 = 70ms)   
    - SI - Self Id: max 7 byte
 
-   - ST - Stop Time, 1 byte. time = rawvalue * 10ms
-   - DT - Decode TIme: 1 byte, time = rawvalue * 10 ms (valid range 0 .. 2000 ms)
+   - TL - Time-Lapse After Encode: 1 byte, time = rawvalue * 10 ms (valid range 10 .. 2550 ms)
+   - PI - PTT ID: 1 byte, 0x00 -> off, 0x09 -> 9 (valid range 5 (0x5) .. 75 (0x4B))
+   - AR - Auto Reset Time: 1 byte, time = rawvalue / 10 s (valid range 0 .. 25 s, resolution 1/10s)
+   - DF - First Delay: 1 byte, time = rawvalue * 10 ms (valid range 10 .. 2550 ms)
+
+   - SS - Side Tone: 1 byte, 0x00 -> disable, 0x01 -> enable
+   - ?? - 1 byte UNCLEAR!
+   - SC - Stop Code: 1 byte, off -> 0x00,  0x0b -> 'B', 0x0c -> 'C', 0x0d -> 'D', 0x0e -> 'E', 0x0f -> 'F'
+   - ST - Stop Time: 1 byte. time = rawvalue * 10ms
+   - DT - Decode Time: 1 byte, time = rawvalue * 10 ms (valid range 0 .. 2000 ms)
    - FD - First Delay Time After Stop: 1 byte, time = rawvalue * 10 ms
+   - PT - Pretime: 1 byte, time = rawvalue * 10 ms (valid range 10 .. 2550 ms)
 
-
-   
    - ES - Encoding standard. 0x00 -> ZWEI1, 0x01 -> ZVEI2, 0x01 -> ZVEI2, ... TBD: make list
    - LI - Length of ID, 1 byte
    - TI - Time of encode tone: 1 byte, resolution 1ms, valid range 30..100 ms. (0x46 = 70ms)
