@@ -138,6 +138,40 @@ memSectChannels = [
 ]
 ```
 
+## FM 0x02480000
+
+```
+57 | 02480000 | 10 | 00876000 00942000 00923000 01036000 | 1b 06 || ..`. .. . ..0. ..`. || ..`... ...0...`. ||
+                     FFFFFF
+57 | 02480010 | 10 | 01000000 01068000 00971000 01080000 | a2 06 || .... .... .... .... || ................ ||
+57 | 02480020 | 10 | 00903000 00000000 00000000 00000000 | 3a 06 || ..0. .... .... .... || ..0............. ||
+
+57 | 02480180 | 10 | 00000000 00000000 01000000 01000000 | dd 06 || .... .... .... .... || ................ ||
+
+   - FF - FM Frequency: 3 bytes BCD coded
+
+4 bytes per record, 100 records in total. Last record ends at 0x0248018f.
+
+57 | 02480200 | 10 | 00903000 00000000 00000000 00000000 | 1c 06 || ..0. .... .... .... || ..0............. ||
+                     VVVVVV
+
+   - VV - VFO FM Frequency: 3 bytes BCD coded
+
+57 | 02480210 | 10 | ff010000 00000000 00000000 0c000000 | 78 06 || ÿ... .... .... .... || ÿ............... ||
+????
+
+57 | 02480220 | 10 | 00000000 00000000 00000000 08000000 | 84 06 || .... .... .... .... || ................ ||
+                     S1S2S3...
+
+ - Sx - FM Scan: Bit field S1 contains channel 1 (LSB) .. 8 (MSB), S2 9-16, ...
+    Del -> 0  Add -> 1
+    
+13 bytes for 100 channels. VFO has no scan type.
+  
+```
+
+
+
 ## 5 Tone 0x024c0000
 
 ```
@@ -217,8 +251,10 @@ Start at 0x024c0d00. 32 bytes per record, 16 records total. So end of last recor
 ```
 
 
-### 5 tone general settings 0x024c1000
+### 5 tone and DTMF general settings 0x024c1000
 ```
+5 Tone:
+
 57 | 024c1000 | 10 | c05d6829 502d9c31 b036c43b 3c417c47 | 8b 06 || À]h) P-.1 °6Ä; <A|G || À]h)P-.1°6Ä;<A|G ||
                      ???????? ???????? ???????? ????????
 57 | 024c1010 | 10 | 204ef055 606da41f e4259222 90655424 | eb 06 ||  NðU `m¤. ä%." .eT$ ||  NðU`m¤.ä%.".eT$ ||
@@ -234,15 +270,7 @@ Start at 0x024c0d00. 32 bytes per record, 16 records total. So end of last recor
 57 | 024c1060 | 10 | 00000646 75321000 00000000 00000000 | d1 06 || ...F u2.. .... .... || ...Fu2.......... ||
                        ESLITI IEIEIEIE IEIEIEIE IEIEIEIE
 57 | 024c1070 | 10 | 00000000 00000000 00000000 00000000 | de 06 || .... .... .... .... || ................ ||
-
-57 | 024c1080 | 10 | 0e0a0032 14640100 00001400 00000000 | c5 06 || ...2 .d.. .... .... || ...2.d.......... ||
-                     ???????? ???????? ???????? ????????
-                     
-57 | 024c1090 | 10 | ffffffff ffffffff ffffffff ffffffff | ee 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
-57 | 024c10a0 | 10 | ffffffff ffffffff ffffffff ffffffff | fe 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
-57 | 024c10b0 | 10 | ffffffff ffffffff ffffffff ffffffff | 0e 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
-57 | 024c10c0 | 10 | ffffffff ffffffff ffffffff ffffffff | 1e 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
-
+   
    - DR - Decoding Response: 1 byte 0x00 -> None, 0x01 -> Beep Tone, 0x02 -> Beep Tone & Respond
    - DS . Decode Standard: 1 byte 0x00 -> ZVEI1. 0x01 -> ZWEI2, ... todo: make list
    - LI - Length of ID, 1 byte
@@ -271,6 +299,35 @@ Start at 0x024c0d00. 32 bytes per record, 16 records total. So end of last recor
    - LI - Length of ID?
    - TI - Time of encode tone: 1 byte, resolution 1ms, valid range 30..100 ms. (0x46 = 70ms).
    - IE - PTT ID Ending (EOT) Encode ID: BCD coded, max. 12 bytes/24 chars, uneven ID padded with one 'e' than 0?
+
+   
+DTMF:
+
+57 | 024c1080 | 10 | 0e0a0032 14640100 00001400 00000000 | c5 06 || ...2 .d.. .... .... || ...2.d.......... ||
+57 | 024c1080 | 10 | 0f0d0238 19800102 0300f90c 010d0000 | f6 06 || ...8 .... ..ù. .... || ...8......ù..... ||
+                                AR       STTLPI ??DC
+
+   - AR - Auto Reset Time: 1 byte, time = rawvalue / 10 s (valid range 0 .. 25 s, resolution 1/10s)
+   - TL - Time laps after encode: 1 byte, time = rawvalue * 10 ms (valid range 10 .. 2500 ms)
+   - PI - PTT ID Pause Time: 1 byte, time = rawvalue * 1 s (valid range 0 (off) .. 12 s)
+   - DC - D Code Pause: 1 byte, time = rawvalue * 1 s (valid range 0 (off) .. 16 s)
+   - ST - Side Tone: 0x00 -> off, 0x01 -> on
+                                         
+57 | 024c1090 | 10 | 01020304 05060708 09000102 03040506 | 40 06 || .... .... .... .... || ................ ||
+
+   - PTT ID Starting (BOT): max. 16 characters, 0x00 .. 0x09, 0xff padded at the end
+
+57 | 024c10a0 | 10 | 06050403 02010009 08070605 04030201 | 50 06 || .... .... .... .... || ................ ||
+   
+   - PTT ID Ending (EOT): max. 16 characters, 0x00 .. 0x09, 0xff padded at the end
+
+57 | 024c10b0 | 10 | 06060606 06060606 06060606 0606ffff | 70 06 || .... .... .... ..ÿÿ || ..............ÿÿ ||
+
+   - Remotely Kill: max. 14 characters, 0x00 .. 0x09, 0xff padded at the end
+
+57 | 024c10c0 | 10 | 09080706 05040302 01000102 0304ffff | 63 06 || .... .... .... ..ÿÿ || ..............ÿÿ ||
+
+   - Remotely Stun: max. 14 characters, 0x00 .. 0x09, 0xff padded at the end
 
 ```
 
@@ -334,6 +391,33 @@ Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last
 Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last entry therefore ends at 0x024c25ff. Empty entries will not be written. 
 
 End information at 0x024c2600 still unclear.
+
+## DTMF Encode List (M1..M16) 0x02500500
+
+```
+57 | 02500500 | 10 | 0d09ffff ffffffff ffffffff ffffffff | 6f 06 || ..ÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ..ÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+                     M1M1M1M1 M1M1M1M1 M1M1M1M1 M1M1M1M1
+57 | 02500510 | 10 | 01020304 05060708 09000102 03040506 | b9 06 || .... .... .... .... || ................ ||
+                     M2M2M2M2 M2M2M2M2 M2M2M2M2 M2M2M2M2
+57 | 02500520 | 10 | ffffffff ffffffff ffffffff ffffffff | 77 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02500530 | 10 | ffffffff ffffffff ffffffff ffffffff | 87 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02500540 | 10 | ffffffff ffffffff ffffffff ffffffff | 97 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02500550 | 10 | ffffffff ffffffff ffffffff ffffffff | a7 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02500560 | 10 | ffffffff ffffffff ffffffff ffffffff | b7 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02500570 | 10 | ffffffff ffffffff ffffffff ffffffff | c7 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02500580 | 10 | ffffffff ffffffff ffffffff ffffffff | d7 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02500590 | 10 | ffffffff ffffffff ffffffff ffffffff | e7 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 025005a0 | 10 | ffffffff ffffffff ffffffff ffffffff | f7 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 025005b0 | 10 | ffffffff ffffffff ffffffff ffffffff | 07 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 025005c0 | 10 | ffffffff ffffffff ffffffff ffffffff | 17 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 025005d0 | 10 | 0dffffff ffffffff ffffffff ffffffff | 35 06 || .ÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || .ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 025005e0 | 10 | 0effffff ffffffff ffffffff ffffffff | 46 06 || .ÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || .ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 025005f0 | 10 | 0fffffff ffffffff ffffffff ffffffff | 57 06 || .ÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || .ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+
+   - Mx: 0x00 -> 0 ... 0x09 -> 9, 0x0a -> A, 0x0b -> B, 0x0c -> C, 0x0d -> D, 0x0e -> *, 0x0f, -> #
+
+16 bytes per entry, 16 entries (M1...M16). Empty characters are 0xff.
+```
 
 ## ARPS
 
