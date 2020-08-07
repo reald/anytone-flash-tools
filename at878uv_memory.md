@@ -170,8 +170,6 @@ memSectChannels = [
   
 ```
 
-
-
 ## 5 Tone 0x024c0000
 
 ```
@@ -305,9 +303,15 @@ DTMF:
 
 57 | 024c1080 | 10 | 0e0a0032 14640100 00001400 00000000 | c5 06 || ...2 .d.. .... .... || ...2.d.......... ||
 57 | 024c1080 | 10 | 0f0d0238 19800102 0300f90c 010d0000 | f6 06 || ...8 .... ..ù. .... || ...8......ù..... ||
-                                AR       STTLPI ??DC
+                     INGCDRPT FDARSISI SISTTLPI ??DC
 
+   - IN - DTMF Interval Character: 0x0a -> A, 0x0b -> B, 0x0c -> C, 0x0d -> D, 0x0e -> *, 0x0f -> #
+   - GC - Group Code: 1 byte, 0x0A -> A, 0x0D -> D ????
+   - DR - Decoding Response: 1 byte, 0x00 -> off, 0x01 -> Beep Tone, 0x02 -> Beep Tone & Respond
+   - PT - Pretime: 1 byte, time = rawvalue * 10 ms (valid range 10 .. 2500 ms)
+   - FD - First Digit Time: 1 byte, time = rawvalue * 10 ms (valid range 0 .. 2500 ms)
    - AR - Auto Reset Time: 1 byte, time = rawvalue / 10 s (valid range 0 .. 25 s, resolution 1/10s)
+   - SI - Self ID: max 3 bytes END?????
    - TL - Time laps after encode: 1 byte, time = rawvalue * 10 ms (valid range 10 .. 2500 ms)
    - PI - PTT ID Pause Time: 1 byte, time = rawvalue * 1 s (valid range 0 (off) .. 12 s)
    - DC - D Code Pause: 1 byte, time = rawvalue * 1 s (valid range 0 (off) .. 16 s)
