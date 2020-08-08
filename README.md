@@ -37,18 +37,18 @@ This his highly experimental code. Use it at your own risk!
 * DTMF Encode
 * Radio ID List
 * Prefabricated SMS
+* Talk Groups
+* Auto Repeater Offset Frequencies
 
 ## Todo - understand memory layout
 
 * Optional Settings
 * Zone
 * Scan List
-* Talk Groups
 * Receive Group Call List
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
-* Auto Repeater Offset Frequencies
 * Roaming Channel
 * Roaming Zone
 * Basic information
