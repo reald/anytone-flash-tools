@@ -65,7 +65,7 @@
 - BL - ??OO??BB
        OO Optional Signal: 00 -> off; 01 -> DTMF; 10 -> 2Tone; 11 -> 5Tone
        BB Busy Lock/TX Permit: 00 -> off: 01 -> Repeater; 10 -> Busy
-- SL - Scanlist: 0 -> Scanlist 1; 1 -> Scanlist 1; 0xff -> No Scanlist
+- SL - Scanlist: 0 -> Scanlist 1; 1 -> Scanlist 2; 0xff -> No Scanlist
 - RG - Receive Group List: 0 -> Group 1; ... 249 -> Group 250; 0xff -> None
 - 2T - 2Tone ID: 0 -> 1; 1 -> 2, ...
 - 5T - 5Tone ID: 0 -> 1; 1 -> 2, ...
