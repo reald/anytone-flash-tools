@@ -797,15 +797,30 @@ End information at 0x024c2600 still unclear.
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
 ```
 
-## ???
+## Zone A Channel (0x02500100)
+
+In this memory block the channel A for each zone is stored. The position is calculated by position = 0x0250100 + 2 * [zonenumber]
 
 ```
-57 | 025002f0 | 10 | 02000000 00000000 00000000 00000000 | 56 06 || .... .... .... .... || ................ ||
-                         ??
-57 | 025004f0 | 10 | 02000000 00000000 00000000 00000000 | 58 06 || .... .... .... .... || ................ ||
-                         ??
-Zone 250 added -> 0x02 -> 0x00
+57 | 02500100 | 10 | 00000100 00000500 05000000 08000800 | 7e 06 || .... .... .... .... || ................ ||
+                     I000I001 I002I003 I004I005 I006I007
+
+   - Ix: Index of channel in zone, 2 bytes, low byte first. The index refers to the position of a channel in the zone
+         this is NOT the index of a channel in the channel list! Default/unused value is 0x02.
 ```
+
+## Zone B Channel (0x02500300)
+
+In this memory block the channel B for each zone is stored. The position is calculated by position = 0x0250300 + 2 * [zonenumber]
+
+```
+57 | 02500300 | 10 | 01000100 09000000 00000b00 0a000a00 | 8f 06 || .... .... .... .... || ................ ||
+                     I000I001 I002I003 I004I005 I006I007
+
+   - Ix: Index of channel in zone, 2 bytes, low byte first. The index refers to the position of a channel in the zone
+         this is NOT the index of a channel in the channel list! Default/unused value is 0x02.
+```
+
 
 ## DTMF Encode List (M1..M16) (0x02500500)
 
