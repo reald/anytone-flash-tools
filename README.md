@@ -39,6 +39,8 @@ This his highly experimental code. Use it at your own risk!
 * Prefabricated SMS
 * Talk Groups
 * Auto Repeater Offset Frequencies
+* Roaming Channel
+* Roaming Zone
 
 ## Todo - understand memory layout
 
@@ -49,9 +51,6 @@ This his highly experimental code. Use it at your own risk!
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
-* Roaming Channel
-* Roaming Zone
-* Basic information
 * Alarm Settings
 * Local information
 * AES Encryption Code
