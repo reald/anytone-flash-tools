@@ -139,6 +139,62 @@ memSectChannels = [
    { 'address' : 0xfc0000, 'size' : 2176 }
 ]
 ```
+
+## Roaming Channels (0x01040000)
+
+Each entry has 32 bytes and start at 0x01040000 + 32 * [id number]. 
+
+```
+57 | 01040000 | 10 | 44000000 43990000 0201526f 616d2043 | 2a 06 || D... C... ..Ro am C || D...C.....Roam C ||
+                     RXRXRXRX TXTXTXTX CCSLNANA NANANANA
+57 | 01040010 | 10 | 68616e6e 656c2031 00000000 00000000 | ec 06 || hann el 1 .... .... || hannel 1........ ||
+                     NANANANA NANANANA NANA
+
+   - RX - RX Frequency: 4 bytes, BCD Coded, resolution 10 Hz.
+   - TX - TX Frequency: 4 bytes, BCD Coded, resolution 10 Hz.
+   - CC - Color Code: 1 byte, range 0 (0x00).. 15 (0x0f), ?? -> No Use
+   - SL - Slot: 0x00 -> Slot 1, 0x01 -> Slot 2, 0x02 -> No Use
+   - NA - Name: ASCII, max 16 byte, unused characters are 0x00.
+```
+
+Empty entries will not be written.
+
+## Roaming ?? (0x001042000)
+```
+57 | 01042000 | 10 | 01000000 00000000 00000000 00000000 | 36 06 || .... .... .... .... || ................ ||
+57 | 01042010 | 10 | 00000000 00000000 00000000 00000002 | 47 06 || .... .... .... .... || ................ ||
+                                                      ??
+```
+
+## Roaming Zones (0x01043000)
+
+```
+57 | 01042080 | 10 | 01000000 00000080 00000000 00000000 | 36 06 || .... .... .... .... || ................ ||
+                                    ??
+```
+
+Each entry has 128 bytes and start at 0x01043000 + 128 * [id number]. 
+
+```
+57 | 01043000 | 10 | 00ffffff ffffffff ffffffff ffffffff | 36 06 || .ÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || .ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+                     RNRN
+57 | 01043010 | 10 | ffffffff ffffffff ffffffff ffffffff | 45 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 01043020 | 10 | ffffffff ffffffff ffffffff ffffffff | 55 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 01043030 | 10 | ffffffff ffffffff ffffffff ffffffff | 65 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 01043040 | 10 | 526f616d 205a6f6e 65204848 00000000 | 80 06 || Roam  Zon e HH .... || Roam Zone HH.... ||
+                     NANANANA NANANANA NANANANA NANANANA
+57 | 01043050 | 10 | 00000000 00000000 00000000 00000000 | 95 06 || .... .... .... .... || ................ ||
+57 | 01043060 | 10 | 00000000 00000000 00000000 00000000 | a5 06 || .... .... .... .... || ................ ||
+57 | 01043070 | 10 | 00000000 00000000 00000000 00000000 | b5 06 || .... .... .... .... || ................ ||
+
+   - RN - Roaming channel member: 1 byte each, id of included roaming channel in this zone. (0x00 -> 1 ... 0xf9 -> 250)
+          TBD: How many channels can be inserted in a zone?
+   - NA - Name: ASCII, max 16 byte, unused characters are 0x00.
+```
+
+Empty entries will not be written.
+
+
 ## Prefabricated SMS
 
 Up to 100 prefabricated SMS can be stored. Besides the SMS texts two management memory sections must be written.
