@@ -621,8 +621,7 @@ DTMF:
 ```
 
 
-## 2 Tone
-### 2 Tone Encode 0x024c1100
+## 2 Tone Encode 0x024c1100
 
 **2 Encode general settings are NOT exported to .cvx files by CPS!!**
 
@@ -652,7 +651,28 @@ General 2 Tone Encoding settings:
 ```
 Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f. Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
 
-### 2 Tone Decode 0x024c2400
+
+## Auto Repeater Offset Frequencies (0x024c2000)
+
+4 bytes per offset, low byte first, 250 entries. Resolution 10 Hz.
+
+```
+57 | 024c2000 | 10 | 60ea0000 c0980b00 e0570e00 00000000 | 70 06 || `ê.. À... àW.. .... || `ê..À...àW...... ||
+                     Offset 1 Offset 2 Offset 3 Offset 4
+
+[...]
+
+57 | 024c23e0 | 10 | 00000000 30251a00 00000000 00000000 | d0 06 || .... 0%.. .... .... || ....0%.......... ||
+                     Offs.249 Offs.250
+
+0xea60 = 60000 => 600000 Hz => 600 Khz
+0x000b98c0 = 760000 => 7.6 Mhz
+0xe57e0 = 940000 => 9.4 Mhz
+(0x1a2530 = 17.13456 Mhz)
+```
+
+
+## 2 Tone Decode 0x024c2400
 **2 Tone Decode data are NOT exported to .cvx files by CPS!!**
 
 ```
