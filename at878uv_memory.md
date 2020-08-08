@@ -6,6 +6,8 @@
 
 * Single memory sections cannot be written alone!
 
+# "Other info"
+
 ## Channel List
 
 ### 4000 Channels + 2 VFO
@@ -821,7 +823,7 @@ The talk group list can contain up to 10000 entries. In this memory section the 
 ```
 4 bytes per entry, 10000 entries in total so memory section ends at 0x02609C3F. One big memory section, no gaps. Empty fields are 0xFFFFFFFF. The software does not support gaps or empty entries. Talk groups after empty fields will be moved forward to the first empty field.
 
-# Unknown Talk group info 0x02640000
+## Unknown Talk group info 0x02640000
 
 ```
 57 | 02640000 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
@@ -832,7 +834,7 @@ The talk group list can contain up to 10000 entries. In this memory section the 
 ?? What is this for?
 [...]
 ```
-# Talk group list
+## Talk group list
 
 ```
 57 | 02680000 | 10 | 00424d20 4563686f 20323632 39393700 | 0b 06 || .BM  Echo  262 997. || .BM Echo 262997. ||
@@ -895,12 +897,38 @@ Start at 0x02940000, 1 record is 24 bytes, up to 128 records can be stored. Ther
 ```
 
 
-## Digital contact list
+
+## Talk group offsets 0x04340000 (used for writing talk groups)
+
+Similar to contact list for talk group writing some offsets are calculated, too. These offsets are use for writing only and will not read back.
+
+One entry contains the BCD coded radio ID shifted left by 1 bit in the first 4 bytes (low byte first). The free lowest bit will be 1 for group calls and 0 for private calls or all call. The list is sorted ascending by this calculated value. The next four bytes are the position of the talk group list (low byte first,  0 (0x0000) - 9999 (0x0f27)) for the 10000 entries). 
+
+
+```
+57 | 04340000 | 10 | 03000000 39000000 05000000 3a000000 | c3 06 || .... 9... .... :... || ....9.......:... ||
+                     IDIDIDID POPOPOPO IDIDIDID POPOPOPO
+
+[...]
+
+57 | 04340690 | 10 | 2ae4ee2c c5000000 ffffffff ffffffff | c3 06 || *äî, Å... ÿÿÿÿ ÿÿÿÿ || *äî,Å...ÿÿÿÿÿÿÿÿ ||
+                     IDIDIDID POPOPOPO
+
+  Example:
+  2ae4ee2c -> 0x2ceee42a. Lowest bit is 0 so we have no group call type. Shift 0x2ceee42a 1 bit down => 0x16777215 This is the talk group ID as BCD.
+  cf000000 -> 0x000000c5 = 197 dec => This talk group has position 198 (id 197 counting from 0) in the talk group list.
+```
+TBC: There might be more memory sections involved if the list gets bigger.
+
+If there is an unused place at the end (uneven number of talk groups), the 8 bytes are filled with 0xff.
+
+
+# Digital contact list
 
 For managing the digital contact list 3 memory parts are used. The first part starting at 0x04000000 contains information about the digital radio ID (and the call type) and an memory offset to the contact list. Part 2 only hosts the number of contact list entries and a pointer to the next free contact list memory address.
 Part 3 contains the contact list with all information (ID, Callsign, Name, City, ...).
 
-### Part 1: Contact offsets (used for writing contacts)
+## Part 1: Contact offsets (used for writing contacts)
 
 One entry contains the BCD coded radio ID shifted left by 1 bit in the first 4 bytes (low byte first). The free lowest bit will be 1 for group calls and 0 for private calls. The next four bytes are the memory offset to the contact list (low byte first) stored in Part 3. 
 
@@ -910,7 +938,7 @@ Example:
 0x04000010: 26010000 c6000000 28010000 29010000
 
 22010000 => 0x122. Lowest bit is 0 so we have a private call type. Shift 0x122 1 bit down => 0x91 This is the radio ID as BCD.
-The next four bytes are 0 the contact list memory offset for this entry is 0.
+The next four bytes are 0 so the contact list memory offset for this entry is 0.
 
 24010000 => 0x124. Lowest bit is 0 so we have a private call type. Shift 0x124 1 bit down => 0x92 This is the radio ID as BCD.
 The next four bytes are 0x00000063 so the contact list entry for the first entry was 99 bytes long.
@@ -938,7 +966,7 @@ memSectContactsOffsetWrite = [
 ~~~
 So when reaching address 0x401F3FF (0x4000000 + 128000 dec) storing these data will be continued in the next section beginning at 0x4040000.
 
-### Part 2: Index at 0x044c0000
+## Part 2: Index at 0x044c0000
 This section only contains 4 bytes with the total number of stored contacts (low byte first) and the relative memory address to the next free contact list entry.
 
 ```
@@ -948,7 +976,7 @@ This section only contains 4 bytes with the total number of stored contacts (low
 Next free entry at memory address 0x07680000
 ```
 
-### Part 3: Contact list
+## Part 3: Contact list
 
 In this block beginning at address 0x04500000 the contact information for every contact is stored:
 
