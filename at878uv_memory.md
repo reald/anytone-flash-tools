@@ -140,6 +140,25 @@ memSectChannels = [
 ]
 ```
 
+## Zone (0x01000000) 
+
+Here are the list of a zone stored. For every of the 250 zones are 512 byte memory reserved which contains up to 250 2-byte channel identifiers.
+The start adresse if a zone is calculated 0x0100000 + 512 * [zonenumber].
+
+```
+57 | 01002800 | 10 | 00000300 22002300 24002500 26002700 | 17 06 || .... ".#. $.%. &.'. || ....".#.$.%.&.'. ||
+                     I001I002 ID03...
+
+[...]
+
+57 | 010029f0 | 10 | 2c012d01 ffffffff ffffffff ffffffff | 79 06 || ,.-. ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ,.-.ÿÿÿÿÿÿÿÿÿÿÿÿ ||
+                     I248I250
+
+  - Ixxx - ID: 2 bytes, low byte first, channel id. 0xffffffff for unused space.
+```
+Empty zones will not be written.
+
+
 ## Roaming Channels (0x01040000)
 
 Each entry has 32 bytes and start at 0x01040000 + 32 * [id number]. 
@@ -152,14 +171,14 @@ Each entry has 32 bytes and start at 0x01040000 + 32 * [id number].
 
    - RX - RX Frequency: 4 bytes, BCD Coded, resolution 10 Hz.
    - TX - TX Frequency: 4 bytes, BCD Coded, resolution 10 Hz.
-   - CC - Color Code: 1 byte, range 0 (0x00).. 15 (0x0f), ?? -> No Use
+   - CC - Color Code: 1 byte, range 0 (0x00).. 15 (0x0f), 16 (0x10) -> No Use
    - SL - Slot: 0x00 -> Slot 1, 0x01 -> Slot 2, 0x02 -> No Use
    - NA - Name: ASCII, max 16 byte, unused characters are 0x00.
 ```
 
 Empty entries will not be written.
 
-## Roaming ?? (0x001042000)
+## Roaming ?? (0x01042000)
 ```
 57 | 01042000 | 10 | 01000000 00000000 00000000 00000000 | 36 06 || .... .... .... .... || ................ ||
 57 | 01042010 | 10 | 00000000 00000000 00000000 00000002 | 47 06 || .... .... .... .... || ................ ||
@@ -170,7 +189,7 @@ Empty entries will not be written.
 
 ```
 57 | 01042080 | 10 | 01000000 00000080 00000000 00000000 | 36 06 || .... .... .... .... || ................ ||
-                                    ??
+                     ??             ??
 ```
 
 Each entry has 128 bytes and start at 0x01043000 + 128 * [id number]. 
@@ -188,7 +207,7 @@ Each entry has 128 bytes and start at 0x01043000 + 128 * [id number].
 57 | 01043070 | 10 | 00000000 00000000 00000000 00000000 | b5 06 || .... .... .... .... || ................ ||
 
    - RN - Roaming channel member: 1 byte each, id of included roaming channel in this zone. (0x00 -> 1 ... 0xf9 -> 250)
-          TBD: How many channels can be inserted in a zone?
+          TBD: How many channels can be inserted in a roaming zone? 64?
    - NA - Name: ASCII, max 16 byte, unused characters are 0x00.
 ```
 
@@ -199,7 +218,7 @@ Empty entries will not be written.
 
 Up to 100 prefabricated SMS can be stored. Besides the SMS texts two management memory sections must be written.
 
-### List of used SMS storage 1
+### List of used SMS storage 1 (0x01640000)
 
 ```
 57 | 01640000 | 10 | 00000100 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
@@ -327,7 +346,7 @@ memSectSMSUse1 = [
 Empty fields will not be written.
 
 
-### List of used SMS storage 2 0x01640800
+### List of used SMS storage 2 (0x01640800)
 
 100 bytes starting at address 0x01640800 are used to mark if a predefined SMS is available or not.
 
@@ -347,7 +366,7 @@ Empty fields will not be written.
 In this example SMS 1..18 and 100 are stored. All other memories are free.
 ```
 
-### SMS Text
+### SMS Text (0x02140000)
 
 Example of one SMS (SMS No. 100):
 
@@ -510,7 +529,7 @@ Unused memory sections will not be written.
   
 ```
 
-## 5 Tone 0x024c0000
+## 5 Tone (0x024c0000)
 
 ```
 57 | 024c0000 | 10 | 00000646 38501e00 00000000 00000000 | 50 06 || ...F 8P.. .... .... || ...F8P.......... ||
@@ -540,7 +559,7 @@ Unused memory sections will not be written.
 
 Start at 0x024c0000. 1 record is 32 bytes. 100 records possible. End of records therefore at 0x024c0c7f. Empty records will not be written.
 ```
-### 5 Tone list of information IDs 0x024c0d00
+### 5 Tone list of information IDs (0x024c0d00)
 
 ```
 57 | 024c0d00 | 10 | 06000c01 02030405 06070809 00010200 | ad 06 || .... .... .... .... || ................ ||
@@ -589,7 +608,7 @@ Start at 0x024c0d00. 32 bytes per record, 16 records total. So end of last recor
 ```
 
 
-### 5 tone and DTMF general settings 0x024c1000
+### 5 tone and DTMF general settings (0x024c1000)
 ```
 5 Tone:
 
@@ -677,7 +696,7 @@ DTMF:
 ```
 
 
-## 2 Tone Encode 0x024c1100
+## 2 Tone Encode (0x024c1100)
 
 **2 Encode general settings are NOT exported to .cvx files by CPS!!**
 
@@ -707,6 +726,20 @@ General 2 Tone Encoding settings:
 ```
 Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f. Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
 
+## ???
+
+```
+57 | 024c1300 | 10 | 6fff1700 e0bfffbf 01000000 00000000 | 54 06 || oÿ.. à¿ÿ¿ .... .... || oÿ..à¿ÿ¿........ ||
+57 | 024c1310 | 10 | 00000000 00000000 00000000 00000002 | 83 06 || .... .... .... .... || ................ ||
+                                                      ??
+57 | 024c1320 | 10 | 01000000 00000000 00000000 00000000 | 92 06 || .... .... .... .... || ................ ||
+57 | 024c1330 | 10 | 00000000 00000000 00000000 00000002 | a3 06 || .... .... .... .... || ................ ||
+57 | 024c1340 | 10 | bfffff0b 00000000 00000000 00000000 | 79 06 || ¿ÿÿ. .... .... .... || ¿ÿÿ............. ||
+57 | 024c1350 | 10 | 00000000 00000000 00000000 00000000 | c1 06 || .... .... .... .... || ................ ||
+
+?? Zone 350 added (00->02)
+```
+
 
 ## Auto Repeater Offset Frequencies (0x024c2000)
 
@@ -728,7 +761,7 @@ Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last
 ```
 
 
-## 2 Tone Decode 0x024c2400
+## 2 Tone Decode (0x024c2400)
 **2 Tone Decode data are NOT exported to .cvx files by CPS!!**
 
 ```
@@ -764,7 +797,17 @@ End information at 0x024c2600 still unclear.
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
 ```
 
-## DTMF Encode List (M1..M16) 0x02500500
+## ???
+
+```
+57 | 025002f0 | 10 | 02000000 00000000 00000000 00000000 | 56 06 || .... .... .... .... || ................ ||
+                         ??
+57 | 025004f0 | 10 | 02000000 00000000 00000000 00000000 | 58 06 || .... .... .... .... || ................ ||
+                         ??
+Zone 250 added -> 0x02 -> 0x00
+```
+
+## DTMF Encode List (M1..M16) (0x02500500)
 
 ```
 57 | 02500500 | 10 | 0d09ffff ffffffff ffffffff ffffffff | 6f 06 || ..ÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ..ÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
@@ -793,7 +836,7 @@ End information at 0x024c2600 still unclear.
 
 ## ARPS
 
-### General APRS Settings 0x02501000
+### General APRS Settings (0x02501000)
 ```
 57 | 02501000 | 10 | 00144800 001e0000 13003c00 00001700 | 52 06 || ..H. .... ..<. .... || ..H.......<..... ||
                        TFTFTF TFTDSTCT DC  MIAI TTFBLALA
@@ -849,7 +892,7 @@ Other expected values: "APRS TG","Call Type"
 
 
 
-### APRS Sending Text 0x02501200
+### APRS Sending Text (0x02501200)
 ```
 57 | 02501200 | 10 | 37332044 4520444c 39434154 00000000 | 48 06 || 73 D E DL 9CAT .... || 73 DE DL9CAT.... ||
 57 | 02501210 | 10 | 00000000 00000000 00000000 00000000 | 84 06 || .... .... .... .... || ................ ||
@@ -860,7 +903,20 @@ Other expected values: "APRS TG","Call Type"
 
 CPS supports up to 60 Bytes sending text.
 
-## Radio ID List 0x02580000
+## Zone names (0x02540000)
+
+Each entry has 32 bytes and starts at 0x02540000 + 32 * [id number]. Up to 250 Zones possible.
+
+```
+57 | 02540000 | 10 | 44423047 46000000 00000000 00000000 | a9 06 || DB0G F... .... .... || DB0GF........... ||
+                     NANANANA NANANANA NANANANA NANANANA
+57 | 02540010 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
+
+   - NA - Name: ASCII, max 16 chars. 0x00 for unused characters.
+```
+Empty entries will not be written.
+
+## Radio ID List (0x02580000)
 
 ```
 57 | 02580000 | 10 | 02620848 00444c39 43415400 00000000 | bf 06 || .b.H .DL9 CAT. .... || .b.H.DL9CAT..... ||
