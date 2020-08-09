@@ -220,9 +220,9 @@ There are up to 250 scanlists programmable which each can contain up to 50 chann
 
 ```
 57 | 01080000 | 10 | 0000ffff ffff1400 1e001f00 1f000048 | cd 06 || ..ÿÿ ÿÿ.. .... ...H || ..ÿÿÿÿ.........H ||
-                       PRPCH1 PCH2LA   LB  DR   DW  ????
+                       PRPCH1 PCH2LA   LB  DR   DW  RVNA
 57 | 01080010 | 10 | 482d4d65 74726f70 6f6c2d54 47380000 | f0 06 || H-Me trop ol-T G8.. || H-Metropol-TG8.. ||
-                     NANANANA NANANANA NANANANA NANANANA
+                     NANANANA NANANANA NANANANA NANANA
 57 | 01080020 | 10 | 9500a900 1e01ffff ffffffff ffffffff | 8c 06 || ..©. ..ÿÿ ÿÿÿÿ ÿÿÿÿ || ..©...ÿÿÿÿÿÿÿÿÿÿ ||
                      I001I002 I003I004 I005I006 I007I008
 
@@ -237,6 +237,9 @@ There are up to 250 scanlists programmable which each can contain up to 50 chann
    - LB - Look Back Time B: 1 byte, time = rawvalue / 10 s, valid range 0.5 .. 5.0s.   
    - DR - Dropout Delay Time: 1 byte, time = rawvalue / 10 s, valid range 0.1 .. 5.0s.   
    - DW - Dwell Time: 1 byte, time = rawvalue / 10 s, valid range 0.1 .. 5.0s.   
+   - RV - Revert Channel: 1 byte, 0x00 -> Selected, 0x01 -> Selected + TalkBack, 0x02 -> Priority Channel Select1, 
+                                  0x03 -> Priority Channel Select2, 0x04 -> Last Called, 0x05 -> Last Used, 
+                                  0x06 -> Priority Channel Select1 + TalkBack, 0x07 -> Priority Channel Select2 + TalkBack
    - NA - Name: ASCII, max 16 bytes, unused characters are 0x00.                     
    - Ix - ID: 2 bytes, low byte first. Channel ID, 0xffff if free.
 
@@ -786,7 +789,7 @@ Unused memory sections will not be written.
 
 
 
-## FM 0x02480000
+## FM (0x02480000)
 
 ```
 57 | 02480000 | 10 | 00876000 00942000 00923000 01036000 | 1b 06 || ..`. .. . ..0. ..`. || ..`... ...0...`. ||
@@ -1251,7 +1254,7 @@ Empty entries will not be written.
 ?? receive call group 250 added                                                      
 ```
 
-## Talk groups control data 0x02600000
+## Talk groups control data (0x02600000)
 
 The talk group list can contain up to 10000 entries. In this memory section the used entries are numbered.
 
@@ -1276,7 +1279,7 @@ The talk group list can contain up to 10000 entries. In this memory section the 
 Empty fields are 0xFFFFFFFF. 
 The software does not support gaps or empty entries. Talk groups after empty fields will be moved forward to the first empty field.
 
-## Unknown Talk group info 0x02640000
+## Unknown Talk group info (0x02640000)
 
 ```
 57 | 02640000 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
