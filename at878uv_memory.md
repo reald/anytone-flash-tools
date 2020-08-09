@@ -216,11 +216,11 @@ Empty entries will not be written.
 
 ## Scanlists (0x001080000)
 
-There are up to 250 scanlists programmable which contain up to 50 channels. TBC: Memory seems to be partitioned in multiple sections.
+There are up to 250 scanlists programmable which each can contain up to 50 channels.
 
 ```
 57 | 01080000 | 10 | 0000ffff ffff1400 1e001f00 1f000048 | cd 06 || ..ÿÿ ÿÿ.. .... ...H || ..ÿÿÿÿ.........H ||
-
+                       PRPCH1 PCH2LA   LB  DR   DW  ????
 57 | 01080010 | 10 | 482d4d65 74726f70 6f6c2d54 47380000 | f0 06 || H-Me trop ol-T G8.. || H-Metropol-TG8.. ||
                      NANANANA NANANANA NANANANA NANANANA
 57 | 01080020 | 10 | 9500a900 1e01ffff ffffffff ffffffff | 8c 06 || ..©. ..ÿÿ ÿÿÿÿ ÿÿÿÿ || ..©...ÿÿÿÿÿÿÿÿÿÿ ||
@@ -230,12 +230,277 @@ There are up to 250 scanlists programmable which contain up to 50 channels. TBC:
 
 57 | 01080080 | 10 | ffffffff 00000000 00000000 00000000 | 95 06 || ÿÿÿÿ .... .... .... || ÿÿÿÿ............ ||
                      I050
-                     
-  - Ix - ID: 2 bytes, low byte first. Channel ID, 0xffff if free.
-  - NA - Name: ASCII, max 16 bytes, unused characters are 0x00.                     
+
+   - PR - Priority Channel Select: 0x00 -> Off, 0x03-> Priority Channel Select1 + Priority Channel Select2
+   - PHCx - Priority Channel x: 2 bytes, low byte first, channel id. 0xffff -> Off
+   - LA - Look Back Time A: 1 byte, time = rawvalue / 10 s, valid range 0.5 .. 5.0s.
+   - LB - Look Back Time B: 1 byte, time = rawvalue / 10 s, valid range 0.5 .. 5.0s.   
+   - DR - Dropout Delay Time: 1 byte, time = rawvalue / 10 s, valid range 0.1 .. 5.0s.   
+   - DW - Dwell Time: 1 byte, time = rawvalue / 10 s, valid range 0.1 .. 5.0s.   
+   - NA - Name: ASCII, max 16 bytes, unused characters are 0x00.                     
+   - Ix - ID: 2 bytes, low byte first. Channel ID, 0xffff if free.
 
 ```
 Empty scanlist entries will not be written.
+
+One Scanlist contains 144 bytes. The memory is partitioned in multiple sections sometimes with closer gaps in between. 
+
+The memory addresses for each scanlist are:
+
+```
+memSectScanlist = [
+   { 'address' : 0x01080000, 'size' : 144 }, # Scanlist 1
+   { 'address' : 0x01080200, 'size' : 144 }, # Scanlist 2
+   { 'address' : 0x01080400, 'size' : 144 }, # Scanlist 3
+   { 'address' : 0x01080600, 'size' : 144 }, # Scanlist 4
+   { 'address' : 0x01080800, 'size' : 144 }, # Scanlist 5
+   { 'address' : 0x01080a00, 'size' : 144 }, # Scanlist 6
+   { 'address' : 0x01080c00, 'size' : 144 }, # Scanlist 7
+   { 'address' : 0x01080e00, 'size' : 144 }, # Scanlist 8
+   { 'address' : 0x01081000, 'size' : 144 }, # Scanlist 9
+   { 'address' : 0x01081200, 'size' : 144 }, # Scanlist 10
+   { 'address' : 0x01081400, 'size' : 144 }, # Scanlist 11
+   { 'address' : 0x01081600, 'size' : 144 }, # Scanlist 12
+   { 'address' : 0x01081800, 'size' : 144 }, # Scanlist 13
+   { 'address' : 0x01081a00, 'size' : 144 }, # Scanlist 14
+   { 'address' : 0x01081c00, 'size' : 144 }, # Scanlist 15
+   { 'address' : 0x01081e00, 'size' : 144 }, # Scanlist 16
+   { 'address' : 0x010c0000, 'size' : 144 }, # Scanlist 17
+   { 'address' : 0x010c0200, 'size' : 144 }, # Scanlist 18
+   { 'address' : 0x010c0400, 'size' : 144 }, # Scanlist 19
+   { 'address' : 0x010c0600, 'size' : 144 }, # Scanlist 20
+   { 'address' : 0x010c0800, 'size' : 144 }, # Scanlist 21
+   { 'address' : 0x010c0a00, 'size' : 144 }, # Scanlist 22
+   { 'address' : 0x010c0c00, 'size' : 144 }, # Scanlist 23
+   { 'address' : 0x010c0e00, 'size' : 144 }, # Scanlist 24
+   { 'address' : 0x010c1000, 'size' : 144 }, # Scanlist 25
+   { 'address' : 0x010c1200, 'size' : 144 }, # Scanlist 26
+   { 'address' : 0x010c1400, 'size' : 144 }, # Scanlist 27
+   { 'address' : 0x010c1600, 'size' : 144 }, # Scanlist 28
+   { 'address' : 0x010c1800, 'size' : 144 }, # Scanlist 29
+   { 'address' : 0x010c1a00, 'size' : 144 }, # Scanlist 30
+   { 'address' : 0x010c1c00, 'size' : 144 }, # Scanlist 31
+   { 'address' : 0x010c1e00, 'size' : 144 }, # Scanlist 32
+   { 'address' : 0x01100000, 'size' : 144 }, # Scanlist 33
+   { 'address' : 0x01100200, 'size' : 144 }, # Scanlist 34
+   { 'address' : 0x01100400, 'size' : 144 }, # Scanlist 35
+   { 'address' : 0x01100600, 'size' : 144 }, # Scanlist 36
+   { 'address' : 0x01100800, 'size' : 144 }, # Scanlist 37
+   { 'address' : 0x01100a00, 'size' : 144 }, # Scanlist 38
+   { 'address' : 0x01100c00, 'size' : 144 }, # Scanlist 39
+   { 'address' : 0x01100e00, 'size' : 144 }, # Scanlist 40
+   { 'address' : 0x01101000, 'size' : 144 }, # Scanlist 41
+   { 'address' : 0x01101200, 'size' : 144 }, # Scanlist 42
+   { 'address' : 0x01101400, 'size' : 144 }, # Scanlist 43
+   { 'address' : 0x01101600, 'size' : 144 }, # Scanlist 44
+   { 'address' : 0x01101800, 'size' : 144 }, # Scanlist 45
+   { 'address' : 0x01101a00, 'size' : 144 }, # Scanlist 46
+   { 'address' : 0x01101c00, 'size' : 144 }, # Scanlist 47
+   { 'address' : 0x01101e00, 'size' : 144 }, # Scanlist 48
+   { 'address' : 0x01140000, 'size' : 144 }, # Scanlist 49
+   { 'address' : 0x01140200, 'size' : 144 }, # Scanlist 50
+   { 'address' : 0x01140400, 'size' : 144 }, # Scanlist 51
+   { 'address' : 0x01140600, 'size' : 144 }, # Scanlist 52
+   { 'address' : 0x01140800, 'size' : 144 }, # Scanlist 53
+   { 'address' : 0x01140a00, 'size' : 144 }, # Scanlist 54
+   { 'address' : 0x01140c00, 'size' : 144 }, # Scanlist 55
+   { 'address' : 0x01140e00, 'size' : 144 }, # Scanlist 56
+   { 'address' : 0x01141000, 'size' : 144 }, # Scanlist 57
+   { 'address' : 0x01141200, 'size' : 144 }, # Scanlist 58
+   { 'address' : 0x01141400, 'size' : 144 }, # Scanlist 59
+   { 'address' : 0x01141600, 'size' : 144 }, # Scanlist 60
+   { 'address' : 0x01141800, 'size' : 144 }, # Scanlist 61
+   { 'address' : 0x01141a00, 'size' : 144 }, # Scanlist 62
+   { 'address' : 0x01141c00, 'size' : 144 }, # Scanlist 63
+   { 'address' : 0x01141e00, 'size' : 144 }, # Scanlist 64
+   { 'address' : 0x01180000, 'size' : 144 }, # Scanlist 65
+   { 'address' : 0x01180200, 'size' : 144 }, # Scanlist 66
+   { 'address' : 0x01180400, 'size' : 144 }, # Scanlist 67
+   { 'address' : 0x01180600, 'size' : 144 }, # Scanlist 68
+   { 'address' : 0x01180800, 'size' : 144 }, # Scanlist 69
+   { 'address' : 0x01180a00, 'size' : 144 }, # Scanlist 70
+   { 'address' : 0x01180c00, 'size' : 144 }, # Scanlist 71
+   { 'address' : 0x01180e00, 'size' : 144 }, # Scanlist 72
+   { 'address' : 0x01181000, 'size' : 144 }, # Scanlist 73
+   { 'address' : 0x01181200, 'size' : 144 }, # Scanlist 74
+   { 'address' : 0x01181400, 'size' : 144 }, # Scanlist 75
+   { 'address' : 0x01181600, 'size' : 144 }, # Scanlist 76
+   { 'address' : 0x01181800, 'size' : 144 }, # Scanlist 77
+   { 'address' : 0x01181a00, 'size' : 144 }, # Scanlist 78
+   { 'address' : 0x01181c00, 'size' : 144 }, # Scanlist 79
+   { 'address' : 0x01181e00, 'size' : 144 }, # Scanlist 80
+   { 'address' : 0x011c0000, 'size' : 144 }, # Scanlist 81
+   { 'address' : 0x011c0200, 'size' : 144 }, # Scanlist 82
+   { 'address' : 0x011c0400, 'size' : 144 }, # Scanlist 83
+   { 'address' : 0x011c0600, 'size' : 144 }, # Scanlist 84
+   { 'address' : 0x011c0800, 'size' : 144 }, # Scanlist 85
+   { 'address' : 0x011c0a00, 'size' : 144 }, # Scanlist 86
+   { 'address' : 0x011c0c00, 'size' : 144 }, # Scanlist 87
+   { 'address' : 0x011c0e00, 'size' : 144 }, # Scanlist 88
+   { 'address' : 0x011c1000, 'size' : 144 }, # Scanlist 89
+   { 'address' : 0x011c1200, 'size' : 144 }, # Scanlist 90
+   { 'address' : 0x011c1400, 'size' : 144 }, # Scanlist 91
+   { 'address' : 0x011c1600, 'size' : 144 }, # Scanlist 92
+   { 'address' : 0x011c1800, 'size' : 144 }, # Scanlist 93
+   { 'address' : 0x011c1a00, 'size' : 144 }, # Scanlist 94
+   { 'address' : 0x011c1c00, 'size' : 144 }, # Scanlist 95
+   { 'address' : 0x011c1e00, 'size' : 144 }, # Scanlist 96
+   { 'address' : 0x01200000, 'size' : 144 }, # Scanlist 97
+   { 'address' : 0x01200200, 'size' : 144 }, # Scanlist 98
+   { 'address' : 0x01200400, 'size' : 144 }, # Scanlist 99
+   { 'address' : 0x01200600, 'size' : 144 }, # Scanlist 100
+   { 'address' : 0x01200800, 'size' : 144 }, # Scanlist 101
+   { 'address' : 0x01200a00, 'size' : 144 }, # Scanlist 102
+   { 'address' : 0x01200c00, 'size' : 144 }, # Scanlist 103
+   { 'address' : 0x01200e00, 'size' : 144 }, # Scanlist 104
+   { 'address' : 0x01201000, 'size' : 144 }, # Scanlist 105
+   { 'address' : 0x01201200, 'size' : 144 }, # Scanlist 106
+   { 'address' : 0x01201400, 'size' : 144 }, # Scanlist 107
+   { 'address' : 0x01201600, 'size' : 144 }, # Scanlist 108
+   { 'address' : 0x01201800, 'size' : 144 }, # Scanlist 109
+   { 'address' : 0x01201a00, 'size' : 144 }, # Scanlist 110
+   { 'address' : 0x01201c00, 'size' : 144 }, # Scanlist 111
+   { 'address' : 0x01201e00, 'size' : 144 }, # Scanlist 112
+   { 'address' : 0x01240000, 'size' : 144 }, # Scanlist 113
+   { 'address' : 0x01240200, 'size' : 144 }, # Scanlist 114
+   { 'address' : 0x01240400, 'size' : 144 }, # Scanlist 115
+   { 'address' : 0x01240600, 'size' : 144 }, # Scanlist 116
+   { 'address' : 0x01240800, 'size' : 144 }, # Scanlist 117
+   { 'address' : 0x01240a00, 'size' : 144 }, # Scanlist 118
+   { 'address' : 0x01240c00, 'size' : 144 }, # Scanlist 119
+   { 'address' : 0x01240e00, 'size' : 144 }, # Scanlist 120
+   { 'address' : 0x01241000, 'size' : 144 }, # Scanlist 121
+   { 'address' : 0x01241200, 'size' : 144 }, # Scanlist 122
+   { 'address' : 0x01241400, 'size' : 144 }, # Scanlist 123
+   { 'address' : 0x01241600, 'size' : 144 }, # Scanlist 124
+   { 'address' : 0x01241800, 'size' : 144 }, # Scanlist 125
+   { 'address' : 0x01241a00, 'size' : 144 }, # Scanlist 126
+   { 'address' : 0x01241c00, 'size' : 144 }, # Scanlist 127
+   { 'address' : 0x01241e00, 'size' : 144 }, # Scanlist 128
+   { 'address' : 0x01280000, 'size' : 144 }, # Scanlist 129
+   { 'address' : 0x01280200, 'size' : 144 }, # Scanlist 130
+   { 'address' : 0x01280400, 'size' : 144 }, # Scanlist 131
+   { 'address' : 0x01280600, 'size' : 144 }, # Scanlist 132
+   { 'address' : 0x01280800, 'size' : 144 }, # Scanlist 133
+   { 'address' : 0x01280a00, 'size' : 144 }, # Scanlist 134
+   { 'address' : 0x01280c00, 'size' : 144 }, # Scanlist 135
+   { 'address' : 0x01280e00, 'size' : 144 }, # Scanlist 136
+   { 'address' : 0x01281000, 'size' : 144 }, # Scanlist 137
+   { 'address' : 0x01281200, 'size' : 144 }, # Scanlist 138
+   { 'address' : 0x01281400, 'size' : 144 }, # Scanlist 139
+   { 'address' : 0x01281600, 'size' : 144 }, # Scanlist 140
+   { 'address' : 0x01281800, 'size' : 144 }, # Scanlist 141
+   { 'address' : 0x01281a00, 'size' : 144 }, # Scanlist 142
+   { 'address' : 0x01281c00, 'size' : 144 }, # Scanlist 143
+   { 'address' : 0x01281e00, 'size' : 144 }, # Scanlist 144
+   { 'address' : 0x012c0000, 'size' : 144 }, # Scanlist 145
+   { 'address' : 0x012c0200, 'size' : 144 }, # Scanlist 146
+   { 'address' : 0x012c0400, 'size' : 144 }, # Scanlist 147
+   { 'address' : 0x012c0600, 'size' : 144 }, # Scanlist 148
+   { 'address' : 0x012c0800, 'size' : 144 }, # Scanlist 149
+   { 'address' : 0x012c0a00, 'size' : 144 }, # Scanlist 150
+   { 'address' : 0x012c0c00, 'size' : 144 }, # Scanlist 151
+   { 'address' : 0x012c0e00, 'size' : 144 }, # Scanlist 152
+   { 'address' : 0x012c1000, 'size' : 144 }, # Scanlist 153
+   { 'address' : 0x012c1200, 'size' : 144 }, # Scanlist 154
+   { 'address' : 0x012c1400, 'size' : 144 }, # Scanlist 155
+   { 'address' : 0x012c1600, 'size' : 144 }, # Scanlist 156
+   { 'address' : 0x012c1800, 'size' : 144 }, # Scanlist 157
+   { 'address' : 0x012c1a00, 'size' : 144 }, # Scanlist 158
+   { 'address' : 0x012c1c00, 'size' : 144 }, # Scanlist 159
+   { 'address' : 0x012c1e00, 'size' : 144 }, # Scanlist 160
+   { 'address' : 0x01300000, 'size' : 144 }, # Scanlist 161
+   { 'address' : 0x01300200, 'size' : 144 }, # Scanlist 162
+   { 'address' : 0x01300400, 'size' : 144 }, # Scanlist 163
+   { 'address' : 0x01300600, 'size' : 144 }, # Scanlist 164
+   { 'address' : 0x01300800, 'size' : 144 }, # Scanlist 165
+   { 'address' : 0x01300a00, 'size' : 144 }, # Scanlist 166
+   { 'address' : 0x01300c00, 'size' : 144 }, # Scanlist 167
+   { 'address' : 0x01300e00, 'size' : 144 }, # Scanlist 168
+   { 'address' : 0x01301000, 'size' : 144 }, # Scanlist 169
+   { 'address' : 0x01301200, 'size' : 144 }, # Scanlist 170
+   { 'address' : 0x01301400, 'size' : 144 }, # Scanlist 171
+   { 'address' : 0x01301600, 'size' : 144 }, # Scanlist 172
+   { 'address' : 0x01301800, 'size' : 144 }, # Scanlist 173
+   { 'address' : 0x01301a00, 'size' : 144 }, # Scanlist 174
+   { 'address' : 0x01301c00, 'size' : 144 }, # Scanlist 175
+   { 'address' : 0x01301e00, 'size' : 144 }, # Scanlist 176
+   { 'address' : 0x01340000, 'size' : 144 }, # Scanlist 177
+   { 'address' : 0x01340200, 'size' : 144 }, # Scanlist 178
+   { 'address' : 0x01340400, 'size' : 144 }, # Scanlist 179
+   { 'address' : 0x01340600, 'size' : 144 }, # Scanlist 180
+   { 'address' : 0x01340800, 'size' : 144 }, # Scanlist 181
+   { 'address' : 0x01340a00, 'size' : 144 }, # Scanlist 182
+   { 'address' : 0x01340c00, 'size' : 144 }, # Scanlist 183
+   { 'address' : 0x01340e00, 'size' : 144 }, # Scanlist 184
+   { 'address' : 0x01341000, 'size' : 144 }, # Scanlist 185
+   { 'address' : 0x01341200, 'size' : 144 }, # Scanlist 186
+   { 'address' : 0x01341400, 'size' : 144 }, # Scanlist 187
+   { 'address' : 0x01341600, 'size' : 144 }, # Scanlist 188
+   { 'address' : 0x01341800, 'size' : 144 }, # Scanlist 189
+   { 'address' : 0x01341a00, 'size' : 144 }, # Scanlist 190
+   { 'address' : 0x01341c00, 'size' : 144 }, # Scanlist 191
+   { 'address' : 0x01341e00, 'size' : 144 }, # Scanlist 192
+   { 'address' : 0x01380000, 'size' : 144 }, # Scanlist 193
+   { 'address' : 0x01380200, 'size' : 144 }, # Scanlist 194
+   { 'address' : 0x01380400, 'size' : 144 }, # Scanlist 195
+   { 'address' : 0x01380600, 'size' : 144 }, # Scanlist 196
+   { 'address' : 0x01380800, 'size' : 144 }, # Scanlist 197
+   { 'address' : 0x01380a00, 'size' : 144 }, # Scanlist 198
+   { 'address' : 0x01380c00, 'size' : 144 }, # Scanlist 199
+   { 'address' : 0x01380e00, 'size' : 144 }, # Scanlist 200
+   { 'address' : 0x01381000, 'size' : 144 }, # Scanlist 201
+   { 'address' : 0x01381200, 'size' : 144 }, # Scanlist 202
+   { 'address' : 0x01381400, 'size' : 144 }, # Scanlist 203
+   { 'address' : 0x01381600, 'size' : 144 }, # Scanlist 204
+   { 'address' : 0x01381800, 'size' : 144 }, # Scanlist 205
+   { 'address' : 0x01381a00, 'size' : 144 }, # Scanlist 206
+   { 'address' : 0x01381c00, 'size' : 144 }, # Scanlist 207
+   { 'address' : 0x01381e00, 'size' : 144 }, # Scanlist 208
+   { 'address' : 0x013c0000, 'size' : 144 }, # Scanlist 209
+   { 'address' : 0x013c0200, 'size' : 144 }, # Scanlist 210
+   { 'address' : 0x013c0400, 'size' : 144 }, # Scanlist 211
+   { 'address' : 0x013c0600, 'size' : 144 }, # Scanlist 212
+   { 'address' : 0x013c0800, 'size' : 144 }, # Scanlist 213
+   { 'address' : 0x013c0a00, 'size' : 144 }, # Scanlist 214
+   { 'address' : 0x013c0c00, 'size' : 144 }, # Scanlist 215
+   { 'address' : 0x013c0e00, 'size' : 144 }, # Scanlist 216
+   { 'address' : 0x013c1000, 'size' : 144 }, # Scanlist 217
+   { 'address' : 0x013c1200, 'size' : 144 }, # Scanlist 218
+   { 'address' : 0x013c1400, 'size' : 144 }, # Scanlist 219
+   { 'address' : 0x013c1600, 'size' : 144 }, # Scanlist 220
+   { 'address' : 0x013c1800, 'size' : 144 }, # Scanlist 221
+   { 'address' : 0x013c1a00, 'size' : 144 }, # Scanlist 222
+   { 'address' : 0x013c1c00, 'size' : 144 }, # Scanlist 223
+   { 'address' : 0x013c1e00, 'size' : 144 }, # Scanlist 224
+   { 'address' : 0x01400000, 'size' : 144 }, # Scanlist 225
+   { 'address' : 0x01400200, 'size' : 144 }, # Scanlist 226
+   { 'address' : 0x01400400, 'size' : 144 }, # Scanlist 227
+   { 'address' : 0x01400600, 'size' : 144 }, # Scanlist 228
+   { 'address' : 0x01400800, 'size' : 144 }, # Scanlist 229
+   { 'address' : 0x01400a00, 'size' : 144 }, # Scanlist 230
+   { 'address' : 0x01400c00, 'size' : 144 }, # Scanlist 231
+   { 'address' : 0x01400e00, 'size' : 144 }, # Scanlist 232
+   { 'address' : 0x01401000, 'size' : 144 }, # Scanlist 233
+   { 'address' : 0x01401200, 'size' : 144 }, # Scanlist 234
+   { 'address' : 0x01401400, 'size' : 144 }, # Scanlist 235
+   { 'address' : 0x01401600, 'size' : 144 }, # Scanlist 236
+   { 'address' : 0x01401800, 'size' : 144 }, # Scanlist 237
+   { 'address' : 0x01401a00, 'size' : 144 }, # Scanlist 238
+   { 'address' : 0x01401c00, 'size' : 144 }, # Scanlist 239
+   { 'address' : 0x01401e00, 'size' : 144 }, # Scanlist 240
+   { 'address' : 0x01440000, 'size' : 144 }, # Scanlist 241
+   { 'address' : 0x01440200, 'size' : 144 }, # Scanlist 242
+   { 'address' : 0x01440400, 'size' : 144 }, # Scanlist 243
+   { 'address' : 0x01440600, 'size' : 144 }, # Scanlist 244
+   { 'address' : 0x01440800, 'size' : 144 }, # Scanlist 245
+   { 'address' : 0x01440a00, 'size' : 144 }, # Scanlist 246
+   { 'address' : 0x01440c00, 'size' : 144 }, # Scanlist 247
+   { 'address' : 0x01440e00, 'size' : 144 }, # Scanlist 248
+   { 'address' : 0x01441000, 'size' : 144 }, # Scanlist 249
+   { 'address' : 0x01441200, 'size' : 144 }  # Scanlist 250
+]
+```
 
 
 ## Prefabricated SMS
@@ -762,8 +1027,9 @@ Empty entries will not be written. 32 bytes general information follow at 0x024c
 57 | 024c1330 | 10 | 00000000 00000000 00000000 00000002 | a3 06 || .... .... .... .... || ................ ||
 57 | 024c1340 | 10 | bfffff0b 00000000 00000000 00000000 | 79 06 || ¿ÿÿ. .... .... .... || ¿ÿÿ............. ||
 57 | 024c1350 | 10 | 00000000 00000000 00000000 00000000 | c1 06 || .... .... .... .... || ................ ||
-
-?? Zone 350 added (00->02)
+                                                      SC
+?? Zone 250 added (00->02)
+SC Scanlist 250 added (00->02)
 ```
 
 
