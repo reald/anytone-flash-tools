@@ -193,7 +193,7 @@ Empty entries will not be written.
                      ??             ??
 ```
 
-Each entry has 128 bytes and start at 0x01043000 + 128 * [id number]. 
+Each entry has 128 bytes and start at 0x01043000 + 128 * [id number]. Range of [id number] = 0 .. 63.
 
 ```
 57 | 01043000 | 10 | 00ffffff ffffffff ffffffff ffffffff | 36 06 || .ÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || .ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
@@ -213,6 +213,29 @@ Each entry has 128 bytes and start at 0x01043000 + 128 * [id number].
 ```
 
 Empty entries will not be written.
+
+## Scanlists (0x001080000)
+
+There are up to 250 scanlists programmable which contain up to 50 channels. TBC: Memory seems to be partitioned in multiple sections.
+
+```
+57 | 01080000 | 10 | 0000ffff ffff1400 1e001f00 1f000048 | cd 06 || ..ÿÿ ÿÿ.. .... ...H || ..ÿÿÿÿ.........H ||
+
+57 | 01080010 | 10 | 482d4d65 74726f70 6f6c2d54 47380000 | f0 06 || H-Me trop ol-T G8.. || H-Metropol-TG8.. ||
+                     NANANANA NANANANA NANANANA NANANANA
+57 | 01080020 | 10 | 9500a900 1e01ffff ffffffff ffffffff | 8c 06 || ..©. ..ÿÿ ÿÿÿÿ ÿÿÿÿ || ..©...ÿÿÿÿÿÿÿÿÿÿ ||
+                     I001I002 I003I004 I005I006 I007I008
+
+[...]
+
+57 | 01080080 | 10 | ffffffff 00000000 00000000 00000000 | 95 06 || ÿÿÿÿ .... .... .... || ÿÿÿÿ............ ||
+                     I050
+                     
+  - Ix - ID: 2 bytes, low byte first. Channel ID, 0xffff if free.
+  - NA - Name: ASCII, max 16 bytes, unused characters are 0x00.                     
+
+```
+Empty scanlist entries will not be written.
 
 
 ## Prefabricated SMS
