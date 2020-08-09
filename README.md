@@ -43,11 +43,11 @@ This his highly experimental code. Use it at your own risk!
 * Roaming Zone
 * Receive Group Call List
 * Zone
+* Scan List
 
 ## Todo - understand memory layout
 
 * Optional Settings
-* Scan List
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
