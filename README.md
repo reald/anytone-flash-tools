@@ -41,13 +41,13 @@ This his highly experimental code. Use it at your own risk!
 * Auto Repeater Offset Frequencies
 * Roaming Channel
 * Roaming Zone
+* Receive Group Call List
+* Zone
 
 ## Todo - understand memory layout
 
 * Optional Settings
-* Zone
 * Scan List
-* Receive Group Call List
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
