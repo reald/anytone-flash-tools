@@ -101,7 +101,8 @@ Some IDs/values refer to other lists!
 
 ```
 
-Start at 0x00800000, 64 bytes per Channel, one channel after each other. As seen on other data the memory is partitioned in multiple sections and has gaps in between.
+Start at 0x00800000, 64 bytes per Channel, one channel after each other. 
+As seen on other data the memory is partitioned in multiple sections and has gaps in between.
 
 ```
 memSectChannels = [
@@ -724,7 +725,9 @@ General 2 Tone Encoding settings:
    - ST - Side Tone: 1 byte, 0x00 -> disabled, 0x01 -> enabled
 
 ```
-Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f. Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
+Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f.
+
+Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
 
 ## ???
 
@@ -786,9 +789,11 @@ Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last
 57 | 024c2600 | 10 | 01e00000 00000000 00000000 00000000 | 65 06 || .à.. .... .... .... || .à.............. ||
                      ????
 ```
-Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last entry therefore ends at 0x024c25ff. Empty entries will not be written. 
+Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last entry therefore ends at 0x024c25ff. 
 
-End information at 0x024c2600 still unclear.
+Empty entries will not be written. 
+
+TBC: End information at 0x024c2600 still unclear.
 
 ## even more DTMF ??
 ```
@@ -947,6 +952,16 @@ Empty entries will not be written.
 
 Empty entries will not be written.
 
+## ???
+
+```
+57 | 025c0b00 | 10 | 01000000 00000000 00000000 00000000 | 7a 06 || .... .... .... .... || ................ ||
+57 | 025c0b10 | 10 | ff030000 00000000 00000000 00000000 | 8b 06 || ÿ... .... .... .... || ÿ............... ||
+57 | 025c0b20 | 10 | 00000000 00000000 00000000 00000002 | 9b 06 || .... .... .... .... || ................ ||
+                                                      ??
+?? receive call group 250 added                                                      
+```
+
 ## Talk groups control data 0x02600000
 
 The talk group list can contain up to 10000 entries. In this memory section the used entries are numbered.
@@ -968,7 +983,9 @@ The talk group list can contain up to 10000 entries. In this memory section the 
 
 57 | 02609c30 | 10 | ffffffff ffffffff ffffffff ffffffff | 2e 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
 ```
-4 bytes per entry, 10000 entries in total so memory section ends at 0x02609C3F. One big memory section, no gaps. Empty fields are 0xFFFFFFFF. The software does not support gaps or empty entries. Talk groups after empty fields will be moved forward to the first empty field.
+4 bytes per entry, 10000 entries in total so memory section ends at 0x02609C3F. One big memory section, no gaps. 
+Empty fields are 0xFFFFFFFF. 
+The software does not support gaps or empty entries. Talk groups after empty fields will be moved forward to the first empty field.
 
 ## Unknown Talk group info 0x02640000
 
@@ -1023,7 +1040,7 @@ The talk group list can contain up to 10000 entries. In this memory section the 
 On entry adter another. 100 bytes per dataset? More management information at 0x04340000++?
 
 
-## Analog Address Book 0x02940000
+## Analog Address Book (0x02940000)
 
 ```
 57 | 02940000 | 10 | 38501000 00000005 444c3149 4e5f3100 | 2b 06 || 8P.. .... DL1I N_1. || 8P......DL1IN_1. ||
@@ -1043,9 +1060,26 @@ Start at 0x02940000, 1 record is 24 bytes, up to 128 records can be stored. Ther
 
 ```
 
+## Receive Group Call List (0x02980000)
 
+Up to 250 receive group calls possible. Start address for each group 0x02980000 + 512 * [groupid] (groupid valid range 0...249).
 
-## Talk group offsets 0x04340000 (used for writing talk groups)
+```
+57 | 02980000 | 10 | b7000000 01000000 b9000000 ba000000 | d5 06 || ·... .... ¹... º... || ·.......¹...º... ||
+                     I1I1I1I1 I2I2I2I2 I3I3I3I3 I4I4I4I4
+[...]
+
+57 | 02980100 | 10 | 57572061 6c6c6573 00000000 00000000 | 8a 06 || WW a lles .... .... || WW alles........ ||
+                     NANANANA NANANANA NANANANA NANANANA
+57 | 02980110 | 10 | 00000000 00000000 00000000 00000000 | bb 06 || .... .... .... .... || ................ ||
+
+   - Ix - ID of group in Talk group list, 4 bytes, low byte first. 64 entries possible, unused will be 0xffffffff
+   - NA - Name of Group: max 16 characters, ASCII, unused chars are 0x00.
+```
+
+Empty groups will not be written.
+
+## Talk group offsets (used for writing talk groups) - (0x04340000) 
 
 Similar to contact list for talk group writing some offsets are calculated, too. These offsets are use for writing only and will not read back.
 
