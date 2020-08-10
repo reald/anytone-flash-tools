@@ -1026,10 +1026,21 @@ DTMF:
   - NA - Name: ASCII, up to 7 bytes, pad with 0x00 if shorter
 
 [...] 
+```
+Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f.
+Empty entries will not be written.
 
-General 2 Tone Encoding settings:
 
+## 2 Tone encodings used
+
+1 bit for every used 2 tone decoding. 0 -> memory is free, 1 -> memory in use. Bit field for each entry. Max. 24 entries.
+```
 57 | 024c1280 | 10 | 03008000 00000000 00000000 00000000 | 73 06 || .... .... .... .... || ................ ||
+                     ^^^^^^
+```
+
+## General 2 Tone Encoding settings (0x024c1290)
+```
 57 | 024c1290 | 10 | 00000000 00000000 0005050a 0a640100 | 83 06 || .... .... .... .d.. || .............d.. ||
                                          1D2DLD GAARST
                                          
@@ -1041,9 +1052,7 @@ General 2 Tone Encoding settings:
    - ST - Side Tone: 1 byte, 0x00 -> disabled, 0x01 -> enabled
 
 ```
-Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last entry therefore ends at 0x024c127f.
 
-Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
 
 
 ## Zones used (0x024c1300)
@@ -1130,6 +1139,14 @@ Empty entries will not be written.
                      ^^^^
 ```
 
+## Power on (0x02500000)
+```
+57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
+                                  PIPA
+   - DI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x?? -> Custom Picture
+   - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
+          If password is set the radio cannot communicate to CPS if _unlocked_!! If device is still locked, CPS communicates!
+```
 
 ## even more DTMF ??
 ```
@@ -1137,6 +1154,14 @@ Empty entries will not be written.
                            DT     ??     ????   ??  ????
                            
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
+```
+
+## Optional settings ...
+```
+57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
+                                             MV
+                                             
+   - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
 ```
 
 ## Zone A Channel (0x02500100)
@@ -1189,6 +1214,20 @@ In this memory block the channel B for each zone is stored. The position is calc
    - Mx: 0x00 -> 0 ... 0x09 -> 9, 0x0a -> A, 0x0b -> B, 0x0c -> C, 0x0d -> D, 0x0e -> *, 0x0f, -> #
 
 16 bytes per entry, 16 entries (M1...M16). Empty characters are 0xff.
+```
+
+## Power On Settings (0x02500600)
+```
+57 | 02500600 | 10 | 00000000 00000000 00000000 00000000 | 09 06 || .... .... .... .... || ................ ||
+                     L1L1L1L1 L1L1L1L1 L1L1L1L1 L1L1
+57 | 02500610 | 10 | 00000000 00000000 00000000 00000000 | 39 06 || .... .... .... .... || ................ ||
+                     L2L2L2L2 L2L2L2L2 L2L2L2L2 L2L2
+57 | 02500620 | 10 | 00000000 00000000 00000000 00000000 | 88 06 || .... .... .... .... || ................ ||
+                     PAPAPAPA PAPAPAPA
+
+   - L1 - Power on message line 1: ASCII, max 14 byte, 0x00 for unused characters
+   - L2 - Power on message line 1: ASCII, max 14 byte, 0x00 for unused characters
+   - PA - Power on Password: ASCII, max. 8 byte, 0x00 for unused characters
 ```
 
 ## ARPS
