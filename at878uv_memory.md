@@ -153,7 +153,7 @@ The start adresse if a zone is calculated 0x0100000 + 512 * [zonenumber].
 [...]
 
 57 | 010029f0 | 10 | 2c012d01 ffffffff ffffffff ffffffff | 79 06 || ,.-. ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ,.-.ÿÿÿÿÿÿÿÿÿÿÿÿ ||
-                     I248I250
+                     I249I250
 
   - Ixxx - ID: 2 bytes, low byte first, channel id. 0xffffffff for unused space.
 ```
@@ -179,19 +179,30 @@ Each entry has 32 bytes and start at 0x01040000 + 32 * [id number].
 
 Empty entries will not be written.
 
-## Roaming ?? (0x01042000)
+## Roaming Channels used (0x01042000)
+
+1 bit for every used channel. 0 -> channel is free, 1 -> channel in use. Max. 250 channels.
+
 ```
 57 | 01042000 | 10 | 01000000 00000000 00000000 00000000 | 36 06 || .... .... .... .... || ................ ||
 57 | 01042010 | 10 | 00000000 00000000 00000000 00000002 | 47 06 || .... .... .... .... || ................ ||
-                                                      ??
+
+In this example the first channel is used (first bit in first byte is 1) and the last one (250) is used (8bit/byte*4byte)*7 + (3byte*8bit/byte) + 2.
+
+```
+
+## Roaming Zones used (0x01042080)
+
+1 bit for every used zone. 0 -> zone is free, 1 -> zone in use. Max. 64 zones.
+```
+57 | 01042080 | 10 | 09000000 00000080 00000000 00000000 | 3e 06 || .... .... .... .... || ................ ||
+
+Byte 1: 0x09 = b1001 -> zone 1 and 4 used
+Byte 8: 0x80 = b10000000 -> zone 64 used. (8 bit/byte * 7 bytes before + eighths bit in byte 8 = 64)
+                     
 ```
 
 ## Roaming Zones (0x01043000)
-
-```
-57 | 01042080 | 10 | 01000000 00000080 00000000 00000000 | 36 06 || .... .... .... .... || ................ ||
-                     ??             ??
-```
 
 Each entry has 128 bytes and start at 0x01043000 + 128 * [id number]. Range of [id number] = 0 .. 63.
 
@@ -840,9 +851,6 @@ Unused memory sections will not be written.
 57 | 024c0c60 | 10 | 000e0a21 12345679 80000000 00000000 | 98 06 || ...! .4Vy .... .... || ...!.4Vy........ ||
 57 | 024c0c70 | 10 | 00000000 00000000 656e6465 20202000 | d6 06 || .... .... ende    . || ........ende   . ||
 
-57 | 024c0c80 | 10 | 0f000000 00000000 00000000 08000000 | 01 06 || .... .... .... .... || ................ ||
-                     ??                         ??
-
    - ES - Encoding standard. 0x00 -> ZWEI1, 0x01 -> ZVEI2, 0x01 -> ZVEI2, ... TBD: make list
    - LI - Length of ID
    - TI - Time of encode tone: 1 byte, resolution 1ms, valid range 30..100 ms. (0x46 = 70ms)
@@ -851,6 +859,18 @@ Unused memory sections will not be written.
 
 Start at 0x024c0000. 1 record is 32 bytes. 100 records possible. End of records therefore at 0x024c0c7f. Empty records will not be written.
 ```
+
+## 5 tone encodings used (0x024c0c80)
+
+1 bit for every used encoding. 0 -> encoding is free, 1 -> encoding in use. Max. 100 encodings.
+´´´
+57 | 024c0c80 | 10 | 0f000000 00000000 00000000 0c000000 | 05 06 || .... .... .... .... || ................ ||
+
+Byte 1: 0x0f = b1111 -> encoding 1-4 used
+Byte 13: 0x0c = b1100 -> zone 99 and 100 used. (8 bit/byte * 12 bytes before + 3rd/4ths bit in byte 13 = 99/100)
+´´´
+
+
 ### 5 Tone list of information IDs (0x024c0d00)
 
 ```
@@ -1026,15 +1046,26 @@ Empty entries will not be written. 32 bytes general information follow at 0x024c
 57 | 024c1300 | 10 | 6fff1700 e0bfffbf 01000000 00000000 | 54 06 || oÿ.. à¿ÿ¿ .... .... || oÿ..à¿ÿ¿........ ||
 57 | 024c1310 | 10 | 00000000 00000000 00000000 00000002 | 83 06 || .... .... .... .... || ................ ||
                                                       ??
+?? Zone 250 added (00->02)
+
 57 | 024c1320 | 10 | 01000000 00000000 00000000 00000000 | 92 06 || .... .... .... .... || ................ ||
 57 | 024c1330 | 10 | 00000000 00000000 00000000 00000002 | a3 06 || .... .... .... .... || ................ ||
-57 | 024c1340 | 10 | bfffff0b 00000000 00000000 00000000 | 79 06 || ¿ÿÿ. .... .... .... || ¿ÿÿ............. ||
-57 | 024c1350 | 10 | 00000000 00000000 00000000 00000000 | c1 06 || .... .... .... .... || ................ ||
-                                                      SC
-?? Zone 250 added (00->02)
-SC Scanlist 250 added (00->02)
 ```
 
+
+## Scanlists used (0x024c1340)
+
+1 bit for every used scanlist. 0 -> scanlist is free, 1 -> scanlist in use. Max. 250 scanlists.
+
+```
+57 | 024c1340 | 10 | bfffff0b 00000000 00000000 00000000 | 79 06 || ¿ÿÿ. .... .... .... || ¿ÿÿ............. ||
+57 | 024c1350 | 10 | 00000000 00000000 00000000 00000002 | c3 06 || .... .... .... .... || ................ ||
+                                                      SC
+
+Byte 1: 0xbf = b10111111 -> scanlist 7 not used
+Byte 4; 0x0b = b00001011 -> scanlist 25, 26, 28 used, 27 not used
+Byte 8: 0x02 = b10000010 -> scanlist 250 used. (8 bit/byte * 31 bytes before + 2nd bit in byte 32 = 250)
+```
 
 ## Auto Repeater Offset Frequencies (0x024c2000)
 
@@ -1090,7 +1121,8 @@ TBC: End information at 0x024c2600 still unclear.
 ## even more DTMF ??
 ```
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
-                           DT
+                           DT     ??     ????   ??  ????
+                           
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
 ```
 
@@ -1205,12 +1237,12 @@ Other expected values: "APRS TG","Call Type"
 
 
 ### APRS Sending Text (0x02501200)
+
 ```
 57 | 02501200 | 10 | 37332044 4520444c 39434154 00000000 | 48 06 || 73 D E DL 9CAT .... || 73 DE DL9CAT.... ||
 57 | 02501210 | 10 | 00000000 00000000 00000000 00000000 | 84 06 || .... .... .... .... || ................ ||
 57 | 02501220 | 10 | 00000000 00000000 00000000 00000000 | 94 06 || .... .... .... .... || ................ ||
 57 | 02501230 | 10 | 00000000 00000000 00000000 00000000 | a4 06 || .... .... .... .... || ................ ||
-=> Size: 0x2501200 .. 0x250123f: 64 bytes
 ```
 
 CPS supports up to 60 Bytes sending text.
@@ -1248,6 +1280,7 @@ Empty entries will not be written.
 
 ```
 57 | 025c0b00 | 10 | 01000000 00000000 00000000 00000000 | 7a 06 || .... .... .... .... || ................ ||
+
 57 | 025c0b10 | 10 | ff030000 00000000 00000000 00000000 | 8b 06 || ÿ... .... .... .... || ÿ............... ||
 57 | 025c0b20 | 10 | 00000000 00000000 00000000 00000002 | 9b 06 || .... .... .... .... || ................ ||
                                                       ??
@@ -1329,7 +1362,7 @@ The software does not support gaps or empty entries. Talk groups after empty fie
 
 [...]
 ```
-On entry adter another. 100 bytes per dataset? More management information at 0x04340000++?
+On entry adter another. 100 bytes per dataset? More management information at 0x04340000 when writing.
 
 
 ## Analog Address Book (0x02940000)
