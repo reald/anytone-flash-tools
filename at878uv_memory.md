@@ -863,13 +863,12 @@ Start at 0x024c0000. 1 record is 32 bytes. 100 records possible. End of records 
 ## 5 tone encodings used (0x024c0c80)
 
 1 bit for every used encoding. 0 -> encoding is free, 1 -> encoding in use. Max. 100 encodings.
-´´´
+```
 57 | 024c0c80 | 10 | 0f000000 00000000 00000000 0c000000 | 05 06 || .... .... .... .... || ................ ||
 
 Byte 1: 0x0f = b1111 -> encoding 1-4 used
 Byte 13: 0x0c = b1100 -> zone 99 and 100 used. (8 bit/byte * 12 bytes before + 3rd/4ths bit in byte 13 = 99/100)
-´´´
-
+```
 
 ### 5 Tone list of information IDs (0x024c0d00)
 
@@ -1040,17 +1039,25 @@ Start at 0x024c1100, 24 entries max, 16 bytes per entry, one after another. Last
 
 Empty entries will not be written. 32 bytes general information follow at 0x024c1280 directly after the entries.
 
-## ???
+
+## Zones used (0x024c1300)
+
+1 bit for every used zone. 0 -> zone is free, 1 -> zone in use. Max. 250 zones.
 
 ```
 57 | 024c1300 | 10 | 6fff1700 e0bfffbf 01000000 00000000 | 54 06 || oÿ.. à¿ÿ¿ .... .... || oÿ..à¿ÿ¿........ ||
 57 | 024c1310 | 10 | 00000000 00000000 00000000 00000002 | 83 06 || .... .... .... .... || ................ ||
-                                                      ??
-?? Zone 250 added (00->02)
+```
 
+
+## ?? used (024c1320)
+
+1 bit for every used ??. 0 -> ?? is free, 1 -> ?? in use. Max. 250 ??.
+```
 57 | 024c1320 | 10 | 01000000 00000000 00000000 00000000 | 92 06 || .... .... .... .... || ................ ||
 57 | 024c1330 | 10 | 00000000 00000000 00000000 00000002 | a3 06 || .... .... .... .... || ................ ||
 ```
+Roaming channels? Radio id list?
 
 
 ## Scanlists used (0x024c1340)
@@ -1060,7 +1067,6 @@ Empty entries will not be written. 32 bytes general information follow at 0x024c
 ```
 57 | 024c1340 | 10 | bfffff0b 00000000 00000000 00000000 | 79 06 || ¿ÿÿ. .... .... .... || ¿ÿÿ............. ||
 57 | 024c1350 | 10 | 00000000 00000000 00000000 00000002 | c3 06 || .... .... .... .... || ................ ||
-                                                      SC
 
 Byte 1: 0xbf = b10111111 -> scanlist 7 not used
 Byte 4; 0x0b = b00001011 -> scanlist 25, 26, 28 used, 27 not used
@@ -1116,7 +1122,7 @@ Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last
 
 Empty entries will not be written. 
 
-TBC: End information at 0x024c2600 still unclear.
+TBC: End information at 0x024c2600 still unclear. Used decodings?
 
 ## even more DTMF ??
 ```
@@ -1235,7 +1241,6 @@ In this memory block the channel B for each zone is stored. The position is calc
 Other expected values: "APRS TG","Call Type"
 
 
-
 ### APRS Sending Text (0x02501200)
 
 ```
@@ -1246,6 +1251,7 @@ Other expected values: "APRS TG","Call Type"
 ```
 
 CPS supports up to 60 Bytes sending text.
+
 
 ## Zone names (0x02540000)
 
@@ -1259,6 +1265,7 @@ Each entry has 32 bytes and starts at 0x02540000 + 32 * [id number]. Up to 250 Z
    - NA - Name: ASCII, max 16 chars. 0x00 for unused characters.
 ```
 Empty entries will not be written.
+
 
 ## Radio ID List (0x02580000)
 
@@ -1276,15 +1283,18 @@ Empty entries will not be written.
 
 Empty entries will not be written.
 
-## ???
+## ??
 
 ```
 57 | 025c0b00 | 10 | 01000000 00000000 00000000 00000000 | 7a 06 || .... .... .... .... || ................ ||
+```
 
+## Receive group call list entry used (0x025c0b10)
+
+1 bit for every used receive group call list entry. 0 -> place is free, 1 -> place in use. Max. 250 places.
+```
 57 | 025c0b10 | 10 | ff030000 00000000 00000000 00000000 | 8b 06 || ÿ... .... .... .... || ÿ............... ||
 57 | 025c0b20 | 10 | 00000000 00000000 00000000 00000002 | 9b 06 || .... .... .... .... || ................ ||
-                                                      ??
-?? receive call group 250 added                                                      
 ```
 
 ## Talk groups control data (0x02600000)
@@ -1312,7 +1322,7 @@ The talk group list can contain up to 10000 entries. In this memory section the 
 Empty fields are 0xFFFFFFFF. 
 The software does not support gaps or empty entries. Talk groups after empty fields will be moved forward to the first empty field.
 
-## Unknown Talk group info (0x02640000)
+## ?? Unknown Talk group info (0x02640000)
 
 ```
 57 | 02640000 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
@@ -1320,9 +1330,10 @@ The software does not support gaps or empty entries. Talk groups after empty fie
                                            ??
 57 | 02640020 | 10 | ffffffff ffffffff ffffffff ffffffff | 86 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
 
-?? What is this for?
+?? What is this byte for?
 [...]
 ```
+
 ## Talk group list
 
 ```
@@ -1362,7 +1373,7 @@ The software does not support gaps or empty entries. Talk groups after empty fie
 
 [...]
 ```
-On entry adter another. 100 bytes per dataset? More management information at 0x04340000 when writing.
+On entry after another. 100 bytes per dataset? TBC. More management information at 0x04340000 when writing.
 
 
 ## Analog Address Book (0x02940000)
