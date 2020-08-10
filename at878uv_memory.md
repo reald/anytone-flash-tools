@@ -86,7 +86,7 @@
 - AR - ??????AA
        AA: APRS report type: 00 -> off; 01 -> analog; 10 -> digital
 - AP:  Analog APRS PTT Mode: 0x00 -> off; 0x01 -> Start of Transmission; 0x02 -> End of Transmission
-- DP:  Digital APRS PTT Mode: 00 -> off; 01 -> on ??
+- DP:  Digital APRS PTT Mode: 00 -> off; 01 -> on
 - DR - Digital APRS Report Channel: 0x00 -> off; 0x01 -> 1
 - CO - Freq Correction. 1 byte signed char; 10 Hz steps. 0x84 -> -1240 Hz; 0x7d -> 1250 Hz; -1250..1250 Hz range
 - EN - Digital Encryption: 0xff -> None; 0x20 -> 32
@@ -95,7 +95,6 @@
        R Random key: 0 -> off; 1 -> on
        M Multiple Key: 0 -> off; 1 -> on
 
-Other Expected Values: "Contact Call Type","Through Mode","Digi APRS RX"
 
 Some IDs/values refer to other lists!
 
@@ -818,19 +817,26 @@ Unused memory sections will not be written.
                      VVVVVV
 
    - VV - VFO FM Frequency: 3 bytes BCD coded
+```
 
+## FM channels used (0x02480010)
+```
 57 | 02480210 | 10 | ff010000 00000000 00000000 0c000000 | 78 06 || ÿ... .... .... .... || ÿ............... ||
-????
+                     UUUU..                     UU
+   - UU - Channel Used: Bit fields, byte 1 contains channel 1 (LSB) .. 8 (MSB), byte 2 9-16, ...
+          0 channel not used, 1 channel used.
+```
+13 bytes for 100 channels.
 
+
+## FM channels scan (0x02480010)
+```
 57 | 02480220 | 10 | 00000000 00000000 00000000 08000000 | 84 06 || .... .... .... .... || ................ ||
                      S1S2S3...
-
-  - Sx - FM Scan: Bit field S1 contains channel 1 (LSB) .. 8 (MSB), S2 9-16, ...
-    Del -> 0  Add -> 1
-    
-13 bytes for 100 channels. VFO has no scan type.
-  
+   - Sx - FM Scan: Bit field S1 contains channel 1 (LSB) .. 8 (MSB), S2 9-16, ...
+     Del -> 0  Add -> 1
 ```
+13 bytes for 100 channels. VFO has no scan type.
 
 ## 5 Tone (0x024c0000)
 
