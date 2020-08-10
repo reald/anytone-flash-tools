@@ -1050,15 +1050,13 @@ Empty entries will not be written. 32 bytes general information follow at 0x024c
 ```
 
 
-## ?? used (024c1320)
+## Radio id list entries used (024c1320)
 
-1 bit for every used ??. 0 -> ?? is free, 1 -> ?? in use. Max. 250 ??.
+1 bit for every used radio id. 0 -> memory is free, 1 -> memory in use. Max. 250 entries.
 ```
 57 | 024c1320 | 10 | 01000000 00000000 00000000 00000000 | 92 06 || .... .... .... .... || ................ ||
 57 | 024c1330 | 10 | 00000000 00000000 00000000 00000002 | a3 06 || .... .... .... .... || ................ ||
 ```
-Roaming channels? Radio id list?
-
 
 ## Scanlists used (0x024c1340)
 
@@ -1114,15 +1112,18 @@ Byte 8: 0x02 = b10000010 -> scanlist 250 used. (8 bit/byte * 31 bytes before + 2
 
 57 | 024c25e0 | 10 | 400bb80b 01626565 70000000 00000000 | 0e 06 || @.¸. .bee p... .... || @.¸..beep....... ||
 57 | 024c25f0 | 10 | 00000000 00000000 00000000 00000000 | 73 06 || .... .... .... .... || ................ ||
-
-57 | 024c2600 | 10 | 01e00000 00000000 00000000 00000000 | 65 06 || .à.. .... .... .... || .à.............. ||
-                     ????
 ```
 Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last entry therefore ends at 0x024c25ff. 
 
 Empty entries will not be written. 
 
-TBC: End information at 0x024c2600 still unclear. Used decodings?
+## 2 Tone decodings used (024c2600)
+1 bit for every used 2 tone decoding. 0 -> memory is free, 1 -> memory in use. Max. 16 entries.
+```
+57 | 024c2600 | 10 | 01e00000 00000000 00000000 00000000 | 65 06 || .à.. .... .... .... || .à.............. ||
+                     ^^^^
+```
+
 
 ## even more DTMF ??
 ```
