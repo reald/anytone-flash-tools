@@ -257,7 +257,7 @@ There are up to 250 scanlists programmable which each can contain up to 50 chann
 ```
 Empty scanlist entries will not be written.
 
-One Scanlist contains 144 bytes. The memory is partitioned in multiple sections sometimes with closer gaps in between. 
+One Scanlist contains 144 bytes. The memory is partitioned in multiple sections sometimes with bigger gaps in between. 
 
 The memory addresses for each scanlist are:
 
@@ -1216,7 +1216,7 @@ In this memory block the channel B for each zone is stored. The position is calc
 - DC - DCS: 1 byte: 0x13 -> D023. Todo: complete list
 - AI - Manual TX Interval: 0x00 -> 0; 0xff -> 255s
 - AI - APRS Auto TX Interval: 0 -> Off; 2 -> 60s; 255 -> 7650s
-- FB - Fixed location beacon: 0x00 -> Off (GPS), 0x01 -> On (send fix position) ?
+- FB - Fixed location beacon: 0x00 -> Off (GPS), 0x01 -> On (send fix position)
 - LA - latitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> N, 1 -> S)
 - TT - ARPS Tx Tone: 0x00 -> off, 0x01 -> on
 - LO - longitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> E, 1 -> W)
@@ -1232,7 +1232,7 @@ In this memory block the channel B for each zone is stored. The position is calc
 - ?? - WHAT IS THIS BYTE USED FOR? 0x00 and 0xff seen!
 - RC - Report Channel 1-8: 2 bytes per channel, 0xfa2 = 4002 -> Current Channel, other values point to channel list (use digital channels only)
 - TG - APRS TG 1-8: BCD coded, 4 bytes each, one after another
-- CT - Call Type 1-8: 0x00 -> Private Call, 0x01 -> Group Call, 0x?? -> All Call; 1 byte each, one after another
+- CT - Call Type 1-8: 0x00 -> Private Call, 0x01 -> Group Call, 0x02 -> All Call; 1 byte each, one after another
 - RO - Support for Roaming: 0x00 -> off, 0x01 -> on
 - SL - Slot 1-8: 0x00 -> Channel Slot, 0x01 -> Slot 1, 0x02 -> Slot 2, 1 byte, one after another
 - RD - Repeater Activation Delay: 0x00 -> off, 0x01 -> 100ms, 0x03 -> 300ms, 0x10 -> 1000ms
@@ -1322,6 +1322,7 @@ The talk group list can contain up to 10000 entries. In this memory section the 
 Empty fields are 0xFFFFFFFF. 
 The software does not support gaps or empty entries. Talk groups after empty fields will be moved forward to the first empty field.
 
+
 ## ?? Unknown Talk group info (0x02640000)
 
 ```
@@ -1335,6 +1336,8 @@ The software does not support gaps or empty entries. Talk groups after empty fie
 ```
 
 ## Talk group list
+
+Max 10000 entries.
 
 ```
 57 | 02680000 | 10 | 00424d20 4563686f 20323632 39393700 | 0b 06 || .BM  Echo  262 997. || .BM Echo 262997. ||
@@ -1459,7 +1462,6 @@ The next four bytes are 0 so the contact list memory offset for this entry is 0.
 
 24010000 => 0x124. Lowest bit is 0 so we have a private call type. Shift 0x124 1 bit down => 0x92 This is the radio ID as BCD.
 The next four bytes are 0x00000063 so the contact list entry for the first entry was 99 bytes long.
-
 ```
 
 So for every entry in the contact list 8 bytes are stored in this memory part. One after each other. But the memory is partitioned in multiple sections with gaps in between:
