@@ -1139,16 +1139,17 @@ Empty entries will not be written.
                      ^^^^
 ```
 
-## Power on (0x02500000)
+## Power on and other optional settings (0x02500000)
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
-                                  PIPA
+                                  PIPA                MG
    - PI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x02 -> Custom Picture
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
           If password is set the radio cannot communicate to CPS if _unlocked_!! If device is still locked, CPS communicates!
+   - MG - Mic gain: 1 byte, valid range 0x00 -> 1 .. 0x04 -> 5
 ```
 
-## even more DTMF ??
+
 ```
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
                            DT     ??     ????   ??  ????
@@ -1156,26 +1157,30 @@ Empty entries will not be written.
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
 ```
 
-## Optional settings ...
+
 ```
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
                                              MV
+57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
+57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
+                         MH         ES           
                                              
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
+   - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
+   - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
+
 ```
 
-## Power on settings
 
 ```
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
-                                    DC ????????
+                                    DC ZAZBCACB
 
-Zone A: Zone 123445678901
-Ch a: vfo
-Zone B: DB0GF
-ch b: DB0GF 70 cm
-                                    
-   - DC - Default startup channel ?: 0x00 -> off, 0x01 -> on ?
+   - DC - Default startup channel: 0x00 -> off, 0x01 -> on
+   - ZA - Zone A: 1 byte Zone ID
+   - ZB - Zone B: 1 byte Zone ID
+   - CA - Channel A: number of channel in selected zone. 0xff for VFO.
+   - CB - Channel B: number of channel in selected zone. 0xff for VFO.   
                                     
 57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
                                              SG SR
