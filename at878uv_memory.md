@@ -1143,7 +1143,7 @@ Empty entries will not be written.
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
                                   PIPA
-   - DI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x?? -> Custom Picture
+   - PI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x02 -> Custom Picture
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
           If password is set the radio cannot communicate to CPS if _unlocked_!! If device is still locked, CPS communicates!
 ```
@@ -1163,6 +1163,28 @@ Empty entries will not be written.
                                              
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
 ```
+
+## Power on settings
+
+```
+57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
+                                    DC ????????
+
+Zone A: Zone 123445678901
+Ch a: vfo
+Zone B: DB0GF
+ch b: DB0GF 70 cm
+                                    
+   - DC - Default startup channel ?: 0x00 -> off, 0x01 -> on ?
+                                    
+57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
+                                             SG SR
+   - SG - Startup GPS Test: 0x00 -> off; 0x01 -> on
+   - SR - Startup Rest: 0x00 -> off, 0x01 -> on ("Set ON to allow MCU reboot")
+                                             
+```
+
+
 
 ## Zone A Channel (0x02500100)
 
