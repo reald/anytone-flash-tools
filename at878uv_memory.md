@@ -1150,21 +1150,28 @@ Empty entries will not be written.
    
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
-                           DT     DB   GP????   ??  ????
+                           DT     DBBD GP????   ??  ????
                            
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
    - DB - Display Brightness: 1 byte, 0x00 -> 1 .. 0x04 -> 5
+   - DB - Auto Backlight Duration: 1 byte: 0x00 -> Always, 0x01 -> 5s, 0x02 -> 10s, 0x03 -> 15s, 0x04 -> 20s, 0x05 -> 25s, 0x06 -> 30s, 0x07 -> 1m
+                                           0x08 -> 2m, 0x09 -> 3m, 0x0a -> 4m, 0x0b -> 5m, 0x0c -> 15m, 0x0d -> 30m, 0x0e -> 45m, 0x0f -> 60m
    - GP - GPS: 0x00 -> off, 0x01 -> on
 
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
-                     TZ                      MV       GG
+                     TZ             ME     EPMV       GG
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
+                                                  LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
-                         MH         ES           
+                       TDMH         ES           
                                              
    - TZ: Time Zone: 0x00 -> GMT-12 ... 0x0c -> GMT0 ...  0x0e -> GMT2 ... 0x19 -> GMT13
+   - TD: Time Display: 0x00 -> off, 0x01 -> on
+   - ME: Menu Exit Time: 1 byte, value = rawvalue * 5s + 5s, valid range: 0x00 (5s) .. 0x0b (60s)
+   - EP: Call End Prompt Box: 0x00 -> off, 0x01 -> on
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - GG: Get GPS Positioning: 0x00 -> off, 0x01 -> on
+   - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
    - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
 
@@ -1173,13 +1180,16 @@ Empty entries will not be written.
 57 | 02500080 | 10 | 04000400 0a008e03 00000000 00000000 | 85 06 || .... .... .... .... || ................ ||
 57 | 02500090 | 10 | 05000a00 05000a00 0a007503 75032206 | 32 06 || .... .... ..u. u.". || ..........u.u.". ||
 57 | 025000a0 | 10 | 28050000 14001400 00000000 00000000 | 57 06 || (... .... .... .... || (............... ||
+                                                      CD
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
-                                RI
+                                RI              CC
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
                                     DC ZAZBCACB
 
+   - CD - Call Display Mode: 1 byte, 0x00 -> Turn off Talker Alias, 0x01 -> Call Sign Based, 0x02 -> Name Based
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
+   - CC - Call Sign Display Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - DC - Default startup channel: 0x00 -> off, 0x01 -> on
    - ZA - Zone A: 1 byte Zone ID
    - ZB - Zone B: 1 byte Zone ID
@@ -1187,7 +1197,8 @@ Empty entries will not be written.
    - CB - Channel B: number of channel in selected zone. 0xff for VFO.   
                                     
 57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
-                                             SG SR
+                       BT                    SG SR
+   - BT - Backlight Delay auf TX: 1 byte, valid range: 0x00 (0s) .. 0x1e (30s)
    - SG - Startup GPS Test: 0x00 -> off; 0x01 -> on
    - SR - Startup Rest: 0x00 -> off, 0x01 -> on ("Set ON to allow MCU reboot")
                                              
