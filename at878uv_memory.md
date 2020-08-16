@@ -1182,14 +1182,20 @@ Empty entries will not be written.
 57 | 025000a0 | 10 | 28050000 14001400 00000000 00000000 | 57 06 || (... .... .... .... || (............... ||
                                                       CD
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
-                                RI              CC
+                                RI     CNDC     CC
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
+                     SCBPSL
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
                                     DC ZAZBCACB
 
    - CD - Call Display Mode: 1 byte, 0x00 -> Turn off Talker Alias, 0x01 -> Call Sign Based, 0x02 -> Name Based
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
+   - CN - Display Channel Number: 0x00 -> Actual Channel Number, 0x01 -> Sequence Number In Zone
+   - DC - Display Current Contact: 0x00 -> Off, 0x01 -> On
    - CC - Call Sign Display Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - SC - Standby Char Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - BP - Standby BK Picture: 1 byte, 0x00 -> Default, 0x01 -> Custom 1, 0x02 -> Custom 2
+   - SL - Show Last Call On Launch: 1 byte: 0x00 -> off, 0x01 -> on
    - DC - Default startup channel: 0x00 -> off, 0x01 -> on
    - ZA - Zone A: 1 byte Zone ID
    - ZB - Zone B: 1 byte Zone ID
@@ -1197,8 +1203,11 @@ Empty entries will not be written.
    - CB - Channel B: number of channel in selected zone. 0xff for VFO.   
                                     
 57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
-                       BT                    SG SR
+                       BTSD   AC  RD         SG SR
    - BT - Backlight Delay auf TX: 1 byte, valid range: 0x00 (0s) .. 0x1e (30s)
+   - SD - Seperater Display: 0x00 -> off; 0x01 -> on
+   - AC - A Channel Name Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - RD - Receive  Backlight Delay: 0x00 -> Always, 0x01 (1s) .. 0x1e (30s)
    - SG - Startup GPS Test: 0x00 -> off; 0x01 -> on
    - SR - Startup Rest: 0x00 -> off, 0x01 -> on ("Set ON to allow MCU reboot")
                                              
