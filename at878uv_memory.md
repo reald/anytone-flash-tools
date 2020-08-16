@@ -1376,11 +1376,12 @@ CPS supports up to 60 Bytes sending text.
 57 | 02501410 | 10 | 00000000 00000000 00000000 00000000 | 86 06 || .... .... .... .... || ................ ||
 57 | 02501420 | 10 | 000002ff 0085cf00 c0800901 c2199f02 | b1 06 || ...ÿ ..Ï. À... Â... || ...ÿ..Ï.À...Â... ||
 57 | 02501430 | 10 | 3c599f02 00026401 01000000 00000000 | 44 06 || <Y.. ..d. .... .... || <Y....d......... ||
-                                GM       BC       CACB
+                                GM       BC       CACBAK
    - GM - GPS Mode: 0x00 -> GPS, 0x01 -> BDS, 0x02 -> GPS + BDS
    - BC - B Channel Name Color:  1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - CA - Zone Name Colour A: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
-   - Cb - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                                
+   - Cb - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                          - ApoKind (Power Save): 1 byte, 0x00 -> is affected by call, 0x01 -> is not affected by call
+   
 ```
 
 ## Zone names (0x02540000)
