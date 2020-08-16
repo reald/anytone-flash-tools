@@ -1184,7 +1184,7 @@ Empty entries will not be written.
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
                                 RI     CNDC     CC
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
-                     SCBPSL
+                     SCBPSLKL
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
                                     DC ZAZBCACB
 
@@ -1196,6 +1196,7 @@ Empty entries will not be written.
    - SC - Standby Char Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - BP - Standby BK Picture: 1 byte, 0x00 -> Default, 0x01 -> Custom 1, 0x02 -> Custom 2
    - SL - Show Last Call On Launch: 1 byte: 0x00 -> off, 0x01 -> on
+   - KL - CH Switching Keeps Last Caller:  0x00 -> off, 0x01 -> on
    - DC - Default startup channel: 0x00 -> off, 0x01 -> on
    - ZA - Zone A: 1 byte Zone ID
    - ZB - Zone B: 1 byte Zone ID
@@ -1361,15 +1362,17 @@ CPS supports up to 60 Bytes sending text.
                      
 ```
 
-## more GPS settings ?? ()
+## more optional settings  (0x02501400)
 ```
 57 | 02501400 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
 57 | 02501410 | 10 | 00000000 00000000 00000000 00000000 | 86 06 || .... .... .... .... || ................ ||
 57 | 02501420 | 10 | 000002ff 0085cf00 c0800901 c2199f02 | b1 06 || ...ÿ ..Ï. À... Â... || ...ÿ..Ï.À...Â... ||
 57 | 02501430 | 10 | 3c599f02 00026401 01000000 00000000 | 44 06 || <Y.. ..d. .... .... || <Y....d......... ||
-                                GM
+                                GM       BC       CACB
    - GM - GPS Mode: 0x00 -> GPS, 0x01 -> BDS, 0x02 -> GPS + BDS
-                                
+   - BC - B Channel Name Color:  1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - CA - Zone Name Colour A: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - Cb - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                                
 ```
 
 ## Zone names (0x02540000)
