@@ -1142,23 +1142,29 @@ Empty entries will not be written.
 ## Power on and other optional settings (0x02500000)
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
-                                  PIPA                MG
+                           AS     PIPA       PS       MG
+   - AS - Auto Shutdown: 0x00 -> Off, 0x01 -> 10 min, 0x02 -> 30 min, 0x03 -> 60 min, 0x04 -> 120 min
    - PI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x02 -> Custom Picture
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
           If password is set the radio cannot communicate to CPS if _unlocked_!! If device is still locked, CPS communicates!
+   - PS - Power save: 0x00 -> Off, 0x01 -> 1:1, 0x02 -> 2:1
    - MG - Mic gain: 1 byte, valid range 0x00 -> 1 .. 0x04 -> 5
    
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
+                                                  FWFV
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
-                         RFDT     DBBD GP????   ??  ????
+                         RFDT     DBBD GP????FM   ??  ????
 
+   - FW - FM Work Channel: 1 byte, id out fm channel list, valid range: 0x00 (1) .. 0x63 (100). Channel must be used.
+   - FV - FM VFO/MEM: 1 byte: 0x00 -> MEM, 0x01 -> VFO
    - RF - Record Functiion: 0x00 -> off, 0x01 -> on
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
    - DB - Display Brightness: 1 byte, 0x00 -> 1 .. 0x04 -> 5
    - DB - Auto Backlight Duration: 1 byte: 0x00 -> Always, 0x01 -> 5s, 0x02 -> 10s, 0x03 -> 15s, 0x04 -> 20s, 0x05 -> 25s, 0x06 -> 30s, 0x07 -> 1m
                                            0x08 -> 2m, 0x09 -> 3m, 0x0a -> 4m, 0x0b -> 5m, 0x0c -> 15m, 0x0d -> 30m, 0x0e -> 45m, 0x0f -> 60m
    - GP - GPS: 0x00 -> off, 0x01 -> on
-
+   - FM - FM Monitor: 0x00 -> off, 0x01 -> on
+   
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
                      TZ             ME     EPMV       GG
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
