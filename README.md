@@ -44,10 +44,10 @@ This his highly experimental code. Use it at your own risk!
 * Receive Group Call List
 * Zone
 * Scan List
+* Optional Settings
 
 ## Todo - understand memory layout
 
-* Optional Settings
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
