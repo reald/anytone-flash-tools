@@ -1142,12 +1142,13 @@ Empty entries will not be written.
 ## Power on and other optional settings (0x02500000)
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
-                           AS     PIPA       PS       MG
+                           AS     PIPA       PS     VSMG
    - AS - Auto Shutdown: 0x00 -> Off, 0x01 -> 10 min, 0x02 -> 30 min, 0x03 -> 60 min, 0x04 -> 120 min
    - PI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x02 -> Custom Picture
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
           If password is set the radio cannot communicate to CPS if _unlocked_!! If device is still locked, CPS communicates!
    - PS - Power save: 0x00 -> Off, 0x01 -> 1:1, 0x02 -> 2:1
+   - VS - VFO Scan Type: 0x00 -> TO, 0x01 -> CO, 0x02 -> SE
    - MG - Mic gain: 1 byte, valid range 0x00 -> 1 .. 0x04 -> 5
    
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
@@ -1170,7 +1171,7 @@ Empty entries will not be written.
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
                                                   LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
-                       TDMH         ES           
+                       TDMH         ES VFOSSUHF VFOESUHF          
                                              
    - TZ: Time Zone: 0x00 -> GMT-12 ... 0x0c -> GMT0 ...  0x0e -> GMT2 ... 0x19 -> GMT13
    - TD: Time Display: 0x00 -> off, 0x01 -> on
@@ -1181,8 +1182,15 @@ Empty entries will not be written.
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
    - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
+   - VFOSSUHF: VFO Scan Start Freq (UHF): 4 bytes, low byte first, resolution 10 Hz
+   - VFOESUHF: VFO Scan End Freq (UHF): 4 bytes, low byte first, resolution 10 Hz
 
 57 | 02500060 | 10 | 0085cf00 c0800901 01000000 00000100 | 62 06 || ..Ï. À... .... .... || ..Ï.À........... ||
+                     VFOSSVHF VFOESVHF
+                     
+   - VFOSSVHF: VFO Scan Start Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
+   - VFOESVHF: VFO Scan End Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
+                     
 57 | 02500070 | 10 | 00012206 10042206 28050000 04000400 | 6c 06 || ..". ..". (... .... || .."...".(....... ||
 57 | 02500080 | 10 | 04000400 0a008e03 00000000 00000000 | 85 06 || .... .... .... .... || ................ ||
 57 | 02500090 | 10 | 05000a00 05000a00 0a007503 75032206 | 32 06 || .... .... ..u. u.". || ..........u.u.". ||
