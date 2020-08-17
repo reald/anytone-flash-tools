@@ -1195,15 +1195,22 @@ Empty entries will not be written.
    - VFOESVHF: VFO Scan End Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
                      
 57 | 02500070 | 10 | 00012206 10042206 28050000 04000400 | 6c 06 || ..". ..". (... .... || .."...".(....... ||
-                         CT#1 CT#2CT#3 CT#4CT#5
+                         CT#1 CT#2CT#3 CT#4CT#5 PE#1PE#2
 
-   - CT#1 - Call Tone, First Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.
-   - CT#2 - Call Tone, Second Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.   
-   - CT#3 - Call Tone, Third Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.      
-   - CT#4 - Call Tone, Fourth Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.         
-   - CT#5 - Call Tone, Fifth Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.         
-   
 57 | 02500080 | 10 | 04000400 0a008e03 00000000 00000000 | 85 06 || .... .... .... .... || ................ ||
+                     PE#3PE#4 PE#5
+
+   - CT#1 - Call Tone, First Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
+   - CT#2 - Call Tone, Second Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.   
+   - CT#3 - Call Tone, Third Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.      
+   - CT#4 - Call Tone, Fourth Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.         
+   - CT#5 - Call Tone, Fifth Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.         
+   - PE#1 - Call Tone, First Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - PE#2 - Call Tone, Second Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - PE#3 - Call Tone, Third Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - PE#4 - Call Tone, Fourth Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - PE#5 - Call Tone, Fifth Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+
 57 | 02500090 | 10 | 05000a00 05000a00 0a007503 75032206 | 32 06 || .... .... ..u. u.". || ..........u.u.". ||
 57 | 025000a0 | 10 | 28050000 14001400 00000000 00000000 | 57 06 || (... .... .... .... || (............... ||
                                                     RDCD
