@@ -1253,9 +1253,9 @@ Empty entries will not be written.
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
                                 RI     CNDC  KS CC
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
-                     SCBPSLKL
+                     SCBPSLKL MINFAR1V MAXFAR1V MINFAR1U
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
-                              RB    DC ZAZBCACB   RCRI
+                     MAXFAR1U RB    DC ZAZBCACB   RCRICR
 
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
    - CN - Display Channel Number: 0x00 -> Actual Channel Number, 0x01 -> Sequence Number In Zone
@@ -1266,6 +1266,10 @@ Empty entries will not be written.
    - BP - Standby BK Picture: 1 byte, 0x00 -> Default, 0x01 -> Custom 1, 0x02 -> Custom 2
    - SL - Show Last Call On Launch: 1 byte: 0x00 -> off, 0x01 -> on
    - KL - CH Switching Keeps Last Caller:  0x00 -> off, 0x01 -> on
+   - MINFAR1V - Min Freq Of Auuto Repeater 1 (VHF): 4 bytes, low byte first, resolution 10 Hz
+   - MAXFAR1V - Max Freq Of Auuto Repeater 1 (VHF): 4 bytes, low byte first, resolution 10 Hz
+   - MINFAR1U - Min Freq Of Auuto Repeater 1 (UHF): 4 bytes, low byte first, resolution 10 Hz
+   - MAXFAR1U - Max Freq Of Auuto Repeater 1 (UHF): 4 bytes, low byte first, resolution 10 Hz
    - RB: Auto Repeater B (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - DC - Default startup channel: 0x00 -> off, 0x01 -> on
    - ZA - Zone A: 1 byte Zone ID
@@ -1274,13 +1278,16 @@ Empty entries will not be written.
    - CB - Channel B: number of channel in selected zone. 0xff for VFO.   
    - RC - Repeater Check (Auto Repeater): 0x00 -> off, 0x01 -> on
    - RI - Repeater Check Interval (Auto Repeater): value = rawvalue * 5s + 5s, valid range 0x00 (5s) .. 0x09 (50s)
+   - CR - Repeater Check Reconnections (Auto Repeater): 0x00 -> 3, 0x01 -> 4, 0x02 -> 5
                                     
 57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
-                       BTSD   AC  RD         SG SR
+                       BTSD   ACOORD       RRSG SR
    - BT - Backlight Delay auf TX: 1 byte, valid range: 0x00 (0s) .. 0x1e (30s)
    - SD - Seperater Display: 0x00 -> off; 0x01 -> on
    - AC - A Channel Name Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - OO - Alert Out Of Repeat Range (Auto Repeater): 0x00 -> Off, 0x01 -> Bell, 0x02 -> Voice
    - RD - Receive  Backlight Delay: 0x00 -> Always, 0x01 (1s) .. 0x1e (30s)
+   - RR - Repeater out of range reminder (time: 0x00 -> 1 .. 0x09 -> 10)
    - SG - Startup GPS Test: 0x00 -> off; 0x01 -> on
    - SR - Startup Rest: 0x00 -> off, 0x01 -> on ("Set ON to allow MCU reboot")
                                              
@@ -1439,19 +1446,24 @@ CPS supports up to 60 Bytes sending text.
 57 | 02501400 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
 57 | 02501410 | 10 | 00000000 00000000 00000000 00000000 | 86 06 || .... .... .... .... || ................ ||
 57 | 02501420 | 10 | 000002ff 0085cf00 c0800901 c2199f02 | b1 06 || ...ÿ ..Ï. À... Â... || ...ÿ..Ï.À...Â... ||
-                         2U2V
+                         2U2V MINFAR2V MAXFAR2V MINFAR2U
                          
    - 2U - Auto Repeater2 (UHF): 1 byte, auto repeater offset id, 0xff for Off
    - 2V - Auto Repeater2 (VHF): 1 byte, auto repeater offset id, 0xff for Off
-
+   - MINFAR2V - Min Freq Of Auuto Repeater 2 (VHF): 4 bytes, low byte first, resolution 10 Hz
+   - MAXFAR2V - Max Freq Of Auuto Repeater 2 (VHF): 4 bytes, low byte first, resolution 10 Hz
+   - MINFAR2U - Min Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
 
 57 | 02501430 | 10 | 3c599f02 00026401 01000000 00000000 | 44 06 || <Y.. ..d. .... .... || <Y....d......... ||
-                                GM       BC       CACBAK
+                     MAXFAR2U   GM       BC       CACBAK
+
+   - MAXFAR2U - Max Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
    - GM - GPS Mode: 0x00 -> GPS, 0x01 -> BDS, 0x02 -> GPS + BDS
    - BC - B Channel Name Color:  1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - CA - Zone Name Colour A: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - Cb - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                          - ApoKind (Power Save): 1 byte, 0x00 -> is affected by call, 0x01 -> is not affected by call
-   
+
+
 ```
 
 ## Zone names (0x02540000)
