@@ -1172,7 +1172,7 @@ Empty entries will not be written.
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
                      TZCTDR       ITME   SSEPMV       GG
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
-                                    VC            LC 
+                                    VC RA         LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
                        TDMH         ES VFOSSUHF VFOESUHF          
                                              
@@ -1187,6 +1187,7 @@ Empty entries will not be written.
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - GG: Get GPS Positioning: 0x00 -> off, 0x01 -> on
    - VC: Volume Change Prompt (Alert Tone): 0x00 -> off, 0x01 -> on
+   - RA: Auto Repeater A (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
    - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
@@ -1194,10 +1195,12 @@ Empty entries will not be written.
    - VFOESUHF: VFO Scan End Freq (UHF): 4 bytes, low byte first, resolution 10 Hz
 
 57 | 02500060 | 10 | 0085cf00 c0800901 01000000 00000100 | 62 06 || ..Ï. À... .... .... || ..Ï.À........... ||
-                     VFOSSVHF VFOESVHF
+                     VFOSSVHF VFOESVHF 1U1V
                      
-   - VFOSSVHF: VFO Scan Start Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
-   - VFOESVHF: VFO Scan End Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
+   - VFOSSVHF - VFO Scan Start Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
+   - VFOESVHF - VFO Scan End Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
+   - 1U - Auto Repeater1 (UHF): 1 byte, auto repeater offset id, 0xff for Off
+   - 1V - Auto Repeater1 (VHF): 1 byte, auto repeater offset id, 0xff for Off
                      
 57 | 02500070 | 10 | 00012206 10042206 28050000 04000400 | 6c 06 || ..". ..". (... .... || .."...".(....... ||
                          CT#1 CT#2CT#3 CT#4CT#5 PE#1PE#2
@@ -1252,7 +1255,7 @@ Empty entries will not be written.
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
                      SCBPSLKL
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
-                                    DC ZAZBCACB
+                              RB    DC ZAZBCACB   RCRI
 
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
    - CN - Display Channel Number: 0x00 -> Actual Channel Number, 0x01 -> Sequence Number In Zone
@@ -1263,11 +1266,14 @@ Empty entries will not be written.
    - BP - Standby BK Picture: 1 byte, 0x00 -> Default, 0x01 -> Custom 1, 0x02 -> Custom 2
    - SL - Show Last Call On Launch: 1 byte: 0x00 -> off, 0x01 -> on
    - KL - CH Switching Keeps Last Caller:  0x00 -> off, 0x01 -> on
+   - RB: Auto Repeater B (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - DC - Default startup channel: 0x00 -> off, 0x01 -> on
    - ZA - Zone A: 1 byte Zone ID
    - ZB - Zone B: 1 byte Zone ID
    - CA - Channel A: number of channel in selected zone. 0xff for VFO.
    - CB - Channel B: number of channel in selected zone. 0xff for VFO.   
+   - RC - Repeater Check (Auto Repeater): 0x00 -> off, 0x01 -> on
+   - RI - Repeater Check Interval (Auto Repeater): value = rawvalue * 5s + 5s, valid range 0x00 (5s) .. 0x09 (50s)
                                     
 57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
                        BTSD   AC  RD         SG SR
@@ -1433,6 +1439,12 @@ CPS supports up to 60 Bytes sending text.
 57 | 02501400 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
 57 | 02501410 | 10 | 00000000 00000000 00000000 00000000 | 86 06 || .... .... .... .... || ................ ||
 57 | 02501420 | 10 | 000002ff 0085cf00 c0800901 c2199f02 | b1 06 || ...ÿ ..Ï. À... Â... || ...ÿ..Ï.À...Â... ||
+                         2U2V
+                         
+   - 2U - Auto Repeater2 (UHF): 1 byte, auto repeater offset id, 0xff for Off
+   - 2V - Auto Repeater2 (VHF): 1 byte, auto repeater offset id, 0xff for Off
+
+
 57 | 02501430 | 10 | 3c599f02 00026401 01000000 00000000 | 44 06 || <Y.. ..d. .... .... || <Y....d......... ||
                                 GM       BC       CACBAK
    - GM - GPS Mode: 0x00 -> GPS, 0x01 -> BDS, 0x02 -> GPS + BDS
