@@ -1142,7 +1142,8 @@ Empty entries will not be written.
 ## Power on and other optional settings (0x02500000)
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
-                           AS     PIPA       PS     VSMG
+                     KT    AS     PIPA       PS     VSMG
+   - KT - Key Tone (Alert Tone): 0x00 -> off, 0x01 -> Ring
    - AS - Auto Shutdown: 0x00 -> Off, 0x01 -> 10 min, 0x02 -> 30 min, 0x03 -> 60 min, 0x04 -> 120 min
    - PI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x02 -> Custom Picture
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
@@ -1154,11 +1155,11 @@ Empty entries will not be written.
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
                                                   FWFV
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
-                         RFDT     DBBD GPSA??FM   ??  ????
+                         RFDT     DBBD GPSA??FM       CA
 
    - FW - FM Work Channel: 1 byte, id out fm channel list, valid range: 0x00 (1) .. 0x63 (100). Channel must be used.
    - FV - FM VFO/MEM: 1 byte: 0x00 -> MEM, 0x01 -> VFO
-   - RF - Record Functiion: 0x00 -> off, 0x01 -> on
+   - RF - Record Function: 0x00 -> off, 0x01 -> on
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
    - DB - Display Brightness: 1 byte, 0x00 -> 1 .. 0x04 -> 5
    - BD - Auto Backlight Duration: 1 byte: 0x00 -> Always, 0x01 -> 5s, 0x02 -> 10s, 0x03 -> 15s, 0x04 -> 20s, 0x05 -> 25s, 0x06 -> 30s, 0x07 -> 1m
@@ -1166,6 +1167,7 @@ Empty entries will not be written.
    - GP - GPS: 0x00 -> off, 0x01 -> on
    - SA - SMS Alert (Alert Tone): 0x00 -> off, 0x01 -> Ring
    - FM - FM Monitor: 0x00 -> off, 0x01 -> on
+   - CA - Call Alert (Alert Tone): 0x00 -> None, 0x01 -> Ring
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
                      TZCTDR         ME     EPMV       GG
@@ -1198,7 +1200,7 @@ Empty entries will not be written.
                          CT#1 CT#2CT#3 CT#4CT#5 PE#1PE#2
 
 57 | 02500080 | 10 | 04000400 0a008e03 00000000 00000000 | 85 06 || .... .... .... .... || ................ ||
-                     PE#3PE#4 PE#5
+                     PE#3PE#4 PE#5IT#1 IT#2IT#3 IT#4IT#5
 
    - CT#1 - Call Tone, First Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
    - CT#2 - Call Tone, Second Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.   
@@ -1210,10 +1212,38 @@ Empty entries will not be written.
    - PE#3 - Call Tone, Third Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
    - PE#4 - Call Tone, Fourth Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
    - PE#5 - Call Tone, Fifth Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
-
+   - IT#1 - Idle Channel Tone, First Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
+   - IT#2 - Idle Channel Tone, Second Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
+   - IT#3 - Idle Channel Tone, Third Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
+   - IT#4 - Idle Channel Tone, Fourth Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
+   - IT#5 - Idle Channel Tone, Fifth Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
+   
 57 | 02500090 | 10 | 05000a00 05000a00 0a007503 75032206 | 32 06 || .... .... ..u. u.". || ..........u.u.". ||
+                     IP#1IP#2 IP#3IP#4 IP#5CR#1 CR#2CR#3
+
+   - IP#1 - Idle Channel Tone, First Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - IP#2 - Idle Channel Tone, Second Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - IP#3 - Idle Channel Tone, Third Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - IP#4 - Idle Channel Tone, Fourth Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - IP#5 - Idle Channel Tone, Fifth Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - CR#1 - Call Reset Tone, First Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
+   - CR#2 - Call Reset Tone, Second Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.   
+     CR#3 - Call Reset Tone, Third Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.         
+
 57 | 025000a0 | 10 | 28050000 14001400 00000000 00000000 | 57 06 || (... .... .... .... || (............... ||
-                                                    RDCD
+                     CR#4CR#5 RP#1RP#2 RP#3RP#4 RP#5RDCD
+
+   - CR#4 - Call Reset Tone, Fourth Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.         
+   - CR#5 - Call Reset Tone, Fifth Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.         
+   - RP#1 - Call Reset Tone, First Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - RP#2 - Call Reset Tone, Second Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - RP#3 - Call Reset Tone, Third Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - RP#4 - Call Reset Tone, Fourth Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - RP#5 - Call Reset Tone, Fifth Tone Period (Alert Tone): 2 bytes, low byte first, value = rawvalue * 10ms, valid range 0 .. 200ms
+   - RD - Record Delay (Record): 1 byte, value = rawvalue * 0.2s, valid range 0x00 (0.0s) .. 0x19 (5.0s)
+   - CD - Call Display Mode: 1 byte, 0x00 -> Turn off Talker Alias, 0x01 -> Call Sign Based, 0x02 -> Name Based
+
+
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
                                 RI     CNDC  KS CC
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
@@ -1221,8 +1251,6 @@ Empty entries will not be written.
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
                                     DC ZAZBCACB
 
-   - RD - Record Delay: 1 byte, value = rawvalue * 0.2s, valid range 0x00 (0.0s) .. 0x19 (5.0s)
-   - CD - Call Display Mode: 1 byte, 0x00 -> Turn off Talker Alias, 0x01 -> Call Sign Based, 0x02 -> Name Based
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
    - CN - Display Channel Number: 0x00 -> Actual Channel Number, 0x01 -> Sequence Number In Zone
    - DC - Display Current Contact: 0x00 -> Off, 0x01 -> On
