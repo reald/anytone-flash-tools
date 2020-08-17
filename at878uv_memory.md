@@ -1170,9 +1170,9 @@ Empty entries will not be written.
    - CA - Call Alert (Alert Tone): 0x00 -> None, 0x01 -> Ring
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
-                     TZCTDR         ME     EPMV       GG
+                     TZCTDR       ITME   SSEPMV       GG
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
-                                                  LC 
+                                    VC            LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
                        TDMH         ES VFOSSUHF VFOESUHF          
                                              
@@ -1180,10 +1180,13 @@ Empty entries will not be written.
    - CT: Call Tone (Call Alert): 0x00 -> Off, 0x01 -> Digital, 0x02 -> Analog, 0x03 -> Digital&Analog
    - DR: Digi Call ResetTone: 0x00 -> off, 0x01 -> on
    - TD: Time Display: 0x00 -> off, 0x01 -> on
+   - IT: Idle Channel Tone (Alert Tone): 0x00 -> off, 0x01 -> on
    - ME: Menu Exit Time: 1 byte, value = rawvalue * 5s + 5s, valid range: 0x00 (5s) .. 0x0b (60s)
+   - SS: Startup Sound (Alert Tone): 0x00 -> off, 0x01 -> on
    - EP: Call End Prompt Box: 0x00 -> off, 0x01 -> on
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - GG: Get GPS Positioning: 0x00 -> off, 0x01 -> on
+   - VC: Volume Change Prompt (Alert Tone): 0x00 -> off, 0x01 -> on
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
    - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
