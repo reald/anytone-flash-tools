@@ -1154,26 +1154,29 @@ Empty entries will not be written.
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
                                                   FWFV
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
-                         RFDT     DBBD GP????FM   ??  ????
+                         RFDT     DBBD GPSA??FM   ??  ????
 
    - FW - FM Work Channel: 1 byte, id out fm channel list, valid range: 0x00 (1) .. 0x63 (100). Channel must be used.
    - FV - FM VFO/MEM: 1 byte: 0x00 -> MEM, 0x01 -> VFO
    - RF - Record Functiion: 0x00 -> off, 0x01 -> on
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
    - DB - Display Brightness: 1 byte, 0x00 -> 1 .. 0x04 -> 5
-   - DB - Auto Backlight Duration: 1 byte: 0x00 -> Always, 0x01 -> 5s, 0x02 -> 10s, 0x03 -> 15s, 0x04 -> 20s, 0x05 -> 25s, 0x06 -> 30s, 0x07 -> 1m
+   - BD - Auto Backlight Duration: 1 byte: 0x00 -> Always, 0x01 -> 5s, 0x02 -> 10s, 0x03 -> 15s, 0x04 -> 20s, 0x05 -> 25s, 0x06 -> 30s, 0x07 -> 1m
                                            0x08 -> 2m, 0x09 -> 3m, 0x0a -> 4m, 0x0b -> 5m, 0x0c -> 15m, 0x0d -> 30m, 0x0e -> 45m, 0x0f -> 60m
    - GP - GPS: 0x00 -> off, 0x01 -> on
+   - SA - SMS Alert (Alert Tone): 0x00 -> off, 0x01 -> Ring
    - FM - FM Monitor: 0x00 -> off, 0x01 -> on
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
-                     TZ             ME     EPMV       GG
+                     TZCTDR         ME     EPMV       GG
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
                                                   LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
                        TDMH         ES VFOSSUHF VFOESUHF          
                                              
    - TZ: Time Zone: 0x00 -> GMT-12 ... 0x0c -> GMT0 ...  0x0e -> GMT2 ... 0x19 -> GMT13
+   - CT: Call Tone (Call Alert): 0x00 -> Off, 0x01 -> Digital, 0x02 -> Analog, 0x03 -> Digital&Analog
+   - DR: Digi Call ResetTone: 0x00 -> off, 0x01 -> on
    - TD: Time Display: 0x00 -> off, 0x01 -> on
    - ME: Menu Exit Time: 1 byte, value = rawvalue * 5s + 5s, valid range: 0x00 (5s) .. 0x0b (60s)
    - EP: Call End Prompt Box: 0x00 -> off, 0x01 -> on
@@ -1192,12 +1195,20 @@ Empty entries will not be written.
    - VFOESVHF: VFO Scan End Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
                      
 57 | 02500070 | 10 | 00012206 10042206 28050000 04000400 | 6c 06 || ..". ..". (... .... || .."...".(....... ||
+                         CT#1 CT#2CT#3 CT#4CT#5
+
+   - CT#1 - Call Tone, First Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.
+   - CT#2 - Call Tone, Second Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.   
+   - CT#3 - Call Tone, Third Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.      
+   - CT#4 - Call Tone, Fourth Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.         
+   - CT#5 - Call Tone, Fifth Tone (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range ?? ... 3000 Hz.         
+   
 57 | 02500080 | 10 | 04000400 0a008e03 00000000 00000000 | 85 06 || .... .... .... .... || ................ ||
 57 | 02500090 | 10 | 05000a00 05000a00 0a007503 75032206 | 32 06 || .... .... ..u. u.". || ..........u.u.". ||
 57 | 025000a0 | 10 | 28050000 14001400 00000000 00000000 | 57 06 || (... .... .... .... || (............... ||
                                                     RDCD
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
-                                RI     CNDC     CC
+                                RI     CNDC  KS CC
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
                      SCBPSLKL
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
@@ -1208,6 +1219,7 @@ Empty entries will not be written.
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
    - CN - Display Channel Number: 0x00 -> Actual Channel Number, 0x01 -> Sequence Number In Zone
    - DC - Display Current Contact: 0x00 -> Off, 0x01 -> On
+   - KS - Key Sound Adjustable (Alert Tone): 0x00 -> Adjustable, 0x01 -> 1 .. 0x0f -> 15
    - CC - Call Sign Display Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - SC - Standby Char Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - BP - Standby BK Picture: 1 byte, 0x00 -> Default, 0x01 -> Custom 1, 0x02 -> Custom 2
