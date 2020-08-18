@@ -1566,13 +1566,15 @@ CPS supports up to 60 Bytes sending text.
    - MINFAR2U - Min Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
 
 57 | 02501430 | 10 | 3c599f02 00026401 01000000 00000000 | 44 06 || <Y.. ..d. .... .... || <Y....d......... ||
-                     MAXFAR2U   GMST     BCET     CACBAK
+                     MAXFAR2U   GMST     BCETTP TGCACBAK
 
    - MAXFAR2U - Max Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
    - GM - GPS Mode: 0x00 -> GPS, 0x01 -> BDS, 0x02 -> GPS + BDS
    - ST - Ste Time (STE): 1 byte, value = rawvalue * 10ms, valid range 0x00 (0ms) .. 0x64 (1000ms)
    - BC - B Channel Name Color:  1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - ET - Encryption Type (Other): 0x00 ->  Common, 0x01 -> AES
+   - TP - TOT Predict (Other): 0x00 -> off, 0x01 -> on
+   - TG - TxPow Agc (Other):  0x00 -> off, 0x01 -> on
    - CA - Zone Name Colour A: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - Cb - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                          - ApoKind (Power Save): 1 byte, 0x00 -> is affected by call, 0x01 -> is not affected by call
 
