@@ -1142,14 +1142,19 @@ Empty entries will not be written.
 ## Power on and other optional settings (0x02500000)
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
-                     KTDMKLAS     PIPA       PS VLVDVSMG
+                     KTDMKLAS TO  PIPA FSSASBPS VLVDVSMG
    - KT - Key Tone (Alert Tone): 0x00 -> off, 0x01 -> Ring
    - DM - Display Mode (Work Mode): 0x00 -> Channel, 0x01 -> Frequency
    - KL - Key Lock (Key Function): 0x00 -> Man, 0x01 -> Auto
    - AS - Auto Shutdown: 0x00 -> Off, 0x01 -> 10 min, 0x02 -> 30 min, 0x03 -> 60 min, 0x04 -> 120 min
+   - TO - TOT (Other): 0x00 -> Off, value = rawvalue * 30s, valid range 0x01 (30s) .. 0x08 (240s)
    - PI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x02 -> Custom Picture
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
           If password is set the radio cannot communicate to CPS if _unlocked_!! If device is still locked, CPS communicates!
+   - FS - Frequency Step (Other): 0x00 -> 2.5 Khz, 0x01 -> 5Khz, 0x02 -> 6.25 Khz, 0x03 -> 10 Khz, 
+                                  0x04 -> 12.5 Khz, 0x05 -> 20 Khz, 0x06 -> 25 Khz, 0x07 -> 30 Khz, 0x08 ->  50 Khz
+   - SA - SQL Level(A) (Other): 0x00 -> off, range 0x01 (1) .. 0x05 (5)
+   - SB - SQL Level(B) (Other): 0x00 -> off, range 0x01 (1) .. 0x05 (5)   
    - PS - Power save: 0x00 -> Off, 0x01 -> 1:1, 0x02 -> 2:1
    - VL - VOS Level (VOX/BT): 0x00 -> off, 0x01 -> 1, 0x02 -> 2, 0x03 -> 3
    - VD - VOX Delay (VOX/BT): 1 byte, value = rawvalue * 0.1s + 0.5s, valid range: 0x00 (0.5s) .. 0x19 (3.0s)
@@ -1159,7 +1164,7 @@ Empty entries will not be written.
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
                      S1S2S3S4 S5VAVBST SN         FWFVMA
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
-                     MB  RFDT     DBBD GPSA??FM MCSM  CA
+                     MB  RFDT     DBBD GPSA??FM MCSMTBCA
 
    - S1 - PF1 Short Key (Key Function): 1 byte, key list see below
    - S2 - PF2 Short Key (Key Function): 1 byte, key list see below
@@ -1184,6 +1189,7 @@ Empty entries will not be written.
    - FM - FM Monitor: 0x00 -> off, 0x01 -> on
    - MC - Main Channel Set (Work Mode): 0x00 -> A, 0x01 -> B
    - SM - Sub-Channel Mode: 0x00 -> off, 0x01 -> on
+   - TB - TBST: 0x00 -> 1000 Hz, 0x01 -> 1450 Hz, 0x02 -> 1750 Hz, 0x03 -> 2100 Hz
    - CA - Call Alert (Alert Tone): 0x00 -> None, 0x01 -> Ring
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
@@ -1336,7 +1342,7 @@ CDT Scan - 0x32
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
                      SCBPSLKL MINFAR1V MAXFAR1V MINFAR1U
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
-                     MAXFAR1U RB    DC ZAZBCACB RZRCRICR
+                     MAXFAR1U RBAB  DC ZAZBCACB RZRCRICR
 
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
    - CN - Display Channel Number: 0x00 -> Actual Channel Number, 0x01 -> Sequence Number In Zone
@@ -1359,6 +1365,7 @@ CDT Scan - 0x32
    - MINFAR1U - Min Freq Of Auuto Repeater 1 (UHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
    - MAXFAR1U - Max Freq Of Auuto Repeater 1 (UHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
    - RB: Auto Repeater B (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
+   - AB: Address Book Is Sent With Its Own Code (Other): 0x00 -> off, 0x01 -> on
    - DC - Default startup channel: 0x00 -> off, 0x01 -> on
    - ZA - Zone A: 1 byte Zone ID
    - ZB - Zone B: 1 byte Zone ID
