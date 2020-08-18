@@ -1197,7 +1197,7 @@ Empty entries will not be written.
    - CA - Call Alert (Alert Tone): 0x00 -> None, 0x01 -> Ring
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
-                     TZCTDRVF     ITME   SSEPMV       GG
+                     TZCTDRVD WM  ITME   SSEPMV       GG
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
                        L1L2L3 L4L5LTVC RA         LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
@@ -1207,6 +1207,7 @@ Empty entries will not be written.
    - CT: Call Tone (Call Alert): 0x00 -> Off, 0x01 -> Digital, 0x02 -> Analog, 0x03 -> Digital&Analog
    - DR: Digi Call ResetTone: 0x00 -> off, 0x01 -> on
    - VD: VOX Detection (VOX/BT): 0x00 -> Built-in Microphone, 0x01 -> External Microphone, 0x02 -> Both
+   - WM: choose working mode (Other): 0x00 -> amateur mode, 0x01 -> professional mode
    - IT: Idle Channel Tone (Alert Tone): 0x00 -> off, 0x01 -> on
    - ME: Menu Exit Time: 1 byte, value = rawvalue * 5s + 5s, valid range: 0x00 (5s) .. 0x0b (60s)
    - SS: Startup Sound (Alert Tone): 0x00 -> off, 0x01 -> on
@@ -1296,7 +1297,7 @@ CDT Scan - 0x32
    - 1U - Auto Repeater1 (UHF): 1 byte, auto repeater offset id, 0xff for Off
    - 1V - Auto Repeater1 (VHF): 1 byte, auto repeater offset id, 0xff for Off
    - MA - call channel is maintained (Other): 0x00 -> Off, 0x01 -> On
-   - PA - Priority Zone A (Other): 0x00 -> Off, range 0x01 (1) .. 0x (250) with gaps!
+   - PA - Priority Zone A (Other): 0x00 -> Off, range 0x01 (1) .. 0xf9 (250) with gaps in CPS!
                      
 57 | 02500070 | 10 | 00012206 10042206 28050000 04000400 | 6c 06 || ..". ..". (... .... || .."...".(....... ||
                      PB  CT#1 CT#2CT#3 CT#4CT#5 PE#1PE#2
@@ -1304,7 +1305,7 @@ CDT Scan - 0x32
 57 | 02500080 | 10 | 04000400 0a008e03 00000000 00000000 | 85 06 || .... .... .... .... || ................ ||
                      PE#3PE#4 PE#5IT#1 IT#2IT#3 IT#4IT#5
 
-   - PB - Priority Zone B (Other): 0x00 -> Off, range 0x01 (1) .. 0x (250) with gaps!
+   - PB - Priority Zone B (Other): 0x00 -> Off, range 0x01 (1) .. 0xf9 (250) with gaps in CPS!
    - CT#1 - Call Tone, First Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
    - CT#2 - Call Tone, Second Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.   
    - CT#3 - Call Tone, Third Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.      
@@ -1565,12 +1566,13 @@ CPS supports up to 60 Bytes sending text.
    - MINFAR2U - Min Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
 
 57 | 02501430 | 10 | 3c599f02 00026401 01000000 00000000 | 44 06 || <Y.. ..d. .... .... || <Y....d......... ||
-                     MAXFAR2U   GMST     BC       CACBAK
+                     MAXFAR2U   GMST     BCET     CACBAK
 
    - MAXFAR2U - Max Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
    - GM - GPS Mode: 0x00 -> GPS, 0x01 -> BDS, 0x02 -> GPS + BDS
    - ST - Ste Time (STE): 1 byte, value = rawvalue * 10ms, valid range 0x00 (0ms) .. 0x64 (1000ms)
    - BC - B Channel Name Color:  1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - ET - Encryption Type (Other): 0x00 ->  Common, 0x01 -> AES
    - CA - Zone Name Colour A: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - Cb - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                          - ApoKind (Power Save): 1 byte, 0x00 -> is affected by call, 0x01 -> is not affected by call
 
