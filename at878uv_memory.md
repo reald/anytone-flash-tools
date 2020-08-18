@@ -1161,11 +1161,11 @@ Empty entries will not be written.
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
                      MB  RFDT     DBBD GPSA??FM MCSM  CA
 
-   - S1 - PF1 Short Key (Key Function): 1 byte, todo: key list
-   - S2 - PF2 Short Key (Key Function): 1 byte, todo: key list
-   - S3 - PF3 Short Key (Key Function): 1 byte, todo: key list
-   - S4 - P1 Short Key (Key Function): 1 byte, todo: key list
-   - S5 - P2 Short Key (Key Function): 1 byte, todo: key list
+   - S1 - PF1 Short Key (Key Function): 1 byte, key list see below
+   - S2 - PF2 Short Key (Key Function): 1 byte, key list see below
+   - S3 - PF3 Short Key (Key Function): 1 byte, key list see below
+   - S4 - P1 Short Key (Key Function): 1 byte, key list see below
+   - S5 - P2 Short Key (Key Function): 1 byte, key list see below
    - VA - VF/MR(A) (Work Mode): 0x00 -> MEM, 0x01 -> VFO
    - VB - VF/MR(B) (Work Mode): 0x00 -> MEM, 0x01 -> VFO   
    - ST - STE Type Of CTCSS (STE): 0x00 -> Off, 0x01 -> Silent, 0x02 -> 120 Degree, 0x03 -> 180 Degree, 0x04 -> 240 Degree
@@ -1203,21 +1203,78 @@ Empty entries will not be written.
    - EP: Call End Prompt Box: 0x00 -> off, 0x01 -> on
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - GG: Get GPS Positioning: 0x00 -> off, 0x01 -> on
-   - L1 - PF1 Long Key (Key Function): 1 byte, todo: key list ?
-   - L2 - PF2 Long Key (Key Function): 1 byte, todo: key list ?
-   - L3 - PF3 Long Key (Key Function): 1 byte, todo: key list ?
-   - L4 - P1 Long Key (Key Function): 1 byte, todo: key list ?
-   - L5 - P2 Long Key (Key Function): 1 byte, todo: key list ?
+   - L1 - PF1 Long Key (Key Function): 1 byte, key list see below
+   - L2 - PF2 Long Key (Key Function): 1 byte, key list see below
+   - L3 - PF3 Long Key (Key Function): 1 byte, key list see below
+   - L4 - P1 Long Key (Key Function): 1 byte, key list see below
+   - L5 - P2 Long Key (Key Function): 1 byte, key list see below
    - LT - Long Key Time (Key Function): 1 byte, range 0x00 (1s) .. 0x04 (5s)
    - VC: Volume Change Prompt (Alert Tone): 0x00 -> off, 0x01 -> on
    - RA: Auto Repeater A (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
-   - TD: Time Display: 0x00 -> off, 0x01 -> on ????
+   - TD: Time Display: 0x00 -> off, 0x01 -> on
    - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
    - VFOSSUHF: VFO Scan Start Freq (UHF): 4 bytes, low byte first, resolution 10 Hz
    - VFOESUHF: VFO Scan End Freq (UHF): 4 bytes, low byte first, resolution 10 Hz
+```
+### Key list 
 
+CPS does not allow each value for each key!!!
+
+Off - 0x00,
+Voltage - 0x01,
+Power - 0x02,
+Repeater - 0x03,
+Reverse - 0x04,
+Digital Encryption - 0x05,
+Call - 0x06,
+Vox - 0x07,
+V/M - 0x08,
+Sub PTT - 0x09,
+Scan - 0x0a,
+FM - 0x0b,
+Alarm - 0x0c,
+Record Switch - 0x0d,
+Record - 0x0e,
+SMS - 0x0f,
+Dial - 0x10,
+GPS Information - 0x11 ?? Not selectable in CPS!,
+Monitor - 0x12,
+Main Channel Switch - 0x13,
+Hot Key 1 - 0x14,
+Hot Key 2 - 0x15,
+Hot Key 3 - 0x16,
+Hot Key 4 - 0x17,
+Hot Key 5 - 0x18,
+Hot Key 6 - 0x19,
+Work Alone - 0x1a,
+Nuisance Delete 0x1b,
+Digital Monitor - 0x1c,
+Sub CH Switch - 0x1d,
+Priority Zone - 0x1e,
+VFO Scan - 0x1f,
+MIC Sound Quality - 0x20,
+LastCall Reply - 0x21,
+Channel Type Switch - 0x22,
+Ranging - 0x23 ?? Not selectable in CPS!,
+Roaming - 0x24,
+Channel Ranging - 0x25 ?? Not selectable in CPS!,
+Max Volume - 0x26,
+Slot Switch - 0x27,
+APRS Type Switch - 0x28 ?? Not selectable in CPS!,
+Zone Select - 0x29,
+Timed Roaming Set - 0x2a,
+APRS Set - 0x2b ?? Not selectable in CPS!,
+Mute timing - 0x2c,
+CTC/DCS Set - 0x2d,
+TBST Send - 0x2e,
+Bluetooth - 0x2f,
+Gps - 0x30,
+Ch.Name - 0x31,
+CDT Scan - 0x32
+
+```
 57 | 02500060 | 10 | 0085cf00 c0800901 01000000 00000100 | 62 06 || ..Ï. À... .... .... || ..Ï.À........... ||
                      VFOSSVHF VFOESVHF 1U1V
                      
@@ -1275,7 +1332,7 @@ Empty entries will not be written.
 
 
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
-                                RI     CNDCAIKS CC    WT
+                                RI     CNDCAIKS CC  LKWT
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
                      SCBPSLKL MINFAR1V MAXFAR1V MINFAR1U
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
@@ -1287,6 +1344,11 @@ Empty entries will not be written.
    - AI - Auto Roaming interval (Auto repeater): 1 byte, 0x00 -> 1, 0xff -> 256m
    - KS - Key Sound Adjustable (Alert Tone): 0x00 -> Adjustable, 0x01 -> 1 .. 0x0f -> 15
    - CC - Call Sign Display Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - LK - Bits ???FS?KN (Key Function):
+      - F - Forced Lock Key: 0x00 -> Off, 0x01 -> On
+      - S - Side Key Lock: 0x00 -> Off, 0x01 -> On
+      - K - Keyboard Lock: 0x00 -> Off, 0x01 -> On
+      - N - Knob Lock: 0x00 -> Off, 0x01 -> On
    - WT - Roaming Effect Wait Time (Auto repeater): 1 byte, 0x00 -> None, range 0x01 (1 s) .. 0xff (256 s)
    - SC - Standby Char Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - BP - Standby BK Picture: 1 byte, 0x00 -> Default, 0x01 -> Custom 1, 0x02 -> Custom 2
