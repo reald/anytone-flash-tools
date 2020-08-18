@@ -1142,7 +1142,7 @@ Empty entries will not be written.
 ## Power on and other optional settings (0x02500000)
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
-                     KTDM  AS     PIPA       PS     VSMG
+                     KTDM  AS     PIPA       PS VLVDVSMG
    - KT - Key Tone (Alert Tone): 0x00 -> off, 0x01 -> Ring
    - DM - Display Mode (Work Mode): 0x00 -> Channel, 0x01 -> Frequency
    - AS - Auto Shutdown: 0x00 -> Off, 0x01 -> 10 min, 0x02 -> 30 min, 0x03 -> 60 min, 0x04 -> 120 min
@@ -1150,16 +1150,20 @@ Empty entries will not be written.
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
           If password is set the radio cannot communicate to CPS if _unlocked_!! If device is still locked, CPS communicates!
    - PS - Power save: 0x00 -> Off, 0x01 -> 1:1, 0x02 -> 2:1
+   - VL - VOS Level (VOX/BT): 0x00 -> off, 0x01 -> 1, 0x02 -> 2, 0x03 -> 3
+   - VD - VOX Delay (VOX/BT): 1 byte, value = rawvalue * 0.1s + 0.5s, valid range: 0x00 (0.5s) .. 0x19 (3.0s)
    - VS - VFO Scan Type: 0x00 -> TO, 0x01 -> CO, 0x02 -> SE
    - MG - Mic gain: 1 byte, valid range 0x00 -> 1 .. 0x04 -> 5
    
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
-                                VAVB              FWFVMA
+                                VAVBST SN         FWFVMA
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
                      MB  RFDT     DBBD GPSA??FM MCSM  CA
 
    - VA - VF/MR(A) (Work Mode): 0x00 -> MEM, 0x01 -> VFO
    - VB - VF/MR(B) (Work Mode): 0x00 -> MEM, 0x01 -> VFO   
+   - ST - STE Type Of CTCSS (STE): 0x00 -> Off, 0x01 -> Silent, 0x02 -> 120 Degree, 0x03 -> 180 Degree, 0x04 -> 240 Degree
+   - SN - STE When No Signal: 0x00 -> Off, 0x01 55.2 Hz, 0x02 -> 259.2 Hz
    - FW - FM Work Channel: 1 byte, id out fm channel list, valid range: 0x00 (1) .. 0x63 (100). Channel must be used.
    - FV - FM VFO/MEM: 1 byte: 0x00 -> MEM, 0x01 -> VFO
    - MA - MEM Zone(A) (Work Mode): 1 byte, zone id
@@ -1177,7 +1181,7 @@ Empty entries will not be written.
    - CA - Call Alert (Alert Tone): 0x00 -> None, 0x01 -> Ring
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
-                     TZCTDR       ITME   SSEPMV       GG
+                     TZCTDRVF     ITME   SSEPMV       GG
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
                                     VC RA         LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
@@ -1186,7 +1190,7 @@ Empty entries will not be written.
    - TZ: Time Zone: 0x00 -> GMT-12 ... 0x0c -> GMT0 ...  0x0e -> GMT2 ... 0x19 -> GMT13
    - CT: Call Tone (Call Alert): 0x00 -> Off, 0x01 -> Digital, 0x02 -> Analog, 0x03 -> Digital&Analog
    - DR: Digi Call ResetTone: 0x00 -> off, 0x01 -> on
-   - TD: Time Display: 0x00 -> off, 0x01 -> on
+   - VD: VOX Detection (VOX/BT): 0x00 -> Built-in Microphone, 0x01 -> External Microphone, 0x02 -> Both
    - IT: Idle Channel Tone (Alert Tone): 0x00 -> off, 0x01 -> on
    - ME: Menu Exit Time: 1 byte, value = rawvalue * 5s + 5s, valid range: 0x00 (5s) .. 0x0b (60s)
    - SS: Startup Sound (Alert Tone): 0x00 -> off, 0x01 -> on
@@ -1196,6 +1200,7 @@ Empty entries will not be written.
    - VC: Volume Change Prompt (Alert Tone): 0x00 -> off, 0x01 -> on
    - RA: Auto Repeater A (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
+   - TD: Time Display: 0x00 -> off, 0x01 -> on ????
    - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
    - VFOSSUHF: VFO Scan Start Freq (UHF): 4 bytes, low byte first, resolution 10 Hz
@@ -1468,10 +1473,11 @@ CPS supports up to 60 Bytes sending text.
    - MINFAR2U - Min Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
 
 57 | 02501430 | 10 | 3c599f02 00026401 01000000 00000000 | 44 06 || <Y.. ..d. .... .... || <Y....d......... ||
-                     MAXFAR2U   GM       BC       CACBAK
+                     MAXFAR2U   GMST     BC       CACBAK
 
    - MAXFAR2U - Max Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
    - GM - GPS Mode: 0x00 -> GPS, 0x01 -> BDS, 0x02 -> GPS + BDS
+   - ST - Ste Time (STE): 1 byte, value = rawvalue * 10ms, valid range 0x00 (0ms) .. 0x64 (1000ms)
    - BC - B Channel Name Color:  1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - CA - Zone Name Colour A: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - Cb - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                          - ApoKind (Power Save): 1 byte, 0x00 -> is affected by call, 0x01 -> is not affected by call
