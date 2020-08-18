@@ -1142,8 +1142,9 @@ Empty entries will not be written.
 ## Power on and other optional settings (0x02500000)
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
-                     KT    AS     PIPA       PS     VSMG
+                     KTDM  AS     PIPA       PS     VSMG
    - KT - Key Tone (Alert Tone): 0x00 -> off, 0x01 -> Ring
+   - DM - Display Mode (Work Mode): 0x00 -> Channel, 0x01 -> Frequency
    - AS - Auto Shutdown: 0x00 -> Off, 0x01 -> 10 min, 0x02 -> 30 min, 0x03 -> 60 min, 0x04 -> 120 min
    - PI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x02 -> Custom Picture
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
@@ -1153,12 +1154,16 @@ Empty entries will not be written.
    - MG - Mic gain: 1 byte, valid range 0x00 -> 1 .. 0x04 -> 5
    
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
-                                                  FWFV
+                                VAVB              FWFVMA
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
-                         RFDT     DBBD GPSA??FM       CA
+                     MB  RFDT     DBBD GPSA??FM MCSM  CA
 
+   - VA - VF/MR(A) (Work Mode): 0x00 -> MEM, 0x01 -> VFO
+   - VB - VF/MR(B) (Work Mode): 0x00 -> MEM, 0x01 -> VFO   
    - FW - FM Work Channel: 1 byte, id out fm channel list, valid range: 0x00 (1) .. 0x63 (100). Channel must be used.
    - FV - FM VFO/MEM: 1 byte: 0x00 -> MEM, 0x01 -> VFO
+   - MA - MEM Zone(A) (Work Mode): 1 byte, zone id
+   - MB - MEM Zone(B) (Work Mode): 1 byte, zone id   
    - RF - Record Function: 0x00 -> off, 0x01 -> on
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
    - DB - Display Brightness: 1 byte, 0x00 -> 1 .. 0x04 -> 5
@@ -1167,6 +1172,8 @@ Empty entries will not be written.
    - GP - GPS: 0x00 -> off, 0x01 -> on
    - SA - SMS Alert (Alert Tone): 0x00 -> off, 0x01 -> Ring
    - FM - FM Monitor: 0x00 -> off, 0x01 -> on
+   - MC - Main Channel Set (Work Mode): 0x00 -> A, 0x01 -> B
+   - SM - Sub-Channel Mode: 0x00 -> off, 0x01 -> on
    - CA - Call Alert (Alert Tone): 0x00 -> None, 0x01 -> Ring
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
