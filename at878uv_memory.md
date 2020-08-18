@@ -1142,20 +1142,24 @@ Empty entries will not be written.
 ## Power on and other optional settings (0x02500000)
 ```
 57 | 02500000 | 10 | 00000000 00000101 04020200 000f0104 | 80 06 || .... .... .... .... || ................ ||
-                     KTDMKLAS TO  PIPA FSSASBPS VLVDVSMG
+                     KTDMKLAS TOLAPIPA FSSASBPS VLVDVSMG
    - KT - Key Tone (Alert Tone): 0x00 -> off, 0x01 -> Ring
    - DM - Display Mode (Work Mode): 0x00 -> Channel, 0x01 -> Frequency
    - KL - Key Lock (Key Function): 0x00 -> Man, 0x01 -> Auto
    - AS - Auto Shutdown: 0x00 -> Off, 0x01 -> 10 min, 0x02 -> 30 min, 0x03 -> 60 min, 0x04 -> 120 min
+   
    - TO - TOT (Other): 0x00 -> Off, value = rawvalue * 30s, valid range 0x01 (30s) .. 0x08 (240s)
+   - LA - Language (Other): 0x00 -> English, 0x01 -> German
    - PI - Power on interface: 0x00 -> Default interface, 0x01 -> Custom Char, 0x02 -> Custom Picture
    - PA - Power on password set: 0x00 -> no password, 0x01 password active. 
           If password is set the radio cannot communicate to CPS if _unlocked_!! If device is still locked, CPS communicates!
+          
    - FS - Frequency Step (Other): 0x00 -> 2.5 Khz, 0x01 -> 5Khz, 0x02 -> 6.25 Khz, 0x03 -> 10 Khz, 
                                   0x04 -> 12.5 Khz, 0x05 -> 20 Khz, 0x06 -> 25 Khz, 0x07 -> 30 Khz, 0x08 ->  50 Khz
    - SA - SQL Level(A) (Other): 0x00 -> off, range 0x01 (1) .. 0x05 (5)
    - SB - SQL Level(B) (Other): 0x00 -> off, range 0x01 (1) .. 0x05 (5)   
    - PS - Power save: 0x00 -> Off, 0x01 -> 1:1, 0x02 -> 2:1
+   
    - VL - VOS Level (VOX/BT): 0x00 -> off, 0x01 -> 1, 0x02 -> 2, 0x03 -> 3
    - VD - VOX Delay (VOX/BT): 1 byte, value = rawvalue * 0.1s + 0.5s, valid range: 0x00 (0.5s) .. 0x19 (3.0s)
    - VS - VFO Scan Type: 0x00 -> TO, 0x01 -> CO, 0x02 -> SE
@@ -1197,7 +1201,7 @@ Empty entries will not be written.
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
                        L1L2L3 L4L5LTVC RA         LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
-                       TDMH         ES VFOSSUHF VFOESUHF          
+                     CHTDMH         ES VFOSSUHF VFOESUHF          
                                              
    - TZ: Time Zone: 0x00 -> GMT-12 ... 0x0c -> GMT0 ...  0x0e -> GMT2 ... 0x19 -> GMT13
    - CT: Call Tone (Call Alert): 0x00 -> Off, 0x01 -> Digital, 0x02 -> Analog, 0x03 -> Digital&Analog
@@ -1209,6 +1213,7 @@ Empty entries will not be written.
    - EP: Call End Prompt Box: 0x00 -> off, 0x01 -> on
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - GG: Get GPS Positioning: 0x00 -> off, 0x01 -> on
+
    - L1 - PF1 Long Key (Key Function): 1 byte, key list see below
    - L2 - PF2 Long Key (Key Function): 1 byte, key list see below
    - L3 - PF3 Long Key (Key Function): 1 byte, key list see below
@@ -1218,6 +1223,8 @@ Empty entries will not be written.
    - VC: Volume Change Prompt (Alert Tone): 0x00 -> off, 0x01 -> on
    - RA: Auto Repeater A (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
+
+   - CH: Analog Call Hold Time (Other): 1 byte, valid range 0x00 (0s) .. 0x1e (30s), step 1s
    - TD: Time Display: 0x00 -> off, 0x01 -> on
    - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
    - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
@@ -1282,19 +1289,22 @@ CDT Scan - 0x32
 
 ```
 57 | 02500060 | 10 | 0085cf00 c0800901 01000000 00000100 | 62 06 || ..Ï. À... .... .... || ..Ï.À........... ||
-                     VFOSSVHF VFOESVHF 1U1V
+                     VFOSSVHF VFOESVHF 1U1V         MAPA
                      
    - VFOSSVHF - VFO Scan Start Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
    - VFOESVHF - VFO Scan End Freq (VHF): 4 bytes, low byte first, resolution 10 Hz
    - 1U - Auto Repeater1 (UHF): 1 byte, auto repeater offset id, 0xff for Off
    - 1V - Auto Repeater1 (VHF): 1 byte, auto repeater offset id, 0xff for Off
+   - MA - call channel is maintained (Other): 0x00 -> Off, 0x01 -> On
+   - PA - Priority Zone A (Other): 0x00 -> Off, range 0x01 (1) .. 0x (250) with gaps!
                      
 57 | 02500070 | 10 | 00012206 10042206 28050000 04000400 | 6c 06 || ..". ..". (... .... || .."...".(....... ||
-                         CT#1 CT#2CT#3 CT#4CT#5 PE#1PE#2
+                     PB  CT#1 CT#2CT#3 CT#4CT#5 PE#1PE#2
 
 57 | 02500080 | 10 | 04000400 0a008e03 00000000 00000000 | 85 06 || .... .... .... .... || ................ ||
                      PE#3PE#4 PE#5IT#1 IT#2IT#3 IT#4IT#5
 
+   - PB - Priority Zone B (Other): 0x00 -> Off, range 0x01 (1) .. 0x (250) with gaps!
    - CT#1 - Call Tone, First Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.
    - CT#2 - Call Tone, Second Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.   
    - CT#3 - Call Tone, Third Tone Frequency (Alert Tone): 2 bytes, low byte first, resolution 1 Hz, valid range 300 ... 3000 Hz.      
@@ -1377,7 +1387,7 @@ CDT Scan - 0x32
    - CR - Repeater Check Reconnections (Auto Repeater): 0x00 -> 3, 0x01 -> 4, 0x02 -> 5
                                     
 57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
-                     TCBTSD   ACOORDAR     RRSG SR
+                     TCBTSD   ACOORDAR   MTRRSG SR
                      
    - TC - Timed Roaming Start Condition (Auto repeater): 0x00 -> Fixed time, 0x01 -> Out Of Range
    - BT - Backlight Delay auf TX (Display): 1 byte, valid range: 0x00 (0s) .. 0x1e (30s)
@@ -1386,6 +1396,7 @@ CDT Scan - 0x32
    - OO - Alert Out Of Repeat Range (Auto Repeater): 0x00 -> Off, 0x01 -> Bell, 0x02 -> Voice
    - RD - Receive  Backlight Delay (Display): 0x00 -> Always, 0x01 (1s) .. 0x1e (30s)
    - AR - Auto Roaming (Auto repeater): 0x00 -> off, 0x01 -> on
+   - MT - Mute Timing (Other): 1 byte, valid range: 0x00 (1min) .. 0xff (256 min)
    - RR - Repeater out of range reminder (time (Auto Repeater): 0x00 -> 1 .. 0x09 -> 10) unit?
    - SG - Startup GPS Test (GPS): 0x00 -> off; 0x01 -> on
    - SR - Startup Reset (Power-On): 0x00 -> off, 0x01 -> on ("Set ON to allow MCU reboot")
