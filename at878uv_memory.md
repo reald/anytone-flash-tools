@@ -1251,45 +1251,51 @@ Empty entries will not be written.
 
 
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
-                                RI     CNDC  KS CC
+                                RI     CNDCAIKS CC    WT
 57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
                      SCBPSLKL MINFAR1V MAXFAR1V MINFAR1U
 57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
-                     MAXFAR1U RB    DC ZAZBCACB   RCRICR
+                     MAXFAR1U RB    DC ZAZBCACB RZRCRICR
 
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
    - CN - Display Channel Number: 0x00 -> Actual Channel Number, 0x01 -> Sequence Number In Zone
    - DC - Display Current Contact: 0x00 -> Off, 0x01 -> On
+   - AI - Auto Roaming interval (Auto repeater): 1 byte, 0x00 -> 1, 0xff -> 256m
    - KS - Key Sound Adjustable (Alert Tone): 0x00 -> Adjustable, 0x01 -> 1 .. 0x0f -> 15
    - CC - Call Sign Display Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+   - WT - Roaming Effect Wait Time (Auto repeater): 1 byte, 0x00 -> None, range 0x01 (1 s) .. 0xff (256 s)
    - SC - Standby Char Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - BP - Standby BK Picture: 1 byte, 0x00 -> Default, 0x01 -> Custom 1, 0x02 -> Custom 2
    - SL - Show Last Call On Launch: 1 byte: 0x00 -> off, 0x01 -> on
    - KL - CH Switching Keeps Last Caller:  0x00 -> off, 0x01 -> on
-   - MINFAR1V - Min Freq Of Auuto Repeater 1 (VHF): 4 bytes, low byte first, resolution 10 Hz
-   - MAXFAR1V - Max Freq Of Auuto Repeater 1 (VHF): 4 bytes, low byte first, resolution 10 Hz
-   - MINFAR1U - Min Freq Of Auuto Repeater 1 (UHF): 4 bytes, low byte first, resolution 10 Hz
-   - MAXFAR1U - Max Freq Of Auuto Repeater 1 (UHF): 4 bytes, low byte first, resolution 10 Hz
+   - MINFAR1V - Min Freq Of Auuto Repeater 1 (VHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
+   - MAXFAR1V - Max Freq Of Auuto Repeater 1 (VHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
+   - MINFAR1U - Min Freq Of Auuto Repeater 1 (UHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
+   - MAXFAR1U - Max Freq Of Auuto Repeater 1 (UHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
    - RB: Auto Repeater B (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - DC - Default startup channel: 0x00 -> off, 0x01 -> on
    - ZA - Zone A: 1 byte Zone ID
    - ZB - Zone B: 1 byte Zone ID
    - CA - Channel A: number of channel in selected zone. 0xff for VFO.
    - CB - Channel B: number of channel in selected zone. 0xff for VFO.   
+   - RZ - Roaming Zone (Auto repeater): 1 byte, roaming zone id
    - RC - Repeater Check (Auto Repeater): 0x00 -> off, 0x01 -> on
    - RI - Repeater Check Interval (Auto Repeater): value = rawvalue * 5s + 5s, valid range 0x00 (5s) .. 0x09 (50s)
    - CR - Repeater Check Reconnections (Auto Repeater): 0x00 -> 3, 0x01 -> 4, 0x02 -> 5
                                     
 57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
-                       BTSD   ACOORD       RRSG SR
-   - BT - Backlight Delay auf TX: 1 byte, valid range: 0x00 (0s) .. 0x1e (30s)
-   - SD - Seperater Display: 0x00 -> off; 0x01 -> on
-   - AC - A Channel Name Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
+                     TCBTSD   ACOORDAR     RRSG SR
+                     
+   - TC - Timed Roaming Start Condition (Auto repeater): 0x00 -> Fixed time, 0x01 -> Out Of Range
+   - BT - Backlight Delay auf TX (Display): 1 byte, valid range: 0x00 (0s) .. 0x1e (30s)
+   - SD - Separate Display (Display): 0x00 -> off; 0x01 -> on
+   - AC - A Channel Name Color (Display): 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - OO - Alert Out Of Repeat Range (Auto Repeater): 0x00 -> Off, 0x01 -> Bell, 0x02 -> Voice
-   - RD - Receive  Backlight Delay: 0x00 -> Always, 0x01 (1s) .. 0x1e (30s)
-   - RR - Repeater out of range reminder (time: 0x00 -> 1 .. 0x09 -> 10)
-   - SG - Startup GPS Test: 0x00 -> off; 0x01 -> on
-   - SR - Startup Rest: 0x00 -> off, 0x01 -> on ("Set ON to allow MCU reboot")
+   - RD - Receive  Backlight Delay (Display): 0x00 -> Always, 0x01 (1s) .. 0x1e (30s)
+   - AR - Auto Roaming (Auto repeater): 0x00 -> off, 0x01 -> on
+   - RR - Repeater out of range reminder (time (Auto Repeater): 0x00 -> 1 .. 0x09 -> 10) unit?
+   - SG - Startup GPS Test (GPS): 0x00 -> off; 0x01 -> on
+   - SR - Startup Reset (Power-On): 0x00 -> off, 0x01 -> on ("Set ON to allow MCU reboot")
                                              
 ```
 
