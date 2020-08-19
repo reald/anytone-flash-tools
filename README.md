@@ -45,13 +45,13 @@ This his highly experimental code. Use it at your own risk!
 * Zone
 * Scan List
 * Optional Settings
+* Alarm Settings
 
 ## Todo - understand memory layout
 
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
-* Alarm Settings
 * Local information
 * AES Encryption Code
 * Talk Alias
