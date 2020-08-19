@@ -1166,7 +1166,7 @@ Empty entries will not be written.
    - MG - Mic gain: 1 byte, valid range 0x00 -> 1 .. 0x04 -> 5
    
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
-                     S1S2S3S4 S5VAVBST SN         FWFVMA
+                     S1S2S3S4 S5VAVBST SNGHPHPT WHFWFVMA
 57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
                      MB  RFDT     DBBD GPSA??FM MCSMTBCA
 
@@ -1174,11 +1174,18 @@ Empty entries will not be written.
    - S2 - PF2 Short Key (Key Function): 1 byte, key list see below
    - S3 - PF3 Short Key (Key Function): 1 byte, key list see below
    - S4 - P1 Short Key (Key Function): 1 byte, key list see below
+   
    - S5 - P2 Short Key (Key Function): 1 byte, key list see below
    - VA - VF/MR(A) (Work Mode): 0x00 -> MEM, 0x01 -> VFO
    - VB - VF/MR(B) (Work Mode): 0x00 -> MEM, 0x01 -> VFO   
    - ST - STE Type Of CTCSS (STE): 0x00 -> Off, 0x01 -> Silent, 0x02 -> 120 Degree, 0x03 -> 180 Degree, 0x04 -> 240 Degree
+   
    - SN - STE When No Signal: 0x00 -> Off, 0x01 55.2 Hz, 0x02 -> 259.2 Hz
+   - GH - Group Call Hold Time (Digital Func): valid range: 0x01 (1s) .. 0x1e (30s), 0x1f (30 min), 0x20 (infinite)
+   - PH - Person Call Hold Time (Digital Func): valid range: 0x01 (1s) .. 0x1e (30s), 0x1f (30 min), 0x20 (infinite)
+   - PT - Prewave Time (Digital Func): value = rawvalue * 20ms, valid range 0x00 (0ms) .. 0x32 (5000ms)
+   
+   - WH - Wake Head Period (Digital Func): value = rawvalue * 20ms, valid range 0x00 (0ms) .. 0x32 (5000ms)
    - FW - FM Work Channel: 1 byte, id out fm channel list, valid range: 0x00 (1) .. 0x63 (100). Channel must be used.
    - FV - FM VFO/MEM: 1 byte: 0x00 -> MEM, 0x01 -> VFO
    - MA - MEM Zone(A) (Work Mode): 1 byte, zone id
@@ -1197,9 +1204,9 @@ Empty entries will not be written.
    - CA - Call Alert (Alert Tone): 0x00 -> None, 0x01 -> Ring
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
-                     TZCTDRVD WM  ITME   SSEPMV       GG
+                     TZCTDRVD WM  ITME FOSSEPMV     RMGG
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
-                       L1L2L3 L4L5LTVC RA         LC 
+                       L1L2L3 L4L5LTVC RADM       LC 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
                      CHTDMH         ES VFOSSUHF VFOESUHF          
                                              
@@ -1210,26 +1217,34 @@ Empty entries will not be written.
    - WM: choose working mode (Other): 0x00 -> amateur mode, 0x01 -> professional mode
    - IT: Idle Channel Tone (Alert Tone): 0x00 -> off, 0x01 -> on
    - ME: Menu Exit Time: 1 byte, value = rawvalue * 5s + 5s, valid range: 0x00 (5s) .. 0x0b (60s)
+   - FO; Filter Own ID in MissCall (Digital Func): 0x00 -> off, 0x01 -> on
    - SS: Startup Sound (Alert Tone): 0x00 -> off, 0x01 -> on
    - EP: Call End Prompt Box: 0x00 -> off, 0x01 -> on
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
+   - RM: Remote Monitor (Digital Func): 0x00 -> off, 0x01 -> on
    - GG: Get GPS Positioning: 0x00 -> off, 0x01 -> on
 
    - L1 - PF1 Long Key (Key Function): 1 byte, key list see below
    - L2 - PF2 Long Key (Key Function): 1 byte, key list see below
    - L3 - PF3 Long Key (Key Function): 1 byte, key list see below
+   
    - L4 - P1 Long Key (Key Function): 1 byte, key list see below
    - L5 - P2 Long Key (Key Function): 1 byte, key list see below
    - LT - Long Key Time (Key Function): 1 byte, range 0x00 (1s) .. 0x04 (5s)
    - VC: Volume Change Prompt (Alert Tone): 0x00 -> off, 0x01 -> on
+   
    - RA: Auto Repeater A (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
+   - DM: Digital Monitor (Digital Func): 0x00 -> Off, 0x01 -> Single Slot, 0x02 -> Double Slot
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
 
    - CH: Analog Call Hold Time (Other): 1 byte, valid range 0x00 (0s) .. 0x1e (30s), step 1s
    - TD: Time Display: 0x00 -> off, 0x01 -> on
    - MH: Max headphone volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
+   
    - ES: Enhance Sound quality: 0x00 -> off, 0x01 -> on
+   
    - VFOSSUHF: VFO Scan Start Freq (UHF): 4 bytes, low byte first, resolution 10 Hz
+   
    - VFOESUHF: VFO Scan End Freq (UHF): 4 bytes, low byte first, resolution 10 Hz
 ```
 ### Key list 
@@ -1566,11 +1581,14 @@ CPS supports up to 60 Bytes sending text.
    - MINFAR2U - Min Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
 
 57 | 02501430 | 10 | 3c599f02 00026401 01000000 00000000 | 44 06 || <Y.. ..d. .... .... || <Y....d......... ||
-                     MAXFAR2U   GMST     BCETTP TGCACBAK
+                     MAXFAR2U   GMSTMG MPBCETTP TGCACBAK
 
    - MAXFAR2U - Max Freq Of Auuto Repeater 2 (UHF): 4 bytes, low byte first, resolution 10 Hz
    - GM - GPS Mode: 0x00 -> GPS, 0x01 -> BDS, 0x02 -> GPS + BDS
    - ST - Ste Time (STE): 1 byte, value = rawvalue * 10ms, valid range 0x00 (0ms) .. 0x64 (1000ms)
+   - MG - Manual Dial - Group TG Hold Time (Digital Func): valid range: 0x01 (1s) .. 0x1e (30s), 0x1f (30 min), 0x20 (infinite)
+   
+   - MP - Manual Dial - Private TG Hold Time (Digital Func): valid range: 0x01 (1s) .. 0x1e (30s), 0x1f (30 min), 0x20 (infinite)
    - BC - B Channel Name Color:  1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - ET - Encryption Type (Other): 0x00 ->  Common, 0x01 -> AES
    - TP - TOT Predict (Other): 0x00 -> off, 0x01 -> on
