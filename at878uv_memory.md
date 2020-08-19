@@ -1090,24 +1090,34 @@ Byte 8: 0x02 = b10000010 -> scanlist 250 used. (8 bit/byte * 31 bytes before + 2
 
 ```
 57 | 024c1400 | 10 | 03010f0a ff013909 00fe0005 0a0a400c | 34 06 || .... ÿ.9. .þ.. ..@. || ....ÿ.9..þ....@. ||
-                     EAETEI   DTDRCICI ESEC
+                     EAETEIAT DTDRCICI ESECDADT TXRX
                      
-   - EA - Emergency Alarm: 0x00 -> Alarm, 0x01 -> Transpond+Background, 0x02 -> Transpond+Alarm, 0x03 -> Both
-   - ENI Type Select: 0x00 -> None, 0x01 -> DTMF, 0x02 -> 5Tone
-   - EI - Emergency ID: 
+   - EA - Emergency Alarm (Analog Alarm): 0x00 -> Alarm, 0x01 -> Transpond+Background, 0x02 -> Transpond+Alarm, 0x03 -> Both
+   - ENI Type Select (Analog Alarm): 0x00 -> None, 0x01 -> DTMF, 0x02 -> 5Tone
+   - EI - Emergency ID (Analog Alarm):
        For ENI Type Select DTMF: ID in DTMF Encode List: 0x00 -> 1 .. 0x0f -> 16
        For ENI Type Select 5 Tone: ID in 5-Tone Encode List: 0x00 -> 1 .. 0x63 -> 100
+   - AT: Alarm Time Analog Alarm): valid range 0x01 (1s) .. 0xff (255s), available only for "Alarm"
    
-   - DT - Duration of TX: range 0x01 (1s) .. 0xff (255s)
-   - DR - Duration of RX: range 0x01 (1s) .. 0xff (255s)
-   - CI - Emergency Channel: 2 bytes, low byte first, channel id
+   - DT - Duration of TX (Analog Alarm): range 0x01 (1s) .. 0xff (255s)
+   - DR - Duration of RX (Analog Alarm): range 0x01 (1s) .. 0xff (255s)
+   - CI - Emergency Channel (Analog Alarm): 2 bytes, low byte first, channel id, analog channels only
    
-   - ES - Emergency ENI Send Select: 0x00 -> Assigned Channel, 0x01 -> Selected Channel
-   - EC - Emergency Cycle: 0x00 -> Continuous, range 0x01 -> 1 .. 0xff -> 255
+   - ES - Emergency ENI Send Select (Analog Alarm): 0x00 -> Assigned Channel, 0x01 -> Selected Channel
+   - EC - Emergency Cycle (Analog Alarm): 0x00 -> Continuous, range 0x01 -> 1 .. 0xff -> 255
+   - DA - Emergency Alarm (Digital Alarm): 0x00 -> Alarm, 0x01 -> Transpond+Background, 0x02 -> Transpond+NoLocalAlarm, 0x03 -> Transpond+LocalAlarm
+   - DT - Alarm Time (Digital Alarm): range 0x01 (1s) .. 0xff (255s)
    
-   - AT: Alarm Time
+   - TX - Duration of TX (Digital Alarm): range 0x01 (1s) .. 0xff (255s)
+   - RX - Duration of RX (Digital Alarm): range 0x01 (1s) .. 0xff (255s)
+   
    
 57 | 024c1410 | 10 | 01010909 00000000 00000000 00000000 | 96 06 || .... .... .... .... || ................ ||
+                         VSAS MS
+   - VS - Voice switch broadcast (Work Alone): valid range 0x00 (1m) .. 0xff (256m)
+   - AS - Area switch broadcast (Work Alone): valid range 0x00 (1m) .. 0xff (256m)
+   - MS - Mic broadcast (Work Alone): 0x00 -> Key, 0x01 -> Voice Transmit
+   
 ```
 
 ## Auto Repeater Offset Frequencies (0x024c2000)
