@@ -1086,6 +1086,30 @@ Byte 4; 0x0b = b00001011 -> scanlist 25, 26, 28 used, 27 not used
 Byte 8: 0x02 = b10000010 -> scanlist 250 used. (8 bit/byte * 31 bytes before + 2nd bit in byte 32 = 250)
 ```
 
+## Alarm Settings (0x024c1400)
+
+```
+57 | 024c1400 | 10 | 03010f0a ff013909 00fe0005 0a0a400c | 34 06 || .... ÿ.9. .þ.. ..@. || ....ÿ.9..þ....@. ||
+                     EAETEI   DTDRCICI ESEC
+                     
+   - EA - Emergency Alarm: 0x00 -> Alarm, 0x01 -> Transpond+Background, 0x02 -> Transpond+Alarm, 0x03 -> Both
+   - ENI Type Select: 0x00 -> None, 0x01 -> DTMF, 0x02 -> 5Tone
+   - EI - Emergency ID: 
+       For ENI Type Select DTMF: ID in DTMF Encode List: 0x00 -> 1 .. 0x0f -> 16
+       For ENI Type Select 5 Tone: ID in 5-Tone Encode List: 0x00 -> 1 .. 0x63 -> 100
+   
+   - DT - Duration of TX: range 0x01 (1s) .. 0xff (255s)
+   - DR - Duration of RX: range 0x01 (1s) .. 0xff (255s)
+   - CI - Emergency Channel: 2 bytes, low byte first, channel id
+   
+   - ES - Emergency ENI Send Select: 0x00 -> Assigned Channel, 0x01 -> Selected Channel
+   - EC - Emergency Cycle: 0x00 -> Continuous, range 0x01 -> 1 .. 0xff -> 255
+   
+   - AT: Alarm Time
+   
+57 | 024c1410 | 10 | 01010909 00000000 00000000 00000000 | 96 06 || .... .... .... .... || ................ ||
+```
+
 ## Auto Repeater Offset Frequencies (0x024c2000)
 
 4 bytes per offset, low byte first, 250 entries. Resolution 10 Hz.
