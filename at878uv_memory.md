@@ -1204,25 +1204,29 @@ Empty entries will not be written.
    - CA - Call Alert (Alert Tone): 0x00 -> None, 0x01 -> Ring
    
 57 | 02500030 | 10 | 0e010002 0000010b 00000005 00000101 | b6 06 || .... .... .... .... || ................ ||
-                     TZCTDRVD WM  ITME FOSSEPMV     RMGG
-57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
-                       L1L2L3 L4L5LTVC RADM       LC 
-57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
-                     CHTDMH         ES VFOSSUHF VFOESUHF          
+                     TZCTDRVD WM  ITME FOSSEPMV SK  RMGG
                                              
    - TZ: Time Zone: 0x00 -> GMT-12 ... 0x0c -> GMT0 ...  0x0e -> GMT2 ... 0x19 -> GMT13
    - CT: Call Tone (Call Alert): 0x00 -> Off, 0x01 -> Digital, 0x02 -> Analog, 0x03 -> Digital&Analog
    - DR: Digi Call ResetTone: 0x00 -> off, 0x01 -> on
    - VD: VOX Detection (VOX/BT): 0x00 -> Built-in Microphone, 0x01 -> External Microphone, 0x02 -> Both
+
    - WM: choose working mode (Other): 0x00 -> amateur mode, 0x01 -> professional mode
    - IT: Idle Channel Tone (Alert Tone): 0x00 -> off, 0x01 -> on
    - ME: Menu Exit Time: 1 byte, value = rawvalue * 5s + 5s, valid range: 0x00 (5s) .. 0x0b (60s)
+
    - FO; Filter Own ID in MissCall (Digital Func): 0x00 -> off, 0x01 -> on
    - SS: Startup Sound (Alert Tone): 0x00 -> off, 0x01 -> on
    - EP: Call End Prompt Box: 0x00 -> off, 0x01 -> on
    - MV: Max volume: 0x00 -> "Indoors", 0x01 .. 0x08 possible.
+
+   - SK: Digital Remote Stun&&Kill (Digital Func): 0x00 -> off, 0x01 -> on
    - RM: Remote Monitor (Digital Func): 0x00 -> off, 0x01 -> on
    - GG: Get GPS Positioning: 0x00 -> off, 0x01 -> on
+
+
+57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
+                       L1L2L3 L4L5LTVC RADMCC     LC 
 
    - L1 - PF1 Long Key (Key Function): 1 byte, key list see below
    - L2 - PF2 Long Key (Key Function): 1 byte, key list see below
@@ -1235,7 +1239,12 @@ Empty entries will not be written.
    
    - RA: Auto Repeater A (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - DM: Digital Monitor (Digital Func): 0x00 -> Off, 0x01 -> Single Slot, 0x02 -> Double Slot
+   - CC: Digital Monitor CC (Digital Func): 0x00 -> Any, 0x01 -> Same
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
+
+
+57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
+                     CHTDMH         ES VFOSSUHF VFOESUHF          
 
    - CH: Analog Call Hold Time (Other): 1 byte, valid range 0x00 (0s) .. 0x1e (30s), step 1s
    - TD: Time Display: 0x00 -> off, 0x01 -> on
@@ -1365,16 +1374,14 @@ CDT Scan - 0x32
 
 57 | 025000b0 | 10 | 00010000 00fe0000 00000001 00000b00 | 1d 06 || .... .þ.. .... .... || .....þ.......... ||
                                 RI     CNDCAIKS CC  LKWT
-57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
-                     SCBPSLKL MINFAR1V MAXFAR1V MINFAR1U
-57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
-                     MAXFAR1U RBAB  DC ZAZBCACB RZRCRICR
 
    - RI - Ranging intervals: 1 byte, valid range 0x05 (5s) .. 0xfe (254 s)
+
    - CN - Display Channel Number: 0x00 -> Actual Channel Number, 0x01 -> Sequence Number In Zone
    - DC - Display Current Contact: 0x00 -> Off, 0x01 -> On
    - AI - Auto Roaming interval (Auto repeater): 1 byte, 0x00 -> 1, 0xff -> 256m
    - KS - Key Sound Adjustable (Alert Tone): 0x00 -> Adjustable, 0x01 -> 1 .. 0x0f -> 15
+   
    - CC - Call Sign Display Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - LK - Bits ???FS?KN (Key Function):
       - F - Forced Lock Key: 0x00 -> Off, 0x01 -> On
@@ -1382,13 +1389,23 @@ CDT Scan - 0x32
       - K - Keyboard Lock: 0x00 -> Off, 0x01 -> On
       - N - Knob Lock: 0x00 -> Off, 0x01 -> On
    - WT - Roaming Effect Wait Time (Auto repeater): 1 byte, 0x00 -> None, range 0x01 (1 s) .. 0xff (256 s)
+
+
+57 | 025000c0 | 10 | 00000000 002bde00 2079de00 c0559c02 | 55 06 || .... .+Þ.  yÞ. ÀU.. || .....+Þ. yÞ.ÀU.. ||
+                     SCBPSLSM MINFAR1V MAXFAR1V MINFAR1U
+
    - SC - Standby Char Color: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - BP - Standby BK Picture: 1 byte, 0x00 -> Default, 0x01 -> Custom 1, 0x02 -> Custom 2
    - SL - Show Last Call On Launch: 1 byte: 0x00 -> off, 0x01 -> on
-   - KL - CH Switching Keeps Last Caller:  0x00 -> off, 0x01 -> on
+   - SM - SMS Format (Digital Func): 0x00 -> M-SMS, 0x01 -> H-SMS, (0x02 -> DMR Standard not selectable in CPS)
    - MINFAR1V - Min Freq Of Auuto Repeater 1 (VHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
    - MAXFAR1V - Max Freq Of Auuto Repeater 1 (VHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
    - MINFAR1U - Min Freq Of Auuto Repeater 1 (UHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
+
+
+57 | 025000d0 | 10 | 00639f02 02000001 f900ff0b 00000000 | 3c 06 || .c.. .... ù.ÿ. .... || .c......ù.ÿ..... ||
+                     MAXFAR1U RBAB  DC ZAZBCACB RZRCRICR
+
    - MAXFAR1U - Max Freq Of Auuto Repeater 1 (UHF) (Auto Repeater): 4 bytes, low byte first, resolution 10 Hz
    - RB: Auto Repeater B (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - AB: Address Book Is Sent With Its Own Code (Other): 0x00 -> off, 0x01 -> on
@@ -1403,15 +1420,18 @@ CDT Scan - 0x32
    - CR - Repeater Check Reconnections (Auto Repeater): 0x00 -> 3, 0x01 -> 4, 0x02 -> 5
                                     
 57 | 025000e0 | 10 | 00000000 01000000 00000001 00000000 | 44 06 || .... .... .... .... || ................ ||
-                     TCBTSD   ACOORDAR   MTRRSG SR
+                     TCBTSDKL ACOORDAR   MTRRSG SR
                      
    - TC - Timed Roaming Start Condition (Auto repeater): 0x00 -> Fixed time, 0x01 -> Out Of Range
    - BT - Backlight Delay auf TX (Display): 1 byte, valid range: 0x00 (0s) .. 0x1e (30s)
    - SD - Separate Display (Display): 0x00 -> off; 0x01 -> on
+   - KL - CH Switching Keeps Last Caller:  0x00 -> off, 0x01 -> on   
+   
    - AC - A Channel Name Color (Display): 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
    - OO - Alert Out Of Repeat Range (Auto Repeater): 0x00 -> Off, 0x01 -> Bell, 0x02 -> Voice
    - RD - Receive  Backlight Delay (Display): 0x00 -> Always, 0x01 (1s) .. 0x1e (30s)
    - AR - Auto Roaming (Auto repeater): 0x00 -> off, 0x01 -> on
+   
    - MT - Mute Timing (Other): 1 byte, valid range: 0x00 (1min) .. 0xff (256 min)
    - RR - Repeater out of range reminder (time (Auto Repeater): 0x00 -> 1 .. 0x09 -> 10) unit?
    - SG - Startup GPS Test (GPS): 0x00 -> off; 0x01 -> on
