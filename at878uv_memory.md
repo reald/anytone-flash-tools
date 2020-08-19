@@ -1090,7 +1090,7 @@ Byte 8: 0x02 = b10000010 -> scanlist 250 used. (8 bit/byte * 31 bytes before + 2
 
 ```
 57 | 024c1400 | 10 | 03010f0a ff013909 00fe0005 0a0a400c | 34 06 || .... ÿ.9. .þ.. ..@. || ....ÿ.9..þ....@. ||
-                     EAETEIAT DTDRCICI ESECDADT TXRX
+                     EAETEIAT DTDRCICI ESECDADT TXRXDCDC
                      
    - EA - Emergency Alarm (Analog Alarm): 0x00 -> Alarm, 0x01 -> Transpond+Background, 0x02 -> Transpond+Alarm, 0x03 -> Both
    - ENI Type Select (Analog Alarm): 0x00 -> None, 0x01 -> DTMF, 0x02 -> 5Tone
@@ -1110,14 +1110,29 @@ Byte 8: 0x02 = b10000010 -> scanlist 250 used. (8 bit/byte * 31 bytes before + 2
    
    - TX - Duration of TX (Digital Alarm): range 0x01 (1s) .. 0xff (255s)
    - RX - Duration of RX (Digital Alarm): range 0x01 (1s) .. 0xff (255s)
-   
+   - DC - Emergency Channel (Digital Alarm): 2 bytes, low byte first, channel id, digital channels only
    
 57 | 024c1410 | 10 | 01010909 00000000 00000000 00000000 | 96 06 || .... .... .... .... || ................ ||
-                         VSAS MS
+                     ESECVSAS MSRA
+                     
+   - ES - Emergency ENI Send Select (Digital Alarm): 0x00 -> Assigned Channel, 0x01 -> Selected Channel                     
+   - EC - Emergency Cycle (Digital Alarm): 0x00 -> Continuous, range 0x01 -> 1 .. 0xff -> 255
    - VS - Voice switch broadcast (Work Alone): valid range 0x00 (1m) .. 0xff (256m)
    - AS - Area switch broadcast (Work Alone): valid range 0x00 (1m) .. 0xff (256m)
-   - MS - Mic broadcast (Work Alone): 0x00 -> Key, 0x01 -> Voice Transmit
    
+   - MS - Mic broadcast (Work Alone): 0x00 -> Key, 0x01 -> Voice Transmit
+   - RA - Receive Alarm (Digital Alarm): 0x00 -> off, 0x00 -> on
+
+57 | 024c1440 | 10 | 02000000 00000000 00000000 00000000 | b4 06 || .... .... .... .... || ................ ||
+                     CT
+
+   - CT - Call Type (Digital Alarm): 0x00 -> Pricate Call,  0x01 -> Group Call, 0x02 -> All Call
+                     
+57 | 024c1450 | 10 | 00000000 00000000 00000000 00000000 | c2 06 || .... .... .... .... || ................ ||
+57 | 024c1460 | 10 | 00000012 34561900 00000000 00000000 | 87 06 || .... 4V.. .... .... || ....4V.......... ||
+                           DI DIDIDI
+
+   - DI . TG/DMR ID (Digital Alarm): BCD coded, max 8 characters
 ```
 
 ## Auto Repeater Offset Frequencies (0x024c2000)
@@ -1201,8 +1216,6 @@ Empty entries will not be written.
    
 57 | 02500010 | 10 | 1c210213 08000000 0003030a 0a000001 | e7 06 || .!.. .... .... .... || .!.............. ||
                      S1S2S3S4 S5VAVBST SNGHPHPT WHFWFVMA
-57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
-                     MB  RFDT     DBBD GPSA??FM MCSMTBCA
 
    - S1 - PF1 Short Key (Key Function): 1 byte, key list see below
    - S2 - PF2 Short Key (Key Function): 1 byte, key list see below
@@ -1223,9 +1236,16 @@ Empty entries will not be written.
    - FW - FM Work Channel: 1 byte, id out fm channel list, valid range: 0x00 (1) .. 0x63 (100). Channel must be used.
    - FV - FM VFO/MEM: 1 byte: 0x00 -> MEM, 0x01 -> VFO
    - MA - MEM Zone(A) (Work Mode): 1 byte, zone id
+
+
+57 | 02500020 | 10 | 06000002 00000400 00010100 01000201 | 94 06 || .... .... .... .... || ................ ||
+                     MB  RFDT MD  DBBD GPSA??FM MCSMTBCA
+
    - MB - MEM Zone(B) (Work Mode): 1 byte, zone id   
    - RF - Record Function: 0x00 -> off, 0x01 -> on
    - DT - DTMF Transmitting Time: 1 bybte, 0x00 -> 50 ms, 0x01 -> 100 ms, 0x02 -> 200 ms, 0x03 -> 300ms, 0x04 -> 500 ms
+   
+   - MD . Man Down (Alarm Settings): 0x00 -> Off, 0x01 -> On
    - DB - Display Brightness: 1 byte, 0x00 -> 1 .. 0x04 -> 5
    - BD - Auto Backlight Duration: 1 byte: 0x00 -> Always, 0x01 -> 5s, 0x02 -> 10s, 0x03 -> 15s, 0x04 -> 20s, 0x05 -> 25s, 0x06 -> 30s, 0x07 -> 1m
                                            0x08 -> 2m, 0x09 -> 3m, 0x0a -> 4m, 0x0b -> 5m, 0x0c -> 15m, 0x0d -> 30m, 0x0e -> 45m, 0x0f -> 60m
@@ -1260,7 +1280,7 @@ Empty entries will not be written.
 
 
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
-                       L1L2L3 L4L5LTVC RADMCCID MSLC 
+                       L1L2L3 L4L5LTVC RADMCCID MSLC  MD
 
    - L1 - PF1 Long Key (Key Function): 1 byte, key list see below
    - L2 - PF2 Long Key (Key Function): 1 byte, key list see below
@@ -1278,6 +1298,8 @@ Empty entries will not be written.
    
    - MS: Monitor Slot Hold (Digital Func): 0x00 -> off, 0x01 -> on
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
+   
+   - MD: Man Down Delay (Alarm Settings): 0x00 (0s) .. 0xff (255s)
 
 
 57 | 02500050 | 10 | 01010001 00000001 005a6202 006cdc02 | be 06 || .... .... .Zb. .lÜ. || .........Zb..lÜ. ||
