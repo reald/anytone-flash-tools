@@ -1226,7 +1226,7 @@ Empty entries will not be written.
 
 
 57 | 02500040 | 10 | 0127300a 1d220101 02000000 00030000 | 4a 06 || .'0. .".. .... .... || .'0..".......... ||
-                       L1L2L3 L4L5LTVC RADMCC     LC 
+                       L1L2L3 L4L5LTVC RADMCCID MSLC 
 
    - L1 - PF1 Long Key (Key Function): 1 byte, key list see below
    - L2 - PF2 Long Key (Key Function): 1 byte, key list see below
@@ -1240,6 +1240,9 @@ Empty entries will not be written.
    - RA: Auto Repeater A (Auto repeater): 0x00 -> off, 0x01 -> Positive, 0x02 -> Negative
    - DM: Digital Monitor (Digital Func): 0x00 -> Off, 0x01 -> Single Slot, 0x02 -> Double Slot
    - CC: Digital Monitor CC (Digital Func): 0x00 -> Any, 0x01 -> Same
+   - ID: Digital Monitor ID (Digital Func): 0x00 -> Any, 0x01 -> Same
+   
+   - MS: Monitor Slot Hold (Digital Func): 0x00 -> off, 0x01 -> on
    - LC: Last Caller: 1 byte, 0x00 -> off, 0x01 -> Display ID, 0x02 -> Display Callsign, 0x03 -> Show Both
 
 
