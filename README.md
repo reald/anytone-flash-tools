@@ -48,6 +48,7 @@ This his highly experimental code. Use it at your own risk!
 * Alarm Settings
 * Encryption Code
 * Talk Alias
+* AES Encryption Code
 
 ## Todo - understand memory layout
 
@@ -55,7 +56,6 @@ This his highly experimental code. Use it at your own risk!
 * Hotkey_State
 * Hotkey_Hotkey
 * Local information
-* AES Encryption Code
 * Written memory areas which not part of this list
 
 ## Todo - other things
