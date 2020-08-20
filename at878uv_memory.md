@@ -1649,7 +1649,17 @@ CPS supports up to 60 Bytes sending text.
 ## more optional settings  (0x02501400)
 ```
 57 | 02501400 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
+                     TA
+
+   - TA - Send Talker Alias (Talk Alias): 0x00 -> off, 0x01 -> on
+
+
 57 | 02501410 | 10 | 00000000 00000000 00000000 00000000 | 86 06 || .... .... .... .... || ................ ||
+                                                    APAD
+
+   - AP - Alias Display Priority (Talk Alias): 0x00 -> off, 0x01 -> Contact Alias, 0x02 -> Air Alias
+   - AD - Alias Data Format (Talk Alias): 0x00 -> ISO 8, 0x01 -> ISO 7, 0x02 -> Unicode
+
 57 | 02501420 | 10 | 000002ff 0085cf00 c0800901 c2199f02 | b1 06 || ...ÿ ..Ï. À... Â... || ...ÿ..Ï.À...Â... ||
                          2U2V MINFAR2V MAXFAR2V MINFAR2U
                          
@@ -1677,6 +1687,11 @@ CPS supports up to 60 Bytes sending text.
 
 
 ```
+
+## Encryption (0x024c1800)
+
+0x24c1800 .. 0x24c1cff
+
 
 ## Zone names (0x02540000)
 
