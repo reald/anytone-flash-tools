@@ -1212,16 +1212,19 @@ Empty entries will not be written.
 255 datasets starting at 0x24c4000, each 64 bytes. 
 
 ```
+
+
 57 | 024c4000 | 10 | 02000000 00000000 00000000 00000000 | a0 06 || .... .... .... .... || ................ ||
                      EIKKKKKK KKKKKKKK KKKKKKKK KKKKKKKK
-57 | 024c4010 | 10 | 00000000 0eeeeeee eeeeeeee eeeeeeee | f6 06 || .... .îîî îîîî îîîî || .....îîîîîîîîîîî ||
+57 | 024c4010 | 10 | 00000000 00000012 34567890 12345678 | 66 06 || .... .... 4Vx. .4Vx || ........4Vx..4Vx ||
                      KKKKKKKK KKKKKKKK KKKKKKKK KKKKKKKK
-57 | 024c4020 | 10 | ec004000 00000000 00000000 00000000 | ea 06 || ì.@. .... .... .... || ì.@............. ||
+57 | 024c4020 | 10 | 90001400 00000000 00000000 00000000 | 62 06 || .... .... .... .... || ................ ||
                      KK  LK
 57 | 024c4030 | 10 | 00000000 00000000 00000000 00000000 | ce 06 || .... .... .... .... || ................ ||
 
    - EI - Encryption ID: 1 byte (0x00 -> off, 0x01 (1) .. 0xff (255)
-   - KK - Encryption Key: up to 32 bytes, bcd coded hex string (64 characters). Unused characters will be filled by 0 from left.
+   - KK - Encryption Key: up to 32 bytes, bcd coded hex string (64 characters). 
+          Unused characters will be filled by 0 from left. (Key is 12345678901234567890 in this example.)
    - LK - Length of key: 1 byte
 ```
 
