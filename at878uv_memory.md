@@ -1135,6 +1135,25 @@ Byte 8: 0x02 = b10000010 -> scanlist 250 used. (8 bit/byte * 31 bytes before + 2
    - DI . TG/DMR ID (Digital Alarm): BCD coded, max 8 characters
 ```
 
+## Encryption (0x024c1500)
+
+```
+[...]
+57 | 024c1700 | 10 | 01010202 03030404 05050606 07070808 | bd 06 || .... .... .... .... || ................ ||
+                     ID01ID02 ID03ID04 ID05ID06 ID07ID08
+[...]
+57 | 024c1730 | 10 | 19191a1a 1b1b1c1c 1d1d1e1e 1f1f2020 | 6d 06 || .... .... .... ..   || ..............   ||
+                     ID25ID26 ID27ID28 ID29ID30 ID31ID32
+
+   - IDxx: Encryption ID 1..32, 2 bytes, high byte first
+
+```
+
+## Encryption (0x024c1800)
+
+0x24c1800 .. 0x24c1cff
+
+
 ## Auto Repeater Offset Frequencies (0x024c2000)
 
 4 bytes per offset, low byte first, 250 entries. Resolution 10 Hz.
@@ -1687,10 +1706,6 @@ CPS supports up to 60 Bytes sending text.
 
 
 ```
-
-## Encryption (0x024c1800)
-
-0x24c1800 .. 0x24c1cff
 
 
 ## Zone names (0x02540000)
