@@ -1769,6 +1769,51 @@ Empty entries will not be written.
 
 Empty entries will not be written.
 
+## HotKey (0c025c0000)
+
+```
+57 | 025c0000 | 10 | 010f0301 00ff0217 00000000 00000000 | 9a 06 || .... .ÿ.. .... .... || .....ÿ.......... ||
+                     OTIDOTID OTIDOTID
+                     
+4x Analog Quick Call: 
+   - OT - Operation Type: 0x00 -> Off, 0x01 ->  DTMF, 0x02 -> 2Tone, 0x03 -> 5Tone
+   - ID - Call ID: id of entry in dtmf/2tone/callid list. 0xff for off.
+
+
+32x State Information:
+
+State Content beginning at 0x025c0100, 32 bytes each, ASCII, 0 terminated, max 31 usable bytes.
+
+57 | 025c0100 | 10 | 53746174 7573204d 65737361 67652031 | 29 06 || Stat us M essa ge 1 || Status Message 1 ||
+57 | 025c0110 | 10 | 00000000 00000000 00000000 00000000 | 7f 06 || .... .... .... .... || ................ ||
+
+[...]
+
+18 Hot Key combinations, start at 0x25c0500, 48 bytes for each memory.
+
+Order: Hot Key 1, Hot Key 2, Hot Key 3, Hot Key $, Hot Key 5, Hot Key 6, 
+       Fun Key+0, Fun Key+1, Fun Key+2, Fun Key+3, Fun Key+4, Fun Key+5, Fun Key+6, Fun Key+7, Fun Key+8, Fun Key+9, Fun Key+*, Fun Key+#
+
+57 | 025c0500 | 10 | 00030105 ffffffff 00000000 00000000 | 78 06 || .... ÿÿÿÿ .... .... || ....ÿÿÿÿ........ ||
+                     MOMECTDT COCO     CT
+57 | 025c0510 | 10 | 00000000 00000000 00000000 00000000 | 83 06 || .... .... .... .... || ................ ||
+57 | 025c0520 | 10 | 00000000 00000000 00000000 00000000 | 93 06 || .... .... .... .... || ................ ||
+
+   - MO - Mode: 0x00 -> Menu, 0x01 -> Call
+   - ME - Menu: 0x00 -> Off, 0x01 -> SMS,  0x02 -> New SMS, 0x03 -> Hot Text, 0x04 -> Received SMS, 0x05 -> Send SMS, 0x06 -> Contact List, 0x07 -> Manual Dial, 
+                0x08 -> Call Log, 0x09 -> Dialed Call, 0x0a -> Received Call, 0x0b ->  Missed Call, 0x0c -> Zone, 0x0d -> Radio Set
+   - CT - Call Type: 0x00 -> Analog, 0x01 -> Digital, 0xff -> Off
+   - DT - Digi Call Type: 0xff -> Off, 0x00 -> Group Call, 0x03 -> Hot Text, 0x04 -> Call Tip, 0x05 -> State Information
+
+   - CO - Call Object: 4 bytes, low byte first, 0xffffffff if not used
+        - Digital: id of talk group entry in talk group list
+        - Analog: id of Quick Call list (Hotkey) entry
+
+   - CT - Content: 1 byte, id of entry in state information list, 0xff if not used
+   
+
+```
+
 ## ??
 
 ```
