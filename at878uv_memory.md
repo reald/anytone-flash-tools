@@ -1200,12 +1200,31 @@ Start at 0x024c2400. 32 bytes per entry, 24 entries max, one after another. Last
 
 Empty entries will not be written. 
 
-## 2 Tone decodings used (024c2600)
+## 2 Tone decodings used (0x024c2600)
 1 bit for every used 2 tone decoding. 0 -> memory is free, 1 -> memory in use. Max. 16 entries.
 ```
 57 | 024c2600 | 10 | 01e00000 00000000 00000000 00000000 | 65 06 || .à.. .... .... .... || .à.............. ||
                      ^^^^
 ```
+
+## AES Encryption (0x024c4000)
+
+255 datasets starting at 0x24c4000, each 64 bytes. 
+
+```
+57 | 024c4000 | 10 | 02000000 00000000 00000000 00000000 | a0 06 || .... .... .... .... || ................ ||
+                     EIKKKKKK KKKKKKKK KKKKKKKK KKKKKKKK
+57 | 024c4010 | 10 | 00000000 0eeeeeee eeeeeeee eeeeeeee | f6 06 || .... .îîî îîîî îîîî || .....îîîîîîîîîîî ||
+                     KKKKKKKK KKKKKKKK KKKKKKKK KKKKKKKK
+57 | 024c4020 | 10 | ec004000 00000000 00000000 00000000 | ea 06 || ì.@. .... .... .... || ì.@............. ||
+                     KK  LK
+57 | 024c4030 | 10 | 00000000 00000000 00000000 00000000 | ce 06 || .... .... .... .... || ................ ||
+
+   - EI - Encryption ID: 1 byte (0x00 -> off, 0x01 (1) .. 0xff (255)
+   - KK - Encryption Key: up to 32 bytes, bcd coded hex string (64 characters). Unused characters will be filled by 0 from left.
+   - LK - Length of key: 1 byte
+```
+
 
 ## Power on and other optional settings (0x02500000)
 ```
