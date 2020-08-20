@@ -49,12 +49,12 @@ This his highly experimental code. Use it at your own risk!
 * Encryption Code
 * Talk Alias
 * AES Encryption Code
-
-## Todo - understand memory layout
-
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
+
+## Todo - understand memory layout
+
 * Local information
 * Written memory areas which not part of this list
 
