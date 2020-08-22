@@ -819,7 +819,7 @@ Unused memory sections will not be written.
    - VV - VFO FM Frequency: 3 bytes BCD coded
 ```
 
-## FM channels used (0x02480010)
+## FM channels used (0x02480210)
 ```
 57 | 02480210 | 10 | ff010000 00000000 00000000 0c000000 | 78 06 || ÿ... .... .... .... || ÿ............... ||
                      UUUU..                     UU
@@ -829,7 +829,7 @@ Unused memory sections will not be written.
 13 bytes for 100 channels.
 
 
-## FM channels scan (0x02480010)
+## FM channels scan (0x02480220)
 ```
 57 | 02480220 | 10 | 00000000 00000000 00000000 08000000 | 84 06 || .... .... .... .... || ................ ||
                      S1S2S3...
@@ -1221,8 +1221,6 @@ Empty entries will not be written.
 255 datasets starting at 0x24c4000, each 64 bytes. 
 
 ```
-
-
 57 | 024c4000 | 10 | 02000000 00000000 00000000 00000000 | a0 06 || .... .... .... .... || ................ ||
                      EIKKKKKK KKKKKKKK KKKKKKKK KKKKKKKK
 57 | 024c4010 | 10 | 00000000 00000012 34567890 12345678 | 66 06 || .... .... 4Vx. .4Vx || ........4Vx..4Vx ||
@@ -1873,7 +1871,7 @@ The software does not support gaps or empty entries. Talk groups after empty fie
 [...]
 ```
 
-## Talk group list
+## Talk group list (0x02680000)
 
 Max 10000 entries.
 
@@ -1957,7 +1955,7 @@ Up to 250 receive group calls possible. Start address for each group 0x02980000 
 Empty groups will not be written.
 
 
-## Local information (normally not written) - (0x002fa0000)
+## Local information (normally not written) - (0x02fa0000)
 
 ### Radio Type
 ```
