@@ -1983,25 +1983,55 @@ This memory area is read before each write request. What is this for?
 57 | 02fa0030 | 10 | 00000000 00000000 00000000 00000000 | 61 06 || .... .... .... .... || ................ ||
                      SNSNSNSN SNSNSNSN SNSNSNSN SNSNSNSN
                      
-   - SN - Serial Number: 16 bytes, ASCII
+   - SN - Serial Number: 16 bytes, ASCII, unused chars 0x00
    
 57 | 02fa0040 | 10 | 32303230 2d312d32 34000000 00000000 | 06 06 || 2020 -1-2 4... .... || 2020-1-24....... ||
                      PDPDPDPD PDPDPDPD PDPD
     
-    - PD - Production Date: ASCII
+    - PD - Production Date: max 16 bytes, ASCII, unused chars 0x00
 
 57 | 02fa0050 | 10 | 00000000 00000000 ffffffff ffffffff | 54 06 || .... .... ÿÿÿÿ ÿÿÿÿ || ........ÿÿÿÿÿÿÿÿ ||
-57 | 02fa0060 | 10 | 00000000 00000000 00000000 00000000 | 6c 06 || .... .... .... .... || ................ ||
-57 | 02fa0070 | 10 | 00000000 00000000 00000000 00000000 | 7c 06 || .... .... .... .... || ................ ||
-57 | 02fa0080 | 10 | 00000000 00000000 00000000 00000000 | 8c 06 || .... .... .... .... || ................ ||
-57 | 02fa0090 | 10 | 00000000 00000000 00000000 00000000 | 9c 06 || .... .... .... .... || ................ ||
-57 | 02fa00a0 | 10 | 00000000 00000000 00000000 00000000 | ac 06 || .... .... .... .... || ................ ||
-57 | 02fa00b0 | 10 | 00000000 00000000 00000000 00000000 | bc 06 || .... .... .... .... || ................ ||
-57 | 02fa00c0 | 10 | 00000000 00000000 00000000 00000000 | cc 06 || .... .... .... .... || ................ ||
-57 | 02fa00d0 | 10 | 00000000 00000000 00000000 00000000 | dc 06 || .... .... .... .... || ................ ||
-57 | 02fa00e0 | 10 | 00000000 00000000 00000000 00000000 | ec 06 || .... .... .... .... || ................ ||
-57 | 02fa00f0 | 10 | 00000000 00000000 00000000 00000000 | fc 06 || .... .... .... .... || ................ ||
+                     MCMCMCMC MCMCMCMC
 
+   - MC - Manufacture Code: max 8 bytes, ASCII, unused chars 0x00
+
+57 | 02fa0060 | 10 | 00000000 00000000 00000000 00000000 | 6c 06 || .... .... .... .... || ................ ||
+                     MDMDMDMD MDMDMDMD MDMDMDMD MDMDMDMD
+                     
+   - MD - Maintained Date: max 16 bytes, ASCII, unused chars 0x00
+
+57 | 02fa0070 | 10 | 00000000 00000000 00000000 00000000 | 7c 06 || .... .... .... .... || ................ ||
+                     DCDCDCDC DCDCDCDC DCDCDCDC DCDCDCDC
+
+   - DC - Dealer Code: max 16 bytes, ASCII, unused chars 0x00
+
+57 | 02fa0080 | 10 | 00000000 00000000 00000000 00000000 | 8c 06 || .... .... .... .... || ................ ||
+                     SDSDSDSD SDSDSDSD SDSDSDSD SDSDSDSD
+
+   - SD - Stock Date: max 16 bytes, ASCII, unused chars 0x00
+
+57 | 02fa0090 | 10 | 00000000 00000000 00000000 00000000 | 9c 06 || .... .... .... .... || ................ ||
+                     SDSDSDSD SDSDSDSD SDSDSDSD SDSDSDSD
+
+   - SD - Sell Date: max 16 bytes, ASCII, unused chars 0x00
+
+57 | 02fa00a0 | 10 | 00000000 00000000 00000000 00000000 | ac 06 || .... .... .... .... || ................ ||
+                     SESESESE SESESESE SESESESE SESESESE
+   
+   - SE - Seller: max 16 bytes, ASCII, unused chars 0x00
+
+57 | 02fa00b0 | 10 | 00000000 00000000 00000000 00000000 | bc 06 || .... .... .... .... || ................ ||
+                     MDMDMDMD MDMDMDMD MDMDMDMD MDMDMDMD                  
+57 | 02fa00c0 | 10 | 00000000 00000000 00000000 00000000 | cc 06 || .... .... .... .... || ................ ||
+                     MDMDMDMD MDMDMDMD MDMDMDMD MDMDMDMD                  
+57 | 02fa00d0 | 10 | 00000000 00000000 00000000 00000000 | dc 06 || .... .... .... .... || ................ ||
+                     MDMDMDMD MDMDMDMD MDMDMDMD MDMDMDMD                  
+57 | 02fa00e0 | 10 | 00000000 00000000 00000000 00000000 | ec 06 || .... .... .... .... || ................ ||
+                     MDMDMDMD MDMDMDMD MDMDMDMD MDMDMDMD                  
+57 | 02fa00f0 | 10 | 00000000 00000000 00000000 00000000 | fc 06 || .... .... .... .... || ................ ||
+                     MDMDMDMD MDMDMDMD MDMDMDMD MDMDMDMD                  
+
+   - MD - Maintained Description: max 80 bytes, ASCII, unused chars 0x00
 ```
 
 ## Talk group offsets (used for writing talk groups) - (0x04340000) 
