@@ -60,4 +60,19 @@ Boot radio in firmware receive mode (AT878UV: Hold PF3 (blue button on top) and 
 555044415445
 06
 ```
-A "Read device identifier" (see above) will follow.
+A "Read device identifier" query (see above) will follow.
+
+### Send Firmware Update data
+
+After 1 command byte = 0x01 ("FW" below), 4 bytes of memory address follow ("MAMAMAMA" below). The lowest byte is transmitted first! Then the complete .CDD file file will be transmitted in packets of 32 bytes ("." below). At the end of the file unused bytes will be padded by 0x00 to get 32 bytes of data. Then 2 bytes checksum follow ("CS" below). This is just a 2 byte sum of all bytes in memory address and data. The lowest byte is transmitted first! At the end of the packet an ACK byte (0x06) is send.
+
+```
+0100400008b83d0120e14b00082148000823480008274800082b4800082f48000800000000e70406
+FWMAMAMAMA................................................................CSCS06
+```
+
+The radio will respond with a single ACK byte (0x06).
+
+### End of Firmware Update
+
+The finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF2 (AT878UV: top function key on the left side) and PTT while switching on. In the following menu you can confirm flashing the device. Important: All setting will be overwritten. So backup your code plug first!
