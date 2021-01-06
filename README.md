@@ -22,7 +22,7 @@ https://github.com/reald/anytone-flash-tools/blob/master/at-d878uv_protocol.md
 https://github.com/reald/anytone-flash-tools/blob/master/at-d878uv_memory.md
 
 ## Available tools so far...
-This his highly experimental code. Use it at your own risk!
+This is highly experimental code. Use it at your own risk!
 
 * Digital contact list
   * Read digital contact list from radio to .csv file (readcontacts.py)
