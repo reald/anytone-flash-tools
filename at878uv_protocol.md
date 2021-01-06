@@ -69,10 +69,18 @@ After 1 command byte = 0x01 ("FW" below), 4 bytes of memory address follow ("MAM
 ```
 0100400008b83d0120e14b00082148000823480008274800082b4800082f48000800000000e70406
 FWMAMAMAMA................................................................CSCS06
+
+MAMAMAMA = 00400008 => Memory adress is 0x08004000
+CSCS = e704 => Checksum is 0x04e7
 ```
 
 The radio will respond with a single ACK byte (0x06).
 
 ### End of Firmware Update
 
-The finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF2 (AT878UV: top function key on the left side) and PTT while switching on. In the following menu you can confirm flashing the device. Important: All setting will be overwritten. So backup your code plug first!
+The finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF2 (AT878UV: top function key on the left side) and PTT while switching on. In the following menu you can confirm flashing the device. Important: **All setting will be overwritten! So **backup your code plug** first!
+
+```
+18
+06
+```
