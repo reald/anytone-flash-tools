@@ -16,16 +16,21 @@ tshark -T fields -e usb.capdata -r file.pcapng
 The script createhexdump.py formats the hex output to a more readable form. Then make transfers with small configuration changes and watch the difference in the hex dumps.
 
 ## AT-D878UV Serial protocol
-https://github.com/reald/anytone-flash-tools/blob/master/at878uv_protocol.md
+https://github.com/reald/anytone-flash-tools/blob/master/at-d878uv_protocol.md
 
 ## AT-D878UV memory layout
-https://github.com/reald/anytone-flash-tools/blob/master/at878uv_memory.md
+https://github.com/reald/anytone-flash-tools/blob/master/at-d878uv_memory.md
 
 ## Available tools so far...
 This his highly experimental code. Use it at your own risk!
 
-* Read digital contact list from radio to .csv file (readcontacts.py)
-* Write digital contact list from .csv file to radio (writecontacts.py)
+* Digital contact list
+  * Read digital contact list from radio to .csv file (readcontacts.py)
+  * Write digital contact list from .csv file to radio (writecontacts.py)
+
+* Emulator for flash protocol analysis
+  * Emulate Anytone D878UV radio to customer programming software via virtual null modem cables (emulator/at_d878uv_emulator.py)
+  * Receive intercepted programming data from AT-D878UV emulator via network and diff hexdumps (emulator/at_d878uv_server.py)
 
 ## WIP - understand memory layout
 * Channel
@@ -52,6 +57,7 @@ This his highly experimental code. Use it at your own risk!
 * Hotkey_QuickCall
 * Hotkey_State
 * Hotkey_Hotkey
+* Firmware Update
 
 ## Todo - understand memory layout
 
@@ -62,5 +68,4 @@ This his highly experimental code. Use it at your own risk!
 
 * Icon Update
 * Boot Image
-* Firmware Update
 * ...

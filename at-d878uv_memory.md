@@ -1,6 +1,6 @@
-# AT878UV memory layout
+# AT-D878UV memory layout
 
-* Observations done with firmware version 1.19. 
+* Observations done with firmware version 1.19. Version 1.21 still seems to be compatible.
 
 * **Observations and interpretations of memory dumps might be wrong. Use at your own risk!**
 

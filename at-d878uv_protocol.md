@@ -1,4 +1,4 @@
-# AT878UV Protocol
+# AT-D878UV Protocol
 
 Notes: 
 - Most investigations have been done with firmware version 1.19.
@@ -56,7 +56,7 @@ Just send Ascii "END". The radio will respond with an ACK byte (0x06) and return
 ```
 ### Start Firmware Update
 
-Boot radio in firmware receive mode (AT878UV: Hold PF3 (blue button on top) and PTT while switching on). Send Ascii "UPDATE". The radio will respond with an ACK byte (0x06).
+Boot radio in firmware receive mode (AT-D878UV: Hold PF3 (blue button on top) and PTT while switching on). Send Ascii "UPDATE". The radio will respond with an ACK byte (0x06).
 
 ```
 > 555044415445 (UPDATE)
@@ -80,7 +80,7 @@ The radio will respond with a single ACK byte (0x06).
 
 ### End of Firmware Update
 
-The finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF2 (AT878UV: top function key on the left side) and PTT while switching on. In the following menu you can confirm flashing the device. Important: **All settings will be overwritten!** So **backup your code plug BEFORE updating the firmware"**
+The finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF2 (AT-D878UV: top function key on the left side) and PTT while switching on. In the following menu you can confirm flashing the device. Important: **All settings will be overwritten!** So **backup your code plug BEFORE updating the firmware"**
 
 ```
 > 18

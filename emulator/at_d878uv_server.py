@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-# receive intercepted programming data from at878uv emulator via network
+# receive intercepted programming data from at-d878uv emulator via network
 # and diff hexdumps
 
 

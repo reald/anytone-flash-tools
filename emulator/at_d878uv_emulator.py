@@ -1,6 +1,6 @@
 #!python3
 #
-# Emulate anytone 878uv radio to customer programming software. 
+# Emulate anytone d878uv radio to customer programming software. 
 # Send intercepted data stream over network to server script for further investigation.
 #
 # This script connects to a virtual com port COM26 which is connected via a virtual

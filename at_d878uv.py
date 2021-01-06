@@ -1,4 +1,4 @@
-# Anytone 878UV specific data
+# Anytone D878UV specific data
 
 
 

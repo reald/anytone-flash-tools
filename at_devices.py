@@ -2,7 +2,7 @@ import csv
 
 # devices supported by this software
 list_known_devices = []
-list_known_devices.append({'devicename': b'ID878UV\x00', 'version': b'V100\x00'}) # Anytone 878UV
+list_known_devices.append({'devicename': b'ID878UV\x00', 'version': b'V100\x00'}) # Anytone D878UV
 
 
 
@@ -22,7 +22,7 @@ def is_device_supported(devicename, version):
 
          # known device found
          if devicename == b'ID878UV\x00':
-            import at_878uv as atm
+            import at_d878uv as atm
          else:
             print('ERR: Device found but no data file defined.')
             exit()
