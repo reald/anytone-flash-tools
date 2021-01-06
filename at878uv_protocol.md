@@ -52,5 +52,12 @@ Just send Ascii "END". The radio will respond with an ACK byte (0x06) and return
 > 454e44 (END)
 < 06 ([ACK])
 ```
+### Start Firmware Update
 
+Boot radio in firmware receive mode (AT878UV: Hold PF3 (blue button on top) and PTT while switching on). Send Ascii "UPDATE". The radio will respond with an ACK byte (0x06).
 
+```
+555044415445
+06
+```
+A "Read device identifier" (see above) will follow.
