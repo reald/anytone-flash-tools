@@ -1,5 +1,5 @@
 # anytone-flash-tools
-Independend flash tools for Anytone 878UV radios and maybe other anytone models
+Independend flash tools for Anytone D878UV radios and maybe other anytone models
 
 ## Goal
 Understand the communication protocol between customer programming software (CPS) and radio. Provide open source platform independent reprogramming tools.
@@ -15,10 +15,10 @@ tshark -T fields -e usb.capdata -r file.pcapng
 ```
 The script createhexdump.py formats the hex output to a more readable form. Then make transfers with small configuration changes and watch the difference in the hex dumps.
 
-## AT878UV Serial protocol
+## AT-D878UV Serial protocol
 https://github.com/reald/anytone-flash-tools/blob/master/at878uv_protocol.md
 
-## AT878UV memory layout
+## AT-D878UV memory layout
 https://github.com/reald/anytone-flash-tools/blob/master/at878uv_memory.md
 
 ## Available tools so far...
