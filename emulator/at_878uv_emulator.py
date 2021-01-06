@@ -139,6 +139,28 @@ try:
          serialPort.write(resp)
          sock.sendall( (resp.hex() + '\n').encode() )
 
+      elif ( command == b'UPDATE' ):
+         # for firmware update the device has to be switched on while pressing PF3 (blue button on top) and PTT keys
+         print("Start Firmware Update. Only useful if device is in update receiving mode. (Switch on while pressing PF3 (blue button on top) and PTT keys)")
+         resp = b'\x06' # just ack
+         serialPort.write(resp)
+         sock.sendall( (resp.hex() + '\n').encode() )
+
+      elif ( command == b'\x18' ):
+         print("Firmware Update Send Complete. Switch device on while pressing PF2 (top left side) and PTT keys to start installer.")
+         resp = b'\x06' # just ack
+         serialPort.write(resp)
+         sock.sendall( (resp.hex() + '\n').encode() )
+
+      elif ( command[0] == 0x01 ):
+         print("Firmware data.")
+         resp = b'\x06' # just ack
+         serialPort.write(resp)
+         sock.sendall( (resp.hex() + '\n').encode() )
+      else:
+         #print("> " + str(command))
+         pass
+
 
 
 finally:

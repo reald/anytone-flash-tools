@@ -14,7 +14,7 @@ import os
 # config
 myservername = '0.0.0.0' # 0.0.0.0 means listen on all interfaces
 mylistenport = 2342 # port name to listen on
-pathcreatehexdump = '/home/user/anytone-flash-tools/createhexdump.py'
+pathcreatehexdump = '../createhexdump.py'
 datadir = '/tmp'
 comparetool = 'meld'
 
@@ -98,7 +98,36 @@ while True:
                    alldata = ''
                    lastfilename = outfilename
                    datasetname = ''
+
+                elif ( line == '555044415445' ): # 'UPDATE'
+                   print("Firmware update session started!", file=sys.stderr)
+                   numconnects += 1
+                   datasetname = datetime.now().strftime("%y%m%d-%H%M%S-firmware-") + str(numconnects)
+
+                elif ( line == '18' ): # firmware update end
+                   p = pipes.Template()
+                   p.append(pathcreatehexdump + ' - > $OUT', '-f')
+                   # p.debug(True)
+
+                   outfilename = datadir + '/' + datasetname + '.data'
+                   f = p.open(outfilename, 'w')
+                   try:
+                      f.write(alldata)
+                   finally:
+                      f.close()
+
+                   #print(alldata)
+
+                   if ( len(lastfilename) > 0 ):
+                      # compare last 2 dumps
+                      print('Starting compare ' + lastfilename + ' ' + outfilename)
+                      os.spawnlp(os.P_NOWAIT, comparetool, comparetool, lastfilename , outfilename)
                    
+                   alldata = ''
+                   lastfilename = outfilename
+                   datasetname = ''
+
+
                 else:
                    pass
 
