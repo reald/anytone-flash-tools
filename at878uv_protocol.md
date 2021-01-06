@@ -1,6 +1,8 @@
 # AT878UV Protocol
 
-Note: All investigations have been done with firmware version 1.19.
+Notes: 
+- Most investigations have been done with firmware version 1.19.
+- Firmware version 1.21 seems to still be compatible.
 
 ## Connection
 The cable has no logic inside and just connects 3 USB wires (not the 5V pin). After plugging in and switching on the a serial port appears (/dev/ttyACM0 under linux).
