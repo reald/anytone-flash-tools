@@ -78,7 +78,7 @@ The radio will respond with a single ACK byte (0x06).
 
 ### End of Firmware Update
 
-The finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF2 (AT878UV: top function key on the left side) and PTT while switching on. In the following menu you can confirm flashing the device. Important: **All setting will be overwritten! So **backup your code plug** first!
+The finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF2 (AT878UV: top function key on the left side) and PTT while switching on. In the following menu you can confirm flashing the device. Important: **All settings will be overwritten!** So **backup your code plug BEFORE updating the firmware"**
 
 ```
 > 18
