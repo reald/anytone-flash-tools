@@ -37,7 +37,7 @@ for line in f.readlines():
    
    # parse line
          
-   m = re.search('(57)(........)(..)(.*)(..)(06)$', line)
+   m = re.search('^(57)(........)(..)(.*)(..)(06)$', line)
 
    if m is not None:
 

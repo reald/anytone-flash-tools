@@ -1,4 +1,4 @@
-#!python3
+#!/usr/bin/env python3
 #
 # Emulate anytone d878uv radio to customer programming software. 
 # Send intercepted data stream over network to server script for further investigation.
@@ -6,7 +6,10 @@
 # This script connects to a virtual com port COM26 which is connected via a virtual
 # null modem cable to the virtual com port COM18 which is used by the programming software.
 # This virtual ports and cable can be provided by the COM0COM tool.
-
+#
+# Linux users can use
+# socat -d -d pty,raw,echo=0,b4000000 pty,raw,echo=0,b4000000
+# for emulating a virtual null modem cable.
 
 import serial
 import time
@@ -16,9 +19,19 @@ import sys
 # config
 servername = '192.168.1.2' # ip or hostname of server
 serverport = 2342
-portname = 'COM26' # connected to COM18 with com0com. use COM18 in CPS
+comport = 'COM26' # connected to COM18 with com0com. use COM18 in CPS
 
 
+
+# parameters?
+if len(sys.argv) == 3:
+   servername = sys.argv[1]
+   comport = sys.argv[2]
+elif len(sys.argv) == 2:
+   servername = sys.argv[1]
+elif len(sys.argv) >3:
+   print("Usage: " + sys.argv[0] + ' servername [comport]')
+   exit()
 
 
 
@@ -26,10 +39,12 @@ portname = 'COM26' # connected to COM18 with com0com. use COM18 in CPS
 serialPort = None
 
 try:
-   serialPort = serial.Serial(port = portname, baudrate=4000000, bytesize=8, timeout=1, stopbits=serial.STOPBITS_ONE) # 115200 921600 4000000
+   print("Trying comport " + comport)
+   serialPort = serial.Serial(port = comport, baudrate=4000000, bytesize=8, timeout=1, stopbits=serial.STOPBITS_ONE) # 115200 921600 4000000
 except:
-   print('ERR: Could not open port ' + portname)
+   print('ERR: Could not open port ' + comport)
    exit()
+
 
 
 # make tcp connection
