@@ -43,6 +43,7 @@ try:
    serialPort = serial.Serial(port = comport, baudrate=4000000, bytesize=8, timeout=1, stopbits=serial.STOPBITS_ONE) # 115200 921600 4000000
 except:
    print('ERR: Could not open port ' + comport)
+   print("Usage: " + sys.argv[0] + ' servername [comport]')
    exit()
 
 

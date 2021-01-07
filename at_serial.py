@@ -19,6 +19,11 @@ def open_device(portname):
       print('ERR: Could not open port ' + portname)
       exit()
 
+
+
+def start_pcmode():
+   global serialPort
+
    # change to pc mode
    serialPort.write(b'PROGRAM')
 
@@ -29,10 +34,12 @@ def open_device(portname):
    if resp != b'QX\x06':
       print ('ERR: Unexpected response from device (' + str(resp) + ')' )
       exit()
+   else:
+      print('PC Mode ok.')
 
 
-   
-def close_device():
+
+def end_pcmode():
    global serialPort
 
    # leave pc mode
@@ -45,6 +52,43 @@ def close_device():
    if resp != b'\x06':
       print ('ERR: Unexpected response from device (' + str(resp) + ')' )
       exit()
+
+
+
+def start_updatemode():
+   global serialPort
+
+   # change to update mode
+   serialPort.write(b'UPDATE')
+
+   resp = serialPort.read()
+   while serialPort.in_waiting > 0:
+      resp += serialPort.read()
+
+   if resp != b'\x06':
+      print ('ERR: Unexpected response from device (' + str(resp) + ')' )
+      exit()
+
+
+
+def end_updatemode():
+   global serialPort
+
+   # leave pc mode
+   serialPort.write(b'\x18')
+
+   resp = serialPort.read()
+   while serialPort.in_waiting > 0:
+      resp += serialPort.read()
+
+   if resp != b'\x06':
+      print ('ERR: Unexpected response from device (' + str(resp) + ')' )
+      exit()
+
+
+
+def close_device():
+   global serialPort
 
    # close serial port   
    serialPort.close()
@@ -61,6 +105,7 @@ def get_device_info():
    while serialPort.in_waiting > 0:
       resp += serialPort.read()
 
+   # return devicename and version
    return ( resp[0:8], resp[9:14] )
 
 
@@ -253,7 +298,6 @@ def write_memory(address, data):
          
 
 
-
 def write_memory_hex(address, hexdata):
    global serialPort
    
@@ -307,4 +351,27 @@ def write_memory_hex(address, hexdata):
          print('WARN: No response on write request. Retransmitting at ' + str(address) )
          
 
-   
+
+def write_raw_hex(hexline):
+   # write raw and already complete hex string to radio
+   # warning: no checks!
+
+   global serialPort
+
+   data = bytes.fromhex(hexline)
+
+   serialPort.write(data)
+
+   # read answer
+   answ = bytearray()
+   answ.append( ord(serialPort.read()) )
+   while serialPort.in_waiting > 0:
+      answ.append( ord(serialPort.read()) )
+
+   if answ[0] == 0x06:
+      # ack received, ok
+      pass
+   else:
+      # no response. write again
+      print('WARN: No response on write request. Retransmitting not implemented. FIXME' )
+

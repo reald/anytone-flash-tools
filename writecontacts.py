@@ -21,6 +21,9 @@ else:
 at_serial.open_device(comport)
 
 
+# set pc mode
+at_serial.start_pcmode()
+
 
 # is this device supported?
 [devicename, version] = at_serial.get_device_info()
@@ -117,6 +120,11 @@ while ( len(contactListData) > 0 \
 
    
 # fixme: write padding
+
+
+# end pc mode
+at_serial.end_pcmode()
+
 
 # close device
 at_serial.close_device()
