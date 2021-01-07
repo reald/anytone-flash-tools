@@ -32,7 +32,10 @@ This is highly experimental code. Use it at your own risk!
   * Emulate Anytone D878UV radio to customer programming software via virtual null modem cables (emulator/at_d878uv_emulator.py)
   * Receive intercepted programming data from AT-D878UV emulator via network and diff hexdumps (emulator/at_d878uv_server.py)
 
-## WIP - understand memory layout
+* Flash Firmware
+  * Transfer firmware update to radio. Attention: Updating firmware will delete codeplug. Backup with CPS first! (firmware/flash_firmware.py)
+
+## Done - understand memory layout
 * Channel
 * 2 Tone Encode
 * APRS
