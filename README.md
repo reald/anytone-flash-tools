@@ -15,6 +15,8 @@ tshark -T fields -e usb.capdata -r file.pcapng
 ```
 The script createhexdump.py formats the hex output to a more readable form. Then make transfers with small configuration changes and watch the difference in the hex dumps.
 
+Instead of using wireshark and a real radio you can try the [AT-D878UV emulator](emulator/README.md) for programming protocol analysis. This script emulates the radio behaviour to the programming software and sends all of the programming data to a server script for deeper analysis. 
+
 ## AT-D878UV Serial protocol
 https://github.com/reald/anytone-flash-tools/blob/master/at-d878uv_protocol.md
 
@@ -26,16 +28,17 @@ This is highly experimental code. Use it at your own risk!
 
 * Digital contact list
 
-  * Write digital contact list from .csv file to radio (writecontacts.py)
-  * Read digital contact list from radio to .csv file (readcontacts.py)
-  * Hint: You can download digital contact lists for Anytone devices e.g. here: https://github.com/ContactLists/ContactLists/tree/master/Anytone  
+  * Write digital contact list from .csv file to radio ([writecontacts.py](writecontacts.py))
+  * Read digital contact list from radio to .csv file ([readcontacts.py](readcontacts.py))
+  * Hint: You can download digital contact lists for Anytone devices e.g. here: 
+       * https://github.com/ContactLists/ContactLists/tree/master/Anytone  
 
 * Emulator for flash protocol analysis
-  * Emulate Anytone D878UV radio to customer programming software via virtual null modem cables (emulator/at_d878uv_emulator.py)
-  * Receive intercepted programming data from AT-D878UV emulator via network and diff hexdumps (emulator/at_d878uv_server.py)
+  * Emulate Anytone D878UV radio to customer programming software via virtual null modem cables ([Emulator](emulator/at_d878uv_emulator.py))
+  * Receive intercepted programming data from AT-D878UV emulator via network and diff hexdumps ([Server](emulator/at_d878uv_server.py))
 
 * Flash Firmware
-  * Transfer firmware update to radio. Attention: Updating firmware will delete codeplug. Backup with CPS first! (firmware/flash_firmware.py)
+  * [Transfer firmware update](firmware/README.md) to radio. Attention: Updating firmware will delete codeplug. Backup with CPS first! 
   
 * Rewrite Hex Dump
   * Retransfer hex dump (saved by emulator) to a serial port (rewrite_hexdump.py)
