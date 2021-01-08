@@ -44,31 +44,36 @@ else:
 [resp, resplen] = at_serial.read_memory(at_devices.memSectContactsIndexAddr, at_devices.memSectContactsIndexSize)
 numContacts = (resp[3] << 24) + (resp[2] << 16) + (resp[1] << 8) + resp[0]
 memAddrEndContacts = (resp[7] << 24) + (resp[6] << 16) + (resp[5] << 8) + resp[4]
-print( "Reading " + str(numContacts) + ' contacts from radio...' )
 
 
+if numContacts > 0:
+   print( "Reading " + str(numContacts) + ' contacts from radio...' )
 
-# read contact list data
-contactListData = bytearray()
+   # read contact list data
+   contactListData = bytearray()
 
-#memAddrEndContacts = 0x45c0000 # debug
+   #memAddrEndContacts = 0x45c0000 # debug
 
-i = 0
+   i = 0
 
-while ( i < len(at_devices.memSectContacts) \
-        and at_devices.memSectContacts[i]['address'] <= memAddrEndContacts \
-      ):
+   while ( i < len(at_devices.memSectContacts) \
+           and at_devices.memSectContacts[i]['address'] <= memAddrEndContacts \
+         ):
    
-   # read block
-   numbytestoread = min ( at_devices.memSectContacts[i]['size'], (memAddrEndContacts - at_devices.memSectContacts[i]['address'] + 1) )
+      # read block
+      numbytestoread = min ( at_devices.memSectContacts[i]['size'], (memAddrEndContacts - at_devices.memSectContacts[i]['address'] + 1) )
 
-   [resp, resplen] = at_serial.read_memory(at_devices.memSectContacts[i]['address'], numbytestoread)
-   contactListData = contactListData + resp
+      [resp, resplen] = at_serial.read_memory(at_devices.memSectContacts[i]['address'], numbytestoread)
+      contactListData = contactListData + resp
    
-   i += 1
-   
-# parse data and create contact list .csv
-at_devices.contactlist2csv(contactListData, numContacts, exportfilename)
+      i += 1
+
+   # parse data and create contact list .csv
+   at_devices.contactlist2csv(contactListData, numContacts, exportfilename)
+
+else:
+   print("No contacts stored.")
+
 
 
 # end pc mode
