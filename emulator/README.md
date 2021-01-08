@@ -55,7 +55,7 @@ socat -d -d pty,raw,echo=0,b4000000 pty,raw,echo=0,b4000000
 ### Windows
 
 - e.g. com0com - http://com0com.sourceforge.net
-- Remove default cable pair with CNCx1 port (Anytone CPS has problems with alphanumeric port ids)
+- **Remove default cable pair with CNCx1 port** (Anytone CPS has problems with alphanumeric port ids)
 - Add pair e.g. COM18 - COM26
 - Activate "use Ports class [x]" at least for port COM18 (otherwise CPS will not find it)
 
