@@ -34,6 +34,9 @@ This is highly experimental code. Use it at your own risk!
 
 * Flash Firmware
   * Transfer firmware update to radio. Attention: Updating firmware will delete codeplug. Backup with CPS first! (firmware/flash_firmware.py)
+  
+* Rewrite Hex Dump
+  * Retransfer hex dump (saved by emulator) to a serial port (rewrite_hexdump.py)
 
 ## Done - understand memory layout
 * Channel
