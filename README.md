@@ -34,7 +34,7 @@ This is highly experimental code. Use it at your own risk!
        * https://github.com/ContactLists/ContactLists/tree/master/Anytone  
 
 * Emulator for flash protocol analysis
-  * Emulate Anytone D878UV radio to customer programming software via virtual null modem cables ([Emulator](emulator/at_d878uv_emulator.py))
+  * [Emulate](emulator/README.md) Anytone D878UV radio to customer programming software via virtual null modem cables ([Emulator](emulator/at_d878uv_emulator.py))
   * Receive intercepted programming data from AT-D878UV emulator via network and diff hexdumps ([Server](emulator/at_d878uv_server.py))
 
 * Flash Firmware
