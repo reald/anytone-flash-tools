@@ -21,8 +21,8 @@ Programming software <-> virtual null modem cable <-> at_d878uv_emulator.py <-> 
 ```
 
 The server will receive the programming data and stores each flash process in a seperate hex dump file. If one flash process ends it will automatically open
-a diff tool (meld) and compares the stored files of the latest flash process and the one before. This lets you very efficiently analyse each byte of the 
-flash process without using any hardware. Also wireshark is not needed any longer. (The stored hex dumps files can be flashed later again using rewrite_hexdump.py.)
+a diff tool (meld) and compare the stored files of the latest flash process and the one before. This lets you very efficiently analyse each byte of the 
+flash process without using any hardware. Also wireshark to intercept the USB connection is not needed any longer. (The stored hex dumps files can be flashed later again using rewrite_hexdump.py.)
 
 
 ## Start Server 
