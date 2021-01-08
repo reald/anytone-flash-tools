@@ -1,10 +1,19 @@
 # Anytone D878 emulator
 
-For analyzing the flash programming protocol a radio emulator has been very useful. Instead of flashing your real radio hardware you send your programming
+For analyzing the flash programming protocol a AT-D878UV radio emulator has been very useful. Instead of flashing real radio hardware you send your programming
 data to the emulator script over a virtual null modem cable. The script will behave like the radio and simply acknowledges the packets to the programming software.
 
 Instead of flashing a hardware the emulator will forward the programming data as hex strings to a server via a network connection. This is not mandatory,
-you can run emulator and server on the same machine. Just use "localhost" as servername.
+you can run emulator and server on the same machine. Just use "localhost" as server name.
+
+So instead of
+
+```
+Programming software <-> Anytone D878UV
+                   COM10 via USB
+```
+
+you will have this scenario:
 
 ```
 Programming software <-> virtual null modem cable <-> at_d878uv_emulator.py <-> LAN <-> at_d878uv_server.py
