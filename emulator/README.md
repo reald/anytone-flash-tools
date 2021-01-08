@@ -37,7 +37,7 @@ The server must be started before the emulator. Make sure you have write permiss
 ## Start Emulator
 
 ```
-python3 ./at_d878uv_emulator.py Servername COM26`
+python3 ./at_d878uv_emulator.py Servername COM26
 ``` 
 
 Servername can be "localhost" if its on the same machine. If you are using another port in your virtual null modem cable than COM26 
