@@ -25,8 +25,10 @@ https://github.com/reald/anytone-flash-tools/blob/master/at-d878uv_memory.md
 This is highly experimental code. Use it at your own risk!
 
 * Digital contact list
-  * Read digital contact list from radio to .csv file (readcontacts.py)
+
   * Write digital contact list from .csv file to radio (writecontacts.py)
+  * Read digital contact list from radio to .csv file (readcontacts.py)
+  * Hint: You can download digital contact lists for Anytone devices e.g. here: https://github.com/ContactLists/ContactLists/tree/master/Anytone  
 
 * Emulator for flash protocol analysis
   * Emulate Anytone D878UV radio to customer programming software via virtual null modem cables (emulator/at_d878uv_emulator.py)
