@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
-# Connects anytone programming software to anytone radio via network.
+# Connects programming software to serial port device (radio) via network.
+#
+# Programming software <-> virtual null modem cable <-> at_intercept_programmer.py <-> LAN <-> at_intercept_radio.py <-> Radio
+#                    COM18                        COM26                                                         /dev/ttyACM0
+#
 # The data stream is sent via network to a script (at_intercept_radio.py) where
-# the radio is connected via USB. On the radio side the datastream can be exported
+# the usb device is connected via USB. On the radio side the datastream can be exported
 # for further investigation.
 #
 # This script connects to a virtual com port COM26 which is connected via a virtual
@@ -97,7 +101,7 @@ try:
       if ( len (command_from_programmer) > 0 ):
          # send data from programming software on serial port to server with connected radio as hex encoded line
          to_network = (command_from_programmer.hex() + '\n').encode()
-         print("> " + to_network[:-1].decoder() )
+         print("> " + to_network[:-1].decode() )
          try:
             sock.sendall(to_network)
          except:
