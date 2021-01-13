@@ -1,5 +1,6 @@
 # Traffic interceptor
 
+For analyzing a unknown protocols between programming software and a radio this interceptor scripts can be used. On the programming software side a virtual null modem cable is used to connect the programming software
 and the interceptor script. All communication will be forwarded via network to another interceptor script. The radio is connected to an USB port here. 
 It is not mandatory to use two different machines and a LAN here, you can run both interceptor scripts on the same machine. Just use "localhost" as server name.
 
