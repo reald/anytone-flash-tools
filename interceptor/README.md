@@ -1,6 +1,6 @@
 # Traffic interceptor
 
-For analyzing a unknown protocols between programming software and a radio this interceptor scripts can be used. On the programming software side a virtual null modem cable is used to connect the programming software
+For analyzing unknown protocols between programming software and a serial device like a radio this interceptor scripts can be used. On the programming software side a virtual null modem cable is used to connect the programming software
 and the interceptor script. All communication will be forwarded via network to another interceptor script. The radio is connected to an USB port here. 
 It is not mandatory to use two different machines and a LAN here, you can run both interceptor scripts on the same machine. Just use "localhost" as server name.
 
@@ -19,8 +19,8 @@ Programming software <-> virtual null modem cable <-> at_intercept_programmer.py
 ```
 
 The script on radio side will intercept all data between the programming software and the radio and saves everything in a hex dump file. If the serial port is disconnected it will automatically open
-a diff tool (meld) and compare the stored files of the latest communication flow and the one before. This lets you very efficiently analyse each byte of the 
-the protocol. Also wireshark to intercept the USB connection is not needed any longer.
+a diff tool (meld by default) and compare the stored files of the latest communication flow and the one before. This lets you very efficiently analyse each byte of the 
+the communication protocol. Wireshark to intercept the USB connection is not needed any longer.
 
 
 ## Start interceptor on radio side
@@ -40,7 +40,7 @@ The radio side must be started first. Make sure you have write permissions in th
 python3 ./at_d878uv_emulator.py ServernameWithRadio COM26`
 ``` 
 
-Servername can be "localhost" if its on the same machine. If you are using an other port in your virtual null modem cable than COM26 
+The server name can be "localhost" if its on the same machine. If you are using a different port in your virtual null modem cable than COM26 
 make sure to adapt the port name to your settings.
 
 

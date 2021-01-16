@@ -33,12 +33,15 @@ This is highly experimental code. Use it at your own risk!
   * Hint: You can download digital contact lists for Anytone devices e.g. here: 
        * https://github.com/ContactLists/ContactLists/tree/master/Anytone  
 
+* Flash Firmware
+  * [Transfer firmware update](firmware/README.md) to radio. Attention: Updating firmware will delete codeplug. Backup with CPS first! 
+
 * Emulator for flash protocol analysis
   * [Emulate](emulator/README.md) Anytone D878UV radio to customer programming software via virtual null modem cables ([Emulator](emulator/at_d878uv_emulator.py))
   * Receive intercepted programming data from AT-D878UV emulator via network and diff hexdumps ([Server](emulator/at_d878uv_server.py))
 
-* Flash Firmware
-  * [Transfer firmware update](firmware/README.md) to radio. Attention: Updating firmware will delete codeplug. Backup with CPS first! 
+* Protocol interceptor
+  * Some helping scripts for intercepting serial port traffic ([/interceptor](interceptor))
   
 * Rewrite Hex Dump
   * Retransfer hex dump (saved by emulator) to a serial port (rewrite_hexdump.py)
