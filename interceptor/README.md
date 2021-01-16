@@ -49,8 +49,16 @@ make sure to adapt the port name to your settings.
 ### Linux
 
 ```
-socat -d -d pty,raw,echo=0,b4000000 pty,raw,echo=0,b4000000
+socat -d -d pty,raw,echo=0 pty,raw,echo=0
 ```
+
+For Linux you can use a shorter intercepting script without network support, too.
+
+```
+Programming software <-> virtual null modem cable <-> at_intercept_nonet.py <-> Radio
+                    /dev/pts/2                 /dev/pts/1                /dev/ttyACM0
+```
+
 
 ### Windows
 

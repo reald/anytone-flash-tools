@@ -49,7 +49,7 @@ make sure to adapt the port name to your settings.
 ### Linux
 
 ```
-socat -d -d pty,raw,echo=0,b4000000 pty,raw,echo=0,b4000000
+socat -d -d pty,raw,echo=0 pty,raw,echo=0
 ```
 
 ### Windows
