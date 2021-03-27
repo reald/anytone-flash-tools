@@ -44,7 +44,7 @@ Writing memory is done the same way as the radio response to a read request: 1 b
 > 5702fa002010ffffffffffffffff00000000000000002406
 < 06
 ```
-The checksum is calculated the same way as in the read response. 1 byte sum over address, length and payload, but not over the "W" byte. Contrary the the read memory command it seems not to be possible to set other data length values than 16 (0x10). :angry:
+The checksum is calculated the same way as in the read response. 1 byte sum over address, length and payload, but not over the "W" byte. Contrary to the read memory command it seems not to be possible to set other data length values than 16 (0x10). :angry:
 
 ### Leave programing session
 
@@ -80,7 +80,7 @@ The radio will respond with a single ACK byte (0x06).
 
 ### End of Firmware Update
 
-The finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF2 (AT-D878UV: top function key on the left side) and PTT while switching on. In the following menu you can confirm flashing the device. Important: **All settings will be overwritten!** So **backup your code plug BEFORE updating the firmware"**
+To finish the firmware transfer process 1 byte 0x18 is send to the radio. The radio will respond with a single ACK byte (0x06). To finally flash this image the radio has been switched on while pressing PF1 (AT-D878UV: top function key on the left side next to PTT) and PTT while switching on. In the following menu you can confirm flashing the device. Important: **All settings will be overwritten!** So **backup your code plug BEFORE updating the firmware"**
 
 ```
 > 18
