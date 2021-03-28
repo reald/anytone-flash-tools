@@ -15,5 +15,5 @@ Transfer Anytone firmware update file to radio.
   1. Run the flash tool with the .spi file as first and the serial port as second parameter:
     ```python3 ./flash_firmware.py firmware_image.spi /dev/ttyACM0```
   1. Watch for error messages. Stop process if something fails.
-  1. Switch device off and hold PF2 (top left side) and PTT keys while switching radio on again to start installer.
+  1. Switch device off and hold PF1 (top function key on the left side next to PTT) and PTT keys together while switching radio on again to start installer.
   1. Rewrite code plug and contact list to radio

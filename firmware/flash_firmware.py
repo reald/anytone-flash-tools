@@ -243,7 +243,7 @@ try:
      resp += serialPort.read()
 
    if resp == b'\x06':
-      print("Firmware successfully transferred. Switch device off and hold PF2 (top left side) and PTT keys while switching on to start installer.")
+      print("Firmware successfully transferred. Switch device off and hold PF1 (top function key on the left side next to PTT) and PTT keys together while switching on to start installer.")
    else:
       print("ERROR: Closing transfer failed (" + str(resp) + ")" )
 
