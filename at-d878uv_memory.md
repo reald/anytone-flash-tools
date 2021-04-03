@@ -256,9 +256,13 @@ There are up to 250 scanlists programmable which each can contain up to 50 chann
 ```
 Empty scanlist entries will not be written.
 
-One Scanlist contains 144 bytes. The memory is partitioned in multiple sections sometimes with bigger gaps in between. 
+One Scanlist contains 144 bytes data. They are placed with offsets of 0x200, every 16th scanlist is a bigger offset of 0x3e200 = 0x40000 - 15*0x200.
 
-The memory addresses for each scanlist are:
+Counting from 1 the memory address for each scanlist can be calculated:
+
+scanlistaddr = 0x01080000 + floor ((position-1) / 16) * 0x40000 + mod((position-1), 16) * 0x200
+
+So the memory addresses for each scanlist are:
 
 ```
 memSectScanlist = [
