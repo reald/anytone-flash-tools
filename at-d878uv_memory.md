@@ -1859,17 +1859,19 @@ Empty fields are 0xFFFFFFFF.
 The software does not support gaps or empty entries. Talk groups after empty fields will be moved forward to the first empty field.
 
 
-## ?? Unknown Talk group info (0x02640000)
+## Talk group list used entries (0x02640000)
 
 ```
 57 | 02640000 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
 57 | 02640010 | 10 | 00000000 00000000 0000f8ff ffffffff | 79 06 || .... .... ..øÿ ÿÿÿÿ || ..........øÿÿÿÿÿ ||
-                                           ??
 57 | 02640020 | 10 | ffffffff ffffffff ffffffff ffffffff | 86 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
-
-?? What is this byte for?
 [...]
+57 | 026404e0 | 10 | ffffff00 00000000 00000000 00000000 | 57 06 || ÿÿÿ. .... .... .... || ÿÿÿ............. ||
 ```
+0x02640000 .. 0x026404ef, inverted Bitmap: 1 bit for each used talk group list entry.
+0 -> entry used; 1 -> entry not used. Max 10000 entries. 
+
+Last 13 bytes unused (0x00).
 
 ## Talk group list (0x02680000)
 
