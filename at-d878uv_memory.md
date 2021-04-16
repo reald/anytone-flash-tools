@@ -1960,10 +1960,20 @@ Up to 250 receive group calls possible. Start address for each group 0x02980000 
 
 Empty groups will not be written.
 
-## Boot image (0x2ac0000)
+## Boot Image (0x2ac0000)
 
 Uncompressed binary format, width 160px, height 128px, 2 bytes per pixel (5 bits red, 6 bits green, 5 bits blue). 
 Total memory: 0x2ac0000 .. 0x2ac9fff (2*160*128 = 40960 bytes).
+
+## Standby BK Picture 1 (0x02b00000)
+
+Uncompressed binary format, width 160px, height 128px, 2 bytes per pixel (5 bits red, 6 bits green, 5 bits blue). 
+Total memory: 0x2b00000 .. 0x2b09fff (2*160*128 = 40960 bytes).
+
+## Standby BK Picture 2 (0x02b80000)
+
+Uncompressed binary format, width 160px, height 128px, 2 bytes per pixel (5 bits red, 6 bits green, 5 bits blue). 
+Total memory: 0x2b80000 .. 0x2b89fff (2*160*128 = 40960 bytes).
 
 ## Local information (normally not written) - (0x02fa0000)
 
