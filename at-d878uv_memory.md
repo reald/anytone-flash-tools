@@ -1966,28 +1966,30 @@ Empty groups will not be written.
 ### Radio Type
 ```
 57 | 02fa0000 | 10 | 00000000 01010100 00010120 202020ff | 90 06 || .... .... ...     ÿ || ...........    ÿ ||
-                     ??????BS ???????? ??????BP BPBPBP??
+                     ????FTBF CN??BS?? ??????BP BPBPBP??
    
-   - BS - Band Select: 0x00 Rx: 400-480 136-174 Tx:400-480 136-174
-                       0x01 Rx: 400-480 136-174 Tx:400-480 136-174 (12,5KHz Only)
-                       0x02 Rx: 430-440 136-174 Tx:430-440 136-174
-                       0x03 Rx: 400-480 136-174 Tx:430-440 144-146
-                       0x04 Rx: 440-480 136-174 Tx:440-480 136-174
-                       0x05 Rx: 440-480 144-146 Tx:440-480 144-146
-                       0x06 Rx: 446-447 136-174 Tx:446-447 136-174
-                       0x07 Rx: 400-480 136-174 Tx:420-450 144-148
-                       0x08 Rx: 400-470 136-174 Tx:400-470 136-174
-                       0x09 Rx: 430-432 144-146 Tx:430-432 144-146
-                       0x0a Rx: 400-480 136-174 Tx:430-450 144-148
-                       0x0b Rx: 400-520 136-174 Tx:400-520 136-174
-                       0x0c Rx: 400-490 136-174 Tx:400-490 136-174
-                       0x0d Rx: 400-480 136-174 Tx:403-470 136-174
-                       0x0e Rx: 400-520 220-225 136-174 Tx:400-520 220-225 136-174
-                       0x0f Rx: 420-520 144-148 Tx:420-520 144-148
-                       0x10 Rx: 430-440 144-147 Tx:430-440 144-147
-                       0x11 Rx: 430-440 136-174 Tx:136-174
-
-   - BP - Band Select Password, ASCII, 0x20202020 when empty. Always 4 Bytes? 
+   - FT - Full Test Mode: 0x00 off, 0x01 on. DON`T SET TO ONE! MIGHT BRICK YOUR DEVICE!
+   - BF - Band Frequency: 0x00 Rx: 400-480 136-174 Tx:400-480 136-174
+                          0x01 Rx: 400-480 136-174 Tx:400-480 136-174 (12,5KHz Only)
+                          0x02 Rx: 430-440 136-174 Tx:430-440 136-174
+                          0x03 Rx: 400-480 136-174 Tx:430-440 144-146
+                          0x04 Rx: 440-480 136-174 Tx:440-480 136-174
+                          0x05 Rx: 440-480 144-146 Tx:440-480 144-146
+                          0x06 Rx: 446-447 136-174 Tx:446-447 136-174
+                          0x07 Rx: 400-480 136-174 Tx:420-450 144-148
+                          0x08 Rx: 400-470 136-174 Tx:400-470 136-174
+                          0x09 Rx: 430-432 144-146 Tx:430-432 144-146
+                          0x0a Rx: 400-480 136-174 Tx:430-450 144-148
+                          0x0b Rx: 400-520 136-174 Tx:400-520 136-174
+                          0x0c Rx: 400-490 136-174 Tx:400-490 136-174
+                          0x0d Rx: 400-480 136-174 Tx:403-470 136-174
+                          0x0e Rx: 400-520 220-225 136-174 Tx:400-520 220-225 136-174
+                          0x0f Rx: 420-520 144-148 Tx:420-520 144-148
+                          0x10 Rx: 430-440 144-147 Tx:430-440 144-147
+                          0x11 Rx: 430-440 136-174 Tx:136-174
+   - CN . Chinese: 0x00 chinese, 0x01 not chinese.                          
+   - BS - Band Select: 0x00 off, 0x00 on.
+   - BP - Band Select Password, ASCII, 0x20202020 when empty. Always 4 bytes? 
                        
 57 | 02fa0010 | 10 | 44383738 55560001 00ffffff ffffffff | ac 06 || D878 UV.. .ÿÿÿ ÿÿÿÿ || D878UV...ÿÿÿÿÿÿÿ ||
                      RTRTRTRT RTRT  ?? ??
@@ -1999,9 +2001,13 @@ Empty groups will not be written.
 
 ```
 57 | 02fa0020 | 10 | ffffffff ffffffff 00000000 00000000 | 24 06 || ÿÿÿÿ ÿÿÿÿ .... .... || ÿÿÿÿÿÿÿÿ........ ||
+                                       PPPPPPPP ACACACAC
 ```
 
-This memory area is read before each write request. What is this for?
+This memory area is read before each write request. 
+
+   - PP - Program Password: Ascii, max 4 bytes, unused bytes are 0x00.
+   - AC - Area Code: Ascii, max 4 bytes, unused bytes are 0x00.
 
 
 ### Local information (0x02fa0030)
