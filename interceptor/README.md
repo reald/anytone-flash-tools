@@ -37,7 +37,7 @@ The radio side must be started first. Make sure you have write permissions in th
 ## Start interceptor on programming software side
 
 ```
-python3 ./at_d878uv_emulator.py ServernameWithRadio COM26`
+python3 ./at_d878uv_emulator.py ServernameWithRadio COM26
 ``` 
 
 The server name can be "localhost" if its on the same machine. If you are using a different port in your virtual null modem cable than COM26 
