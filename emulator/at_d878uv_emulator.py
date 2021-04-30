@@ -20,7 +20,7 @@ import sys
 servername = '192.168.1.2' # ip or hostname of server
 serverport = 2342
 comport = 'COM26' # connected to COM18 with com0com. use COM18 in CPS
-
+bandfrequency = b'\x0e' # b'\x00'
 
 
 # parameters?
@@ -85,7 +85,7 @@ try:
 
       elif ( command == b'\x02' ):
          print("Device info requested.")
-         resp = b'ID878UV\x00\x00V100\x00\x00\x06'
+         resp = b'ID878UV\x00' + bandfrequency + b'V100\x00\x00\x06'
          serialPort.write(resp)
          sock.sendall( (resp.hex() + '\n').encode() )
 
@@ -102,7 +102,7 @@ try:
          resp = b'W\x02\xfa\x00' + bytes([command[4]]) + b'\x10'
          
          if ( command[4] == 0x00 ):
-            resp += b'\x00\x00\x00\x00\x01\x01\x01\x00\x00\x01\x01\x20\x20\x20\x20\xff'
+            resp += b'\x00\x00\x00' + bandfrequency + b'\x01\x01\x01\x00\x00\x01\x01\x20\x20\x20\x20\xff'
                                            
          elif ( command[4] == 0x10 ): # Radio Type
             resp += b'\x44\x38\x37\x38\x55\x56\x00\x01\x00\xff\xff\xff\xff\xff\xff\xff'
