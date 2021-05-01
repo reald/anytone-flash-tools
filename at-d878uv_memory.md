@@ -1641,7 +1641,14 @@ In this memory block the channel B for each zone is stored. The position is calc
 57 | 02501080 | 10 | 00010000 00000000 00000000 00000000 | f3 06 || .... .... .... .... || ................ ||
                      SLRD
 57 | 02501090 | 10 | 00000000 00000000 00000000 00000000 | 02 06 || .... .... .... .... || ................ ||
-=> Size: 0x2501000 .. 0x250109f: 160 bytes
+57 | 025010a0 | 10 | 00000000 00002609 00000000 00000000 | 41 06 || .... ..&. .... .... || ......&......... ||
+                                  AAAA
+57 | 025010b0 | 10 | 00000000 00000000 00000000 00000000 | 22 06 || .... .... .... .... || ................ ||
+57 | 025010c0 | 10 | 00000000 00000000 00000000 00000000 | 32 06 || .... .... .... .... || ................ ||
+57 | 025010d0 | 10 | 00000000 00000000 00000000 00000000 | 42 06 || .... .... .... .... || ................ ||
+57 | 025010e0 | 10 | 00000000 00000000 00000000 00000000 | 52 06 || .... .... .... .... || ................ ||
+57 | 025010f0 | 10 | 00000000 00000000 00000000 00000000 | 62 06 || .... .... .... .... || ................ ||
+=> Size: 0x2501000 .. 0x25010ff: 256 bytes
 
 - TF - Tx Frequency: BCD (4 bytes)
 - TD - Transmit Delay: 1 byte, 0x00 -> off, 0x03 -> 60ms, 0xff 5100ms. Transmit Delay = value * 20ms 
@@ -1670,6 +1677,7 @@ In this memory block the channel B for each zone is stored. The position is calc
 - RO - Support for Roaming: 0x00 -> off, 0x01 -> on
 - SL - Slot 1-8: 0x00 -> Channel Slot, 0x01 -> Slot 1, 0x02 -> Slot 2, 1 byte, one after another
 - RD - Repeater Activation Delay: 0x00 -> off, 0x01 -> 100ms, 0x03 -> 300ms, 0x10 -> 1000ms
+- AA - Aprs Alt Data(feet): 2 bytes, low byte first, resolution 1 Ft, 0x926 = 2342 -> 2342 Ft
 ```
 
 Other expected values: "APRS TG","Call Type"
