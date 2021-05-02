@@ -1647,10 +1647,10 @@ In this memory block the channel B for each zone is stored. The position is calc
 57 | 02501070 | 10 | 00000000 00000000 00000000 00000000 | e2 06 || .... .... .... .... || ................ ||
                      CTCTCTCT CTCTCTCT ROSLSLSL SLSLSLSL
 57 | 02501080 | 10 | 00010000 00000000 00000000 00000000 | f3 06 || .... .... .... .... || ................ ||
-                     SLRD
+                     SLRDAD
 57 | 02501090 | 10 | 00000000 00000000 00000000 00000000 | 02 06 || .... .... .... .... || ................ ||
 57 | 025010a0 | 10 | 00000000 00002609 00000000 00000000 | 41 06 || .... ..&. .... .... || ......&......... ||
-                                  AAAA
+                                  AAAA O1O2
 57 | 025010b0 | 10 | 00000000 00000000 00000000 00000000 | 22 06 || .... .... .... .... || ................ ||
 57 | 025010c0 | 10 | 00000000 00000000 00000000 00000000 | 32 06 || .... .... .... .... || ................ ||
 57 | 025010d0 | 10 | 00000000 00000000 00000000 00000000 | 42 06 || .... .... .... .... || ................ ||
@@ -1664,7 +1664,10 @@ In this memory block the channel B for each zone is stored. The position is calc
 - CT - CTCSS: 1 byte 0x00-> 62.5, 0x03 -> 71.9 Hz. Todo: complete list
 - DC - DCS: 1 byte: 0x13 -> D023. Todo: complete list
 - AI - Manual TX Interval: 0x00 -> 0; 0xff -> 255s
-- AI - APRS Auto TX Interval: 0 -> Off; 2 -> 60s; 255 -> 7650s
+- AI - APRS Auto TX Interval: 
+   - 0 -> Off; 2 -> 60s; 255 -> 7650s (until fw 1.21)
+   - 0 -> Off; 45s+ n *15s (n=1..255 -> 60s .. 3870s) (fw 1.22)
+   - 0 -> Off; 1-> 30s; 2->   45s   + (n-1) *15s (n=2..255 -> 60s .. 3855s). 3870 selectable in CPS but invalid. (fw 1.23)
 - FB - Fixed location beacon: 0x00 -> Off (GPS), 0x01 -> On (send fix position)
 - LA - latitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> N, 1 -> S)
 - TT - ARPS Tx Tone: 0x00 -> off, 0x01 -> on
@@ -1685,7 +1688,10 @@ In this memory block the channel B for each zone is stored. The position is calc
 - RO - Support for Roaming: 0x00 -> off, 0x01 -> on
 - SL - Slot 1-8: 0x00 -> Channel Slot, 0x01 -> Slot 1, 0x02 -> Slot 2, 1 byte, one after another
 - RD - Repeater Activation Delay: 0x00 -> off, 0x01 -> 100ms, 0x03 -> 300ms, 0x10 -> 1000ms
+- AD - AprsDisTime: 0x00 -> 3s .. 0x0c -> 15s, 0x0d -> Infinity
 - AA - Aprs Alt Data(feet): 2 bytes, low byte first, resolution 1 Ft, 0x926 = 2342 -> 2342 Ft
+- O1 - Other options 1: 1 byte: bit 0: POSITION, bit 1: MIC-E, bit 2: OBJECT, bit 3: ITEM, bit 4: MESSAGE, bit 5: WX REPORT, bit 6: NMEA report, bit 7: STATUS report
+- O2 - Other options 2: 1 byte: bit 0: OTHER
 ```
 
 Other expected values: "APRS TG","Call Type"
@@ -1751,32 +1757,22 @@ CPS supports up to 60 Bytes sending text.
    - TP - TOT Predict (Other): 0x00 -> off, 0x01 -> on
    - TG - TxPow Agc (Other):  0x00 -> off, 0x01 -> on
    - CA - Zone Name Colour A: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White
-   - Cb - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                          - ApoKind (Power Save): 1 byte, 0x00 -> is affected by call, 0x01 -> is not affected by call
+   - CB - Zone Name Colour B: 1 byte, 0x00 -> orange, 0x01 -> Red, 0x02 -> Yellow, 0x03 -> Green, 0x04 -> Turquoise, 0x05 -> Blue, 0x06 -> White                          - AK - ApoKind (Power Save): 1 byte, 0x00 -> is affected by call, 0x01 -> is not affected by call
 
 
 ```
 
-## Unknown (introduced with firmware 1.22)
+## Analog APRS list (introduced with firmware 1.22)
+
+Each entry has 4 bytes and starts at 0x02501800 + 4 * [id number]. Up to 32 entries possible.
 
 ```
 57 | 02501800 | 10 | 00000000 00000000 00000000 00000000 | 7a 06 || .... .... .... .... || ................ ||
-57 | 02501810 | 10 | 00000000 00000000 00000000 00000000 | 8a 06 || .... .... .... .... || ................ ||
-57 | 02501820 | 10 | 00000000 00000000 00000000 00000000 | 9a 06 || .... .... .... .... || ................ ||
-57 | 02501830 | 10 | 00000000 00000000 00000000 00000000 | aa 06 || .... .... .... .... || ................ ||
-57 | 02501840 | 10 | 00000000 00000000 00000000 00000000 | ba 06 || .... .... .... .... || ................ ||
-57 | 02501850 | 10 | 00000000 00000000 00000000 00000000 | ca 06 || .... .... .... .... || ................ ||
-57 | 02501860 | 10 | 00000000 00000000 00000000 00000000 | da 06 || .... .... .... .... || ................ ||
-57 | 02501870 | 10 | 00000000 00000000 00000000 00000000 | ea 06 || .... .... .... .... || ................ ||
-57 | 02501880 | 10 | 00000000 00000000 00000000 00000000 | fa 06 || .... .... .... .... || ................ ||
-57 | 02501890 | 10 | 00000000 00000000 00000000 00000000 | 0a 06 || .... .... .... .... || ................ ||
-57 | 025018a0 | 10 | 00000000 00000000 00000000 00000000 | 1a 06 || .... .... .... .... || ................ ||
-57 | 025018b0 | 10 | 00000000 00000000 00000000 00000000 | 2a 06 || .... .... .... .... || ................ ||
-57 | 025018c0 | 10 | 00000000 00000000 00000000 00000000 | 3a 06 || .... .... .... .... || ................ ||
-57 | 025018d0 | 10 | 00000000 00000000 00000000 00000000 | 4a 06 || .... .... .... .... || ................ ||
-57 | 025018e0 | 10 | 00000000 00000000 00000000 00000000 | 5a 06 || .... .... .... .... || ................ ||
-57 | 025018f0 | 10 | 00000000 00000000 00000000 00000000 | 6a 06 || .... .... .... .... || ................ ||
-=> Block 110: 
-=> Size: 0x2501800 .. 0x25018ff: 256 bytes
+                     RACACACA CACACASI RACACACA CACACASI
+
+   - RA - Receive allow: 0x00 -> off, 0x01 -> on
+   - CA - Callsign: Ascii, max 6 bytes, 0x00 padded.
+   - SI - SSID: 0x0f -> Off, 0x00 -> 0 .. 0x0e -> -15
 
 ```
 
