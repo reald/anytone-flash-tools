@@ -2,7 +2,7 @@
 
 * Firmware history
   * First observations done with firmware versions 1.19 and 1.20p.
-  * 1.21: Fixed location beacon (0x250100D) can be activated but off by default.
+  * 1.21: Fixed location beacon (0x250100d) can be activated but off by default.
   * 1.22: 
     * General Aprs settings memory area extended by 0x025010a0..0x025010ff
     * New memory area 0x2501800 .. 0x25018ff (Analog APRS list)
