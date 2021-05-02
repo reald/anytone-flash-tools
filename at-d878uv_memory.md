@@ -1669,9 +1669,9 @@ In this memory block the channel B for each zone is stored. The position is calc
 - DC - DCS: 1 byte: 0x13 -> D023. Todo: complete list
 - AI - Manual TX Interval: 0x00 -> 0; 0xff -> 255s
 - AI - APRS Auto TX Interval: 
-   - 0 -> Off; 2 -> 60s; 255 -> 7650s (until fw 1.21)
-   - 0 -> Off; 45s+ n *15s (n=1..255 -> 60s .. 3870s) (fw 1.22)
-   - 0 -> Off; 1-> 30s; 2->   45s   + (n-1) *15s (n=2..255 -> 60s .. 3855s). 3870 selectable in CPS but invalid. (fw 1.23)
+   - 0 -> Off; n -> 30s * n, 2 -> 60s; 255 -> 7650s (until fw 1.21)
+   - 0 -> Off; n -> 45s + n * 15s (n=1..255 -> 60s .. 3870s) (fw 1.22)
+   - 0 -> Off; 1 -> 30s; n -> 45s + (n-1) *15s (n=2..255 -> 60s .. 3855s). 3870 selectable in CPS but invalid. (fw 1.23)
 - FB - Fixed location beacon: 0x00 -> Off (GPS), 0x01 -> On (send fix position)
 - LA - latitude: 1 byte degree, 1 byte minute, 1 byte minute fraction, 1 byte sign (0 -> N, 1 -> S)
 - TT - ARPS Tx Tone: 0x00 -> off, 0x01 -> on
