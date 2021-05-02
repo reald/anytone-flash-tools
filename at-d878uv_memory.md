@@ -2,13 +2,16 @@
 
 * Firmware history
   * First observations done with firmware versions 1.19 and 1.20p.
-  * 1.21: Fixed location beacon (0x250100d) can be activated but off by default.
+  * 1.21: Fixed location beacon (0x250100d) can be activated
   * 1.22: 
     * General Aprs settings memory area extended by 0x025010a0..0x025010ff
     * New memory area 0x2501800 .. 0x25018ff (Analog APRS list)
     * Different settings for hotkeys/Analog Quick Call (0x025c0000 .. 0x025c0003) (removed in 1.23)
-   * 1.23:
-      * Fixed location beacon (0x250100d) on
+    * New formula APRS Auto TX Interval
+  * 1.23:
+    * Different setting for hotkeys/Analog Quick Call of 1.22 removed again
+    * New formula APRS Auto TX Interval
+
 
 
 * **Observations and interpretations of memory dumps might be wrong. Use at your own risk!**
@@ -1768,7 +1771,7 @@ CPS supports up to 60 Bytes sending text.
 Each entry has 4 bytes and starts at 0x02501800 + 4 * [id number]. Up to 32 entries possible.
 
 ```
-57 | 02501800 | 10 | 00000000 00000000 00000000 00000000 | 7a 06 || .... .... .... .... || ................ ||
+57 | 02501800 | 10 | 00000000 00000010 00000000 00000010 | 9a 06 || .... .... .... .... || ................ ||
                      RACACACA CACACASI RACACACA CACACASI
 
    - RA - Receive allow: 0x00 -> off, 0x01 -> on
