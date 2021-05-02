@@ -2215,7 +2215,7 @@ In this block beginning at address 0x04500000 the contact information for every 
          - ID: TG/DMRID as BCD, 4 bytes
          - CA: Call Alert/friend list:
             - Bits 0-3: 0000 (0) -> none, 0001 (1) -> Ring, 0010 (2) -> Online Alert
-            - Bits 4-7: 0000 (0) ->  not on friends list, 0001 (16) -> on friends list
+            - Bits 4-7: 0000 (0) -> not on friends list, 0001 (16) -> on friends list
          - NA: Name. ASCII, 0 terminated, max 16 bytes
          - CI: City. ASCII, 0 terminated, max 15 bytes
          - CS: Callsign, ASCII, 0 terminated, max. 8 bytes
