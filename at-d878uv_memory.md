@@ -6,9 +6,10 @@
   * 1.22: 
     * General Aprs settings memory area extended by 0x025010a0..0x025010ff
     * New memory area 0x2501800 .. 0x25018ff (Analog APRS list)
-  * 1.23:
-    * Fixed location beacon (0x250100d) on
-    * Different settings for hotkeys (0x025c0000 .. 0x025c0003) (still unknown)
+    * Different settings for hotkeys/Analog Quick Call (0x025c0000 .. 0x025c0003) (removed in 1.23)
+   * 1.23:
+      * Fixed location beacon (0x250100d) on
+
 
 * **Observations and interpretations of memory dumps might be wrong. Use at your own risk!**
 
