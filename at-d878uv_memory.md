@@ -22,7 +22,7 @@
 
 ## Channel List
 
-### 4000 Channels + 2 VFO
+### 4000 Channels + 2 VFO (0x00800000)
 ```
 57 | 00800000 | 10 | 14550000 00000000 04000000 11001100 | 1f 06 || .U.. .... .... .... || .U.............. ||
                      RFRFRFRF TOTOTOTO MMCTCECD DEDEDDDD
@@ -1961,6 +1961,36 @@ Max 10000 entries.
 On entry after another. 100 bytes per dataset? TBC. More management information at 0x04340000 when writing.
 
 
+## Analog Address Book Used Entries Index List (0x02900000)
+
+```
+57 | 02900000 | 10 | 000102ff ffffffff ffffffff ffffffff | 98 06 || ...ÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ...ÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900010 | 10 | ffffffff ffffffff ffffffff ffffffff | a2 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900020 | 10 | ffffffff ffffffff ffffffff ffffffff | b2 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900030 | 10 | ffffffff ffffffff ffffffff ffffffff | c2 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900040 | 10 | ffffffff ffffffff ffffffff ffffffff | d2 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900050 | 10 | ffffffff ffffffff ffffffff ffffffff | e2 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900060 | 10 | ffffffff ffffffff ffffffff ffffffff | f2 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900070 | 10 | ffffffff ffffffff ffffffff ffffffff | 02 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+```
+0x02900100 .. 0x0290017f, 1 byte for each analog address book list entry. Used entry is 0-based index to the actual contact; 0xff -> entry not used. 128 entries.
+
+
+## Analog Address Book Used Entries (0x02900100)
+
+```
+57 | 02900100 | 10 | 000000ff ffffffff ffffffff ffffffff | 96 06 || ...ÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ...ÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900110 | 10 | ffffffff ffffffff ffffffff ffffffff | a3 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900120 | 10 | ffffffff ffffffff ffffffff ffffffff | b3 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900130 | 10 | ffffffff ffffffff ffffffff ffffffff | c3 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900140 | 10 | ffffffff ffffffff ffffffff ffffffff | d3 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900150 | 10 | ffffffff ffffffff ffffffff ffffffff | e3 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900160 | 10 | ffffffff ffffffff ffffffff ffffffff | f3 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+57 | 02900170 | 10 | ffffffff ffffffff ffffffff ffffffff | 03 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
+```
+0x02900100 .. 0x0290017f, 1 byte for each analog address book list entry. 0x00 -> entry used; 0xff -> entry not used. 128 entries.
+
+
 ## Analog Address Book (0x02940000)
 
 ```
@@ -1974,7 +2004,7 @@ On entry after another. 100 bytes per dataset? TBC. More management information 
 57 | 02940050 | 10 | 50656761 73757320 50726f6a 656b7400 | cd 06 || Pega sus  Proj ekt. || Pegasus Projekt. ||
 
    - NR - Number, 4 bytes BCD coded. Highest nibble at lowest address. 0 Padded at the end. Max 8 digits, more will crash CPS.
-   - LN - 1 byte, length of number/digits. Necessary to compare end from 0 at the last digits.
+   - LN - 1 byte, length of number/digits. Necessary to distinguish end from 0 at the last digit.
    - NA - NAME, 15 byte, ASCII. Zero padded.
    
 Start at 0x02940000, 1 record is 24 bytes, up to 128 records can be stored. There are no empty records, CPS moves other records to empty places. End of last record is approx. at 0x02940bff. TBC.
