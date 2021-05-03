@@ -22,7 +22,7 @@
 
 ## Channel List
 
-### 4000 Channels + 2 VFO (0x00800000)
+### 4000 Channels + 2 VFO
 ```
 57 | 00800000 | 10 | 14550000 00000000 04000000 11001100 | 1f 06 || .U.. .... .... .... || .U.............. ||
                      RFRFRFRF TOTOTOTO MMCTCECD DEDEDDDD
