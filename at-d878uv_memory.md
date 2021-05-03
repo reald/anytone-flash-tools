@@ -173,7 +173,7 @@ Empty zones will not be written.
 
 ## Roaming Channels (0x01040000)
 
-Each entry has 32 bytes and start at 0x01040000 + 32 * [id number]. 
+Each entry has 32 bytes and start at 0x01040000 + 32 * [id number]. Max 250 Roaming channels.
 
 ```
 57 | 01040000 | 10 | 44000000 43990000 0201526f 616d2043 | 2a 06 || D... C... ..Ro am C || D...C.....Roam C ||
@@ -236,7 +236,7 @@ Each entry has 128 bytes and start at 0x01043000 + 128 * [id number]. Range of [
 
 Empty entries will not be written.
 
-## Scanlists (0x001080000)
+## Scanlists (0x01080000)
 
 There are up to 250 scanlists programmable which each can contain up to 50 channels.
 
@@ -1213,8 +1213,6 @@ Byte 8: 0x02 = b10000010 -> scanlist 250 used. (8 bit/byte * 31 bytes before + 2
   - NA - Name: ASCII, up to 7 bytes, pad with 0x00 if shorter
 
 57 | 024c2420 | 10 | 00000000 00000000 00000000 00000000 | a2 06 || .... .... .... .... || ................ ||
-=> Block 127: 
-=> Size: 0x24c2400 .. 0x24c242f: 48 bytes
 
 [...]
 
@@ -1566,7 +1564,7 @@ CDT Scan - 0x32
 
 ## Zone A Channel (0x02500100)
 
-In this memory block the channel A for each zone is stored. The position is calculated by position = 0x0250100 + 2 * [zonenumber]
+In this memory block the channel A for each zone is stored. The position is calculated by position = 0x0250100 + 2 * [zonenumber], max 250 Zones.
 
 ```
 57 | 02500100 | 10 | 00000100 00000500 05000000 08000800 | 7e 06 || .... .... .... .... || ................ ||
@@ -1578,7 +1576,7 @@ In this memory block the channel A for each zone is stored. The position is calc
 
 ## Zone B Channel (0x02500300)
 
-In this memory block the channel B for each zone is stored. The position is calculated by position = 0x0250300 + 2 * [zonenumber]
+In this memory block the channel B for each zone is stored. The position is calculated by position = 0x0250300 + 2 * [zonenumber], max 250 Zones.
 
 ```
 57 | 02500300 | 10 | 01000100 09000000 00000b00 0a000a00 | 8f 06 || .... .... .... .... || ................ ||
@@ -1724,7 +1722,7 @@ CPS supports up to 60 Bytes sending text.
                      
 ```
 
-## more optional settings  (0x02501400)
+## more optional settings (0x02501400)
 ```
 57 | 02501400 | 10 | 00000000 00000000 00000000 00000000 | 76 06 || .... .... .... .... || ................ ||
                      TA
@@ -1833,7 +1831,7 @@ State Content beginning at 0x025c0100, 32 bytes each, ASCII, 0 terminated, max 3
 
 18 Hot Key combinations, start at 0x25c0500, 48 bytes for each memory.
 
-Order: Hot Key 1, Hot Key 2, Hot Key 3, Hot Key $, Hot Key 5, Hot Key 6, 
+Order: Hot Key 1, Hot Key 2, Hot Key 3, Hot Key 4, Hot Key 5, Hot Key 6, 
        Fun Key+0, Fun Key+1, Fun Key+2, Fun Key+3, Fun Key+4, Fun Key+5, Fun Key+6, Fun Key+7, Fun Key+8, Fun Key+9, Fun Key+*, Fun Key+#
 
 57 | 025c0500 | 10 | 00030105 ffffffff 00000000 00000000 | 78 06 || .... ÿÿÿÿ .... .... || ....ÿÿÿÿ........ ||
@@ -1863,10 +1861,6 @@ Order: Hot Key 1, Hot Key 2, Hot Key 3, Hot Key $, Hot Key 5, Hot Key 6,
                      BBBBBBBB
 
    - B - 1 bit for every used State Content (Hot Key). 0 -> entry is free, 1 -> entry is used. Max. 32 entries.
-                     
-57 | 025c0b10 | 10 | ff030000 00000000 00000000 00000000 | 8b 06 || ÿ... .... .... .... || ÿ............... ||
-                     ????
-57 | 025c0b20 | 10 | 00000000 00000000 00000000 00000002 | 9b 06 || .... .... .... .... || ................ ||
 ```
 
 ## Receive group call list entry used (0x025c0b10)
@@ -1973,7 +1967,7 @@ On entry after another. 100 bytes per dataset? TBC. More management information 
 57 | 02900060 | 10 | ffffffff ffffffff ffffffff ffffffff | f2 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
 57 | 02900070 | 10 | ffffffff ffffffff ffffffff ffffffff | 02 06 || ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ ÿÿÿÿ || ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ||
 ```
-0x02900100 .. 0x0290017f, 1 byte for each analog address book list entry. Used entry is 0-based index to the actual contact; 0xff -> entry not used. 128 entries.
+0x02900000 .. 0x0290017f, 1 byte for each analog address book list entry. Used entry is 0-based index to the actual contact; 0xff -> entry not used. 128 entries.
 
 
 ## Analog Address Book Used Entries (0x02900100)
@@ -2030,20 +2024,10 @@ Up to 250 receive group calls possible. Start address for each group 0x02980000 
 
 Empty groups will not be written.
 
-## Boot Image (0x2ac0000)
+## Boot Logo (0x2ac0000)
 
 Uncompressed binary format, width 160px, height 128px, linewise from top left to bottom right, 2 bytes per pixel (5 bits red, 6 bits green, 5 bits blue). 
 Total memory: 0x2ac0000 .. 0x2ac9fff (2*160*128 = 40960 bytes).
-
-## Standby BK Picture 1 (0x02b00000)
-
-Uncompressed binary format, width 160px, height 128px, linewise from top left to bottom right, 2 bytes per pixel (5 bits red, 6 bits green, 5 bits blue). 
-Total memory: 0x2b00000 .. 0x2b09fff (2*160*128 = 40960 bytes).
-
-## Standby BK Picture 2 (0x02b80000)
-
-Uncompressed binary format, width 160px, height 128px, linewise from top left to bottom right, 2 bytes per pixel (5 bits red, 6 bits green, 5 bits blue). 
-Total memory: 0x2b80000 .. 0x2b89fff (2*160*128 = 40960 bytes).
 
 ## Local information (normally not written) - (0x02fa0000)
 
@@ -2149,6 +2133,16 @@ This memory area is read before each write request.
 
    - MD - Maintained Description: max 80 bytes, ASCII, unused chars 0x00
 ```
+
+## Standby BK Picture 1 (0x02b00000)
+
+Uncompressed binary format, width 160px, height 128px, linewise from top left to bottom right, 2 bytes per pixel (5 bits red, 6 bits green, 5 bits blue). 
+Total memory: 0x2b00000 .. 0x2b09fff (2*160*128 = 40960 bytes).
+
+## Standby BK Picture 2 (0x02b80000)
+
+Uncompressed binary format, width 160px, height 128px, linewise from top left to bottom right, 2 bytes per pixel (5 bits red, 6 bits green, 5 bits blue). 
+Total memory: 0x2b80000 .. 0x2b89fff (2*160*128 = 40960 bytes).
 
 ## Talk group offsets (used for writing talk groups) - (0x04340000) 
 
