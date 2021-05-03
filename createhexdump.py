@@ -6,7 +6,7 @@ import sys
 import re
 import fileinput
 
-
+import at_d878uv_mem as atdevmem # AT D878UV memory layout
     
     
 expnextaddr = 0
@@ -54,6 +54,8 @@ for line in f.readlines():
          if expnextaddr != 0:
             print( '=> Block ' + str(nummemoryblocks) + ': ' )
             print( '=> Size: ' + str(hex(blockstartaddr)) + ' .. ' + str(hex(expnextaddr-1)) + ': ' + str( expnextaddr - blockstartaddr ) + ' bytes' )
+            print( '=> Name: ' + atdevmem.getMemorySectionName(blockstartaddr) + ' .. ' + atdevmem.getMemorySectionName(expnextaddr-1) )
+
          blockstartaddr = int(memoryaddr, 16)
          nummemoryblocks += 1
          print("")
@@ -142,6 +144,7 @@ for line in f.readlines():
       if expnextaddr != 0:
          print( '=> Block ' + str(nummemoryblocks) + ': ' )
          print( '=> Size: ' + str(hex(blockstartaddr)) + ' .. ' + str(hex(expnextaddr-1)) + ': ' + str( expnextaddr - blockstartaddr ) + ' bytes' )
+         print( '=> Name: ' + atdevmem.getMemorySectionName(blockstartaddr) + ' .. ' + atdevmem.getMemorySectionName(expnextaddr-1) )
          print("")
          print(line)
 
