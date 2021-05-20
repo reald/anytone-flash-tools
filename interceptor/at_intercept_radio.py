@@ -205,8 +205,8 @@ try:
                writeHexdump()
                
                # reconnect serial port
-               print("Reconnecting serial port in 15s...")
-               time.sleep(15)
+               print("Reconnecting serial port in 20s...")
+               time.sleep(20)
                serialPort = openSerialPort(comport)
                inputs.append(serialPort)
 
