@@ -1815,7 +1815,7 @@ Each entry has 32 bytes and starts at 0x02540000 + 32 * [id number]. Up to 250 Z
 
    - NA - Name: ASCII, max 16 chars. 0x00 for unused characters.
 ```
-Empty entries will not be written.
+Memory section goes from 0x02540000 to 0x025041ff. Empty entries will not be written.
 
 
 ## Radio ID List (0x02580000)
