@@ -1,17 +1,18 @@
 # AT-D878UV memory layout
 
 * Firmware history
-  * First observations done with firmware versions 1.19 and 1.20p.
-  * 1.21: Fixed location beacon (0x250100d) can be activated
+  * 1.25:
+    * Additional APRS settings
+  * 1.23:
+    * Different setting for hotkeys/Analog Quick Call of 1.22 removed again
+    * New formula APRS Auto TX Interval
   * 1.22: 
     * General Aprs settings memory area extended by 0x025010a0..0x025010ff
     * New memory area 0x2501800 .. 0x25018ff (Analog APRS list)
     * Different settings for hotkeys/Analog Quick Call (0x025c0000 .. 0x025c0003) (removed in 1.23)
     * New formula APRS Auto TX Interval
-  * 1.23:
-    * Different setting for hotkeys/Analog Quick Call of 1.22 removed again
-    * New formula APRS Auto TX Interval
-
+  * 1.21: Fixed location beacon (0x250100d) can be activated
+  * First observations done with firmware versions 1.19 and 1.20p.
 
 
 * **Observations and interpretations of memory dumps might be wrong. Use at your own risk!**
@@ -1652,9 +1653,11 @@ In this memory block the channel B for each zone is stored. The position is calc
                      SLRDAD
 57 | 02501090 | 10 | 00000000 00000000 00000000 00000000 | 02 06 || .... .... .... .... || ................ ||
 57 | 025010a0 | 10 | 00000000 00002609 00000000 00000000 | 41 06 || .... ..&. .... .... || ......&......... ||
-                                  AAAA O1O2
+                                  AAAA O1O2     F1F1F1F1
 57 | 025010b0 | 10 | 00000000 00000000 00000000 00000000 | 22 06 || .... .... .... .... || ................ ||
+                     F2F2F2F2 F3F3F3F3 F4F4F4F4 F5F5F5F5
 57 | 025010c0 | 10 | 00000000 00000000 00000000 00000000 | 32 06 || .... .... .... .... || ................ ||
+                     F6F6F6F6 F7F7F7F7 F8F8F8F8
 57 | 025010d0 | 10 | 00000000 00000000 00000000 00000000 | 42 06 || .... .... .... .... || ................ ||
 57 | 025010e0 | 10 | 00000000 00000000 00000000 00000000 | 52 06 || .... .... .... .... || ................ ||
 57 | 025010f0 | 10 | 00000000 00000000 00000000 00000000 | 62 06 || .... .... .... .... || ................ ||
@@ -1694,6 +1697,14 @@ In this memory block the channel B for each zone is stored. The position is calc
 - AA - Aprs Alt Data(feet): 2 bytes, low byte first, resolution 1 Ft, 0x926 = 2342 -> 2342 Ft
 - O1 - Other options 1: 1 byte: bit 0: POSITION, bit 1: MIC-E, bit 2: OBJECT, bit 3: ITEM, bit 4: MESSAGE, bit 5: WX REPORT, bit 6: NMEA report, bit 7: STATUS report
 - O2 - Other options 2: 1 byte: bit 0: OTHER
+- F1 - Analog Transmission Frequency 1: BCD (4 bytes), *10 Hz
+- F2 - Analog Transmission Frequency 2: BCD (4 bytes), *10 Hz
+- F3 - Analog Transmission Frequency 3: BCD (4 bytes), *10 Hz
+- F4 - Analog Transmission Frequency 4: BCD (4 bytes), *10 Hz
+- F5 - Analog Transmission Frequency 5: BCD (4 bytes), *10 Hz
+- F6 - Analog Transmission Frequency 6: BCD (4 bytes), *10 Hz
+- F7 - Analog Transmission Frequency 7: BCD (4 bytes), *10 Hz
+- F8 - Analog Transmission Frequency 8: BCD (4 bytes), *10 Hz
 ```
 
 Other expected values: "APRS TG","Call Type"
