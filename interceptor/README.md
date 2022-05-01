@@ -62,7 +62,9 @@ Programming software <-> virtual null modem cable <-> at_intercept_nonet.py <-> 
 
 ### Windows
 
-- e.g. com0com - http://com0com.sourceforge.net
+- e.g. com0com - https://sourceforge.net/projects/signed-drivers/ (http://com0com.sourceforge.net)
+- From Windows 10 onwards you have to install the signed drivers.
+- It might be necessary to deactive "secure boot" in the BIOS.
 - Remove default cable pair with CNCx1 port (Anytone CPS has problems with alphanumeric port ids)
 - Add pair e.g. COM18 - COM26
 - Activate "use Ports class [x]" at least for port COM18 (otherwise CPS will not find it)
