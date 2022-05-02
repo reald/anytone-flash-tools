@@ -26,9 +26,9 @@ the communication protocol. Wireshark to intercept the USB connection is not nee
 ## Start interceptor on radio side
 
 ```
-python3 ./at_d878uv_server.py
+python3 ./at_intercept_radio.py
 or
-python3 ./at_d878uv_server.py /dev/ttyACM1
+python3 ./at_intercept_radio.py /dev/ttyACM1
 ```
 By default /dev/ttyACM0 as used as serial port. You can add other port names as first parameter. As storage directory /tmp and as diff tool "meld" is used. You can change this in the config section in the server script. 
 The radio side must be started first. Make sure you have write permissions in the storage directory. This script has not been tested on windows!
@@ -37,7 +37,7 @@ The radio side must be started first. Make sure you have write permissions in th
 ## Start interceptor on programming software side
 
 ```
-python3 ./at_d878uv_emulator.py ServernameWithRadio COM26
+python3 ./at_intercept_programmer.py ServernameWithRadio COM26
 ``` 
 
 The server name can be "localhost" if its on the same machine. If you are using a different port in your virtual null modem cable than COM26 
